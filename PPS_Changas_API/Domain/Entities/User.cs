@@ -19,5 +19,7 @@ namespace Domain.Entities
         public float Reputation => Ratings.Count == 0 ? 0 : Ratings.Sum(v => v.Score) / Ratings.Count;
 
         public string Role { get; set; } = default!;
+
+        
     }
 }
