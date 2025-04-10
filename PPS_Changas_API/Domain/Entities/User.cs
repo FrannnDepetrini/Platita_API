@@ -15,7 +15,5 @@ namespace Domain.Entities
         public int PhoneNumber { get; set; }
         public float Reputation { get; set; }
         public List<Rating> Ratings { get; set; }
-
-        public String Role { get; set; } = default!;
     }
 }
