@@ -9,14 +9,18 @@ namespace Domain.Entities
 {
     public class Job
     {
-        public Employer Employer { get; set; }
-        public List<Postulation> Postulations { get; set; }
         public string Title { get; set; }
-        public float Price { get; set; }
-        public string DateTime { get; set; }
+        public float AveragePrice { get; set; }
+        public DateTime DateTime { get; set; }
         public bool Available { get; set; }
         public string Location { get; set; }
         public string Description { get; set; }
-        public CategoryEnum CategoryEnum { get; set; }
+        public CategoryEnum Category { get; set; }
+
+        public Employer Employer { get; set; }
+        public int IdEmployer { get; set; }
+        public List<Postulation> Postulations { get; set; } = new();
+        public int AmountPostulations => Postulations.Count;
+
     }
 }
