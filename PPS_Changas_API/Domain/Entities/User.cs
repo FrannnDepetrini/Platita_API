@@ -13,9 +13,11 @@ namespace Domain.Entities
         public string UserName { get; set; }
         public string Password { get; set; }
         public int PhoneNumber { get; set; }
-        public float Reputation { get; set; }
-        public List<Rating> Ratings { get; set; }
+        public List<Rating> Ratings { get; set; } = new();
 
-        public String Role { get; set; } = default!;
+        // Promedio de la reputación del usuario. EJ: Juan tiene 3,5 de reputación
+        public float Reputation => Ratings.Count == 0 ? 0 : Ratings.Sum(v => v.Score) / Ratings.Count;
+
+        public string Role { get; set; } = default!;
     }
 }
