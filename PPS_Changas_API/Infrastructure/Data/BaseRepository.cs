@@ -20,19 +20,21 @@ namespace Infrastructure.Data
         public async Task<List<T>>  GetAll()
         {
 
-            return _context.Set<T>().ToList();
+            var entity = await _context.Set<T>().ToListAsync();
+            return entity;
         }
 
-        public async Task<T> GetById(int id)
+        public async Task<T>  GetById(int id)
         {
 
-            return _context.Set<T>().Find(new object[] { id });
+            var entity = await _context.Set<T>().FindAsync(id);
+            return entity;
         }
 
         public async Task Delete(T entity)
         {
             _context.Set<T>().Remove(entity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
 
         }
@@ -40,7 +42,7 @@ namespace Infrastructure.Data
         public async Task<T> Update(T entity)
         {
             _context.Set<T>().Update(entity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return entity;
 
         }
@@ -48,8 +50,8 @@ namespace Infrastructure.Data
         public async Task<T> Create(T entity)
         {
 
-            _context.Set<T>().Add(entity);
-            _context.SaveChanges();
+            await _context.Set<T>().AddAsync(entity);
+            await _context.SaveChangesAsync();
             return entity;
 
 
