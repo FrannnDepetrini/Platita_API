@@ -12,5 +12,7 @@ namespace Domain.Entities
         public Job Job { get; set; }
         public Employee Employee { get; set; }
         public StatusEnum Status { get; set; }
+
+        public float Budget { get; set; }
     }
 }
