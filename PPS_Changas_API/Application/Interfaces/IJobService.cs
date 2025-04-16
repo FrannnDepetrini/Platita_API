@@ -13,8 +13,9 @@ namespace Application.Interfaces
     {
         // Task<List<JobsDTO>> GetAll();
         // JobsDTO GetById(int id);
-        Job Create(JobRequest request);
+        // Job Create(JobRequest request);
         // Job Update(JobUpdateRequest request);
-        // Job Delete (int id);
+        Task Delete (int id);
+        Task DeleteLogic (int id);
     }
 }
