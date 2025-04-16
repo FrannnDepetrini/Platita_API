@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Employee : User
+    public class Employee : JobUser
     {
         public List<Postulation> Postulations { get; set; }
     }
