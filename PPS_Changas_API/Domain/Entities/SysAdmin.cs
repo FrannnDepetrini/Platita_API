@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities;
 
-public class SysAdmin
+public class SysAdmin : User
 {
     public List<User> Users { get; set; }
 }

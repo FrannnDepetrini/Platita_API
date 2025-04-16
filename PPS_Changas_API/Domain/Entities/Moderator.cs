@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities;
 
-public class Moderator
+public class Moderator : User
 {
     public List<User> Users { get; set; }
 }
