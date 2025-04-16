@@ -15,10 +15,12 @@ builder.Services.AddSwaggerGen();
 //regiones para que sea mas legible
 #region Services
 builder.Services.AddScoped<IJobService, JobService>();
+
 #endregion
 
 #region Repositories
 builder.Services.AddScoped<IJobRepository, JobRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 #endregion
 
 var app = builder.Build();
