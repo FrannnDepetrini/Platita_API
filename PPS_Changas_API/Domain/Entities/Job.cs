@@ -19,7 +19,7 @@ namespace Domain.Entities
         public string Title { get; set; }
         public float AveragePrice => Postulations.Count == 0 ? 0 : Postulations.Sum(x => x.Budget) / Postulations.Count;
         public int AmountPostulations => Postulations.Count;
-        public DateTime DateTime { get; set; }
+        public DateTime? DateTime { get; set; }
         public bool Available { get; set; }
         public string Location { get; set; }
         public string Description { get; set; }

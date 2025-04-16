@@ -7,10 +7,10 @@ namespace Application.Model
     {
         public string EmployerName {get; set;}
         public string Title {get; set;}
-        public float Price {get; set;}
+        public float AveragePrice {get; set;}
         public bool Available {get; set;}
         public string Location {get; set;}
-        public string DateTime { get; set; }
+        public DateTime? DateTime { get; set; }
         public string Description{get; set;}
         public CategoryEnum CategoryEnum {get; set;}
 
@@ -20,7 +20,7 @@ namespace Application.Model
             {
                 EmployerName = Job.Employer.UserName,
                 Title = Job.Title,
-                Price = Job.Price,
+                AveragePrice = Job.AveragePrice,
                 Available = Job.Available,
                 Location = Job.Location,
                 DateTime = Job.DateTime,
