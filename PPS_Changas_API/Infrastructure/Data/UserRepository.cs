@@ -16,5 +16,10 @@ namespace Infrastructure.Data
         {
             _context = context;
         }
+
+        public User GetUserByEmail(string email)
+        {
+            
+        }
     }
 }
