@@ -71,6 +71,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IJobService, JobService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 #endregion
 
 #region Repositories

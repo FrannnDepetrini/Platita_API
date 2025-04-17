@@ -18,9 +18,10 @@ namespace Infrastructure.Data
             _context = context;
         }
 
-        public  async Task<User> GetUserByEmail(string email)
+        public async Task<User?> GetUserByEmail(string email)
         {
-            return _context.Set<User>().FirstOrDefault(u => u.Email == email);
+            return await _context.Set<User>().FirstOrDefaultAsync(u => u.Email == email);
         }
+
     }
 }

@@ -2,27 +2,26 @@
 using Domain.Constants;
 using Domain.Entities;
 using Domain.Interfaces;
-using Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Services;
+namespace Application.Services;
 
-public class AuthService(IUserRepository userRepository, ITokenService tokenService, ApplicationContext context) : IAuthService
+public class AuthService(IUserRepository userRepository, ITokenService tokenService, IPasswordHasher passwordHasher) : IAuthService
 {
 
     private readonly IUserRepository _userRepository = userRepository;
     private readonly ITokenService _tokenService = tokenService;
-    private readonly ApplicationContext _context = context;
+    private readonly IPasswordHasher _passwordHasher = passwordHasher;
 
     public async Task<string?> Login(string email, string password)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-        if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Password))
+        var user = await _userRepository.GetUserByEmail(email);
+        if (user == null || !_passwordHasher.VerifyPassword(password, user.Password))
         {
             return null;
         }
@@ -30,29 +29,43 @@ public class AuthService(IUserRepository userRepository, ITokenService tokenServ
         return _tokenService.GenerateToken(user);
     }
 
-    public async Task<bool> Register(string email, string password, RolesEnum role, string userName, int phoneNumber)
+    public async Task<bool> Register(ClaimsPrincipal user, string email, string password, string role, string userName, int phoneNumber)
     {
-        var exisitingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        var exisitingUser = await _userRepository.GetUserByEmail(email);
         if (exisitingUser is not null)
         {
             return false;
         }
 
-        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
-        var newUser = CreateUserByRole(email, hashedPassword, role, userName, phoneNumber);
+        if (!Enum.TryParse(role, out RolesEnum userRole))
+        {
+            throw new ArgumentException("Rol inválido");
+        }
 
-        // acá va la firma del repo de user que agrega el nuevo usuario a la bd
+        if(user.Identity is null || !user.Identity.IsAuthenticated)
+        {
+            if (userRole == RolesEnum.SysAdmin || userRole == RolesEnum.Moderator)
+            {
+                var creatorRole = user.FindFirst(ClaimTypes.Role)?.Value;
+
+                if (creatorRole is null || creatorRole != RolesEnum.SysAdmin.ToString())
+                {
+                    throw new UnauthorizedAccessException("Solo un SysAdmin puede registrar usuarios de tipo SysAdmin o Moderator.");
+                }
+            }
+        }
+
+        var hashedPassword = _passwordHasher.HashPassword(password);
+
+        var newUser = CreateUserByRole(email, hashedPassword, userRole, userName, phoneNumber);
+
         await _userRepository.Create(newUser);
+
         return true;
     }
 
     private User CreateUserByRole(string email, string password, RolesEnum role, string userName, int phoneNumber)
     {
-        //if (!Enum.TryParse(role, out RolesEnum userRole))
-        //{
-        //    throw new ArgumentException("Rol inválido");
-        //}
-
         return role switch
         {
             RolesEnum.SysAdmin => new SysAdmin
