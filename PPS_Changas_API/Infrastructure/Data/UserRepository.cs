@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,9 @@ namespace Infrastructure.Data
             _context = context;
         }
 
-        public User GetUserByEmail(string email)
+        public  async Task<User> GetUserByEmail(string email)
         {
-            
+            return _context.Set<User>().FirstOrDefault(u => u.Email == email);
         }
     }
 }
