@@ -7,7 +7,7 @@ namespace Application.Model
     {
         public string EmployerName {get; set;}
         public string Title {get; set;}
-        public float AveragePrice {get; set;}
+        //public float AveragePrice {get; set;}
         public bool Available {get; set;}
         public string Location {get; set;}
         public DateTime? DateTime { get; set; }
@@ -18,9 +18,10 @@ namespace Application.Model
         {
             return new JobsDTO
             {
-                EmployerName = Job.Employer.UserName,
+                //EmployerName = Job.Employer.UserName,
+                EmployerName = Job.EmployerName,
                 Title = Job.Title,
-                AveragePrice = Job.AveragePrice,
+                //AveragePrice = Job.AveragePrice,
                 Available = Job.Available,
                 Location = Job.Location,
                 DateTime = Job.DateTime,
