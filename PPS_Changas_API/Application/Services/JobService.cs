@@ -1,4 +1,5 @@
 using Application.Interfaces;
+using Application.Model;
 using Application.Model.Requests;
 using Domain.Entities;
 using Domain.Interfaces;
@@ -10,37 +11,58 @@ namespace Application.Services
     {
         private readonly IJobRepository _jobRepository;
 
-        public JobService (IJobRepository jobRepository){
+        public JobService(IJobRepository jobRepository)
+        {
             _jobRepository = jobRepository;
         }
-//baja fisica
-    public async Task Delete(int id)
-    {
-        var job = await _jobRepository.GetById(id);
-
-        if (job == null)
+        //baja fisica
+        public async Task Delete(int id)
         {
-            throw new Exception("Job not found");
+            var job = await _jobRepository.GetById(id);
+
+            if (job == null)
+            {
+                throw new Exception("Job not found");
+            }
+
+            await _jobRepository.Delete(job);
         }
 
-        await _jobRepository.Delete(job);
-    }
-
-//baja logica
-    public async Task DeleteLogic(int id)
-    {
-        var job = await _jobRepository.GetById(id);
-
-        if (job == null)
+        //baja logica
+        public async Task DeleteLogic(int id)
         {
-            throw new Exception("Job not found");
+            var job = await _jobRepository.GetById(id);
+
+            if (job == null)
+            {
+                throw new Exception("Job not found");
+            }
+
+            job.Available = false;
+            job.DateTime = null;
+
+            await _jobRepository.Update(job);
         }
 
-        job.Available = false;
-        job.DateTime = null;
+        public async Task<Job> Update(JobUpdateRequest request, int id)
+        {
+            var job = await _jobRepository.GetById(id);
+            if (job == null)
+            {
+                throw new Exception("Job not found");
+            }
+            job.EmployerName = request.EmployerName;
+            job.Title = request.Title;
+            job.DateTime = request.DateTime;
+            job.Location = request.Location;
+            job.Description = request.Description;
+            job.Category = request.CategoryEnum;
+            
+            await _jobRepository.Update(job);
 
-        await _jobRepository.Update(job);
-    }
+            return job;
+
+        }
 
         // public Job Create(JobRequest request)
         // {
@@ -56,7 +78,7 @@ namespace Application.Services
 
         //     return newJob;
         // }
-        
+
         //Faltan demas firmas
 
 

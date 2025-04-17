@@ -10,12 +10,11 @@ using Domain.Entities;
 namespace Application.Interfaces
 {
     public interface IJobService
-    {
-        // Task<List<JobsDTO>> GetAll();
-        // JobsDTO GetById(int id);
-        // Job Create(JobRequest request);
-        // Job Update(JobUpdateRequest request);
-        Task Delete (int id);
-        Task DeleteLogic (int id);
-    }
+{
+    //Task<JobsDTO> GetById(int id);
+    Task<Job> Update(JobUpdateRequest request, int id);
+    Task Delete(int id);
+    Task DeleteLogic(int id);
+}
+
 }
