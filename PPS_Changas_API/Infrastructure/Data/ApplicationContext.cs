@@ -13,6 +13,14 @@ namespace Infrastructure.Data
     {
         public DbSet<Job> Jobs { get; set; }
 
+        public DbSet<User> Users { get; set; }
+
+        // Esto de acá no crea todas estas tablas sino que las hace disponibles para consultas en vez de tener que llamar a la tabla Users
+        public DbSet<SysAdmin> SysAdmins { get; set; }
+        public DbSet<Moderator> Moderators { get; set; }
+        public DbSet<Employer> Employers { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
 
         //Trabajos para testear db y endpoints de delete/deleteLogic
@@ -20,9 +28,23 @@ namespace Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            //  acá le digo a la tabla User que va a tener una columna que sirve para discriminar el tipo de User
+            modelBuilder.Entity<User>()
+                .HasDiscriminator<string>("Role")
+                .HasValue<SysAdmin>("SysAdmin")
+                .HasValue<Moderator>("Moderator")
+                .HasValue<Employer>("Employer")
+                .HasValue<Employee>("Employee");
+
+
             //ignora claves foraneas
             //modelBuilder.Entity<Job>().Ignore(j => j.Employer);
             modelBuilder.Entity<Job>().Ignore(j => j.Postulations);
+
+            // Esto lo agrego para que en la tabla Users no me agregue las columnas SysAdminId y ModeratorId
+            // Despues hay que ver bien si en las entidades SysAdmin y Moderator hace falta que tenga una lista de Users
+            modelBuilder.Entity<SysAdmin>().Ignore(s => s.Users);
+            modelBuilder.Entity<Moderator>().Ignore(s => s.Users);
 
             modelBuilder.Entity<Job>().HasData(new Job
             {
