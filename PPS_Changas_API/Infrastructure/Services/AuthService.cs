@@ -2,6 +2,8 @@
 using Domain.Constants;
 using Domain.Entities;
 using Domain.Interfaces;
+using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +12,16 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Services;
 
-public class AuthService(IUserRepository userRepository, ITokenService tokenService) : IAuthService
+public class AuthService(IUserRepository userRepository, ITokenService tokenService, ApplicationContext context) : IAuthService
 {
 
     private readonly IUserRepository _userRepository = userRepository;
     private readonly ITokenService _tokenService = tokenService;
+    private readonly ApplicationContext _context = context;
 
-    public Task<string?> Login(string email, string password)
+    public async Task<string?> Login(string email, string password)
     {
-        var user = _userRepository.GetById(email);
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Password))
         {
             return null;
@@ -27,10 +30,10 @@ public class AuthService(IUserRepository userRepository, ITokenService tokenServ
         return _tokenService.GenerateToken(user);
     }
 
-    public Task<bool> Register(string email, string password, RolesEnum role, string userName, int phoneNumber)
+    public async Task<bool> Register(string email, string password, RolesEnum role, string userName, int phoneNumber)
     {
-        var exisitingUser = "firma del repo que busca al user";
-        if(exisitingUser is not null)
+        var exisitingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        if (exisitingUser is not null)
         {
             return false;
         }
@@ -39,6 +42,7 @@ public class AuthService(IUserRepository userRepository, ITokenService tokenServ
         var newUser = CreateUserByRole(email, hashedPassword, role, userName, phoneNumber);
 
         // acá va la firma del repo de user que agrega el nuevo usuario a la bd
+        await _userRepository.Create(newUser);
         return true;
     }
 
@@ -87,3 +91,5 @@ public class AuthService(IUserRepository userRepository, ITokenService tokenServ
         };
     }
 }
+
+
