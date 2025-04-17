@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Application.Interfaces;
+using Application.Model.Requests;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Web.Controllers;
 
@@ -41,6 +43,20 @@ public class JobController : ControllerBase
         catch (System.Exception)
         {
             return NotFound();
+        }
+    }
+
+    [HttpPut("update/{id}")]
+    public async Task<ActionResult> Update([FromBody] JobUpdateRequest request, [FromRoute] int id)
+    {
+        try
+        {
+            await _jobService.Update(request, id);
+            return Ok();
+        }
+        catch (System.Exception)
+        {
+            return StatusCode(404, "Job not found");
         }
     }
 }

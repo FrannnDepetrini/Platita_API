@@ -75,6 +75,20 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IJobRepository, JobRepository>();
 #endregion
 
+//conexion a la db
+var connection = new SqliteConnection("Data source =DB-Platita.db");
+connection.Open();
+
+using (var command = connection.CreateCommand())
+{
+    command.CommandText = "PRAGMA journal_mode = DELETE;";
+    command.ExecuteNonQuery();
+}
+
+builder.Services.AddDbContext<ApplicationContext>(options =>
+    options.UseSqlite(connection, b => b.MigrationsAssembly("Infrastructure")));
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
