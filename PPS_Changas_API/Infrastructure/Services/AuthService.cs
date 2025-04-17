@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Domain.Constants;
 using Domain.Entities;
+using Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ public class AuthService(IUserRepository userRepository, ITokenService tokenServ
 
     public Task<string?> Login(string email, string password)
     {
-        var user = "firma del repo que busca al user";
+        var user = _userRepository.GetById(email);
         if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Password))
         {
             return null;

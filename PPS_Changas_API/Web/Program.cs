@@ -4,6 +4,8 @@ using Domain.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -73,6 +75,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 
 #region Repositories
 builder.Services.AddScoped<IJobRepository, JobRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 #endregion
 
 //conexion a la db
