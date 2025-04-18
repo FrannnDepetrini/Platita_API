@@ -1,7 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.Model.Requests;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity.Data;
+//using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
@@ -17,31 +17,30 @@ namespace Web.Controllers
             _authService = authService;
         }
         [HttpPost ("[action]")]
-        public async Task<IActionResult> Login(LoginRequest1 user)
+        public async Task<IActionResult> Login(LoginRequest user)
         {
-            try
-            {
-                var token = await _authService.Login(user.Email, user.Password);
-                return Ok(token);
-            }
-            catch (System.Exception)
+            
+            var token = await _authService.Login(user.Email, user.Password);
+
+            if (token == null)
             {
                 return Unauthorized();
             }
+
+            return Ok(token);
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> Register([FromBody]RegisterRequest1 user)
+        public async Task<IActionResult> Register([FromBody]RegisterRequest user)
         {
-            try
+            
+            var result = await _authService.Register(User, user.Email, user.Password, user.Role, user.UserName, user.PhoneNumber);
+            if (!result)
             {
-                await _authService.Register(User, user.Email, user.Password, user.Role, user.UserName, user.PhoneNumber);
-                return Ok("Usuario registrado");
-            }
-            catch (System.Exception)
-            {
-                return BadRequest("Usuario existente");
-            }
+                return BadRequest("User already exists");
+            }    
+            return Ok("Usuario registrado");
+            
         }
     }
 }
