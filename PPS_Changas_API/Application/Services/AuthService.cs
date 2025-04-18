@@ -42,16 +42,13 @@ public class AuthService(IUserRepository userRepository, ITokenService tokenServ
             throw new ArgumentException("Rol inválido");
         }
 
-        if(user.Identity is null || !user.Identity.IsAuthenticated)
+        if (userRole == RolesEnum.SysAdmin || userRole == RolesEnum.Moderator)
         {
-            if (userRole == RolesEnum.SysAdmin || userRole == RolesEnum.Moderator)
-            {
-                var creatorRole = user.FindFirst(ClaimTypes.Role)?.Value;
+            var creatorRole = user.FindFirst(ClaimTypes.Role)?.Value;
 
-                if (creatorRole is null || creatorRole != RolesEnum.SysAdmin.ToString())
-                {
-                    throw new UnauthorizedAccessException("Solo un SysAdmin puede registrar usuarios de tipo SysAdmin o Moderator.");
-                }
+            if (creatorRole is null || creatorRole != RolesEnum.SysAdmin.ToString())
+            {
+                throw new UnauthorizedAccessException("Solo un SysAdmin puede registrar usuarios de tipo SysAdmin o Moderator.");
             }
         }
 
