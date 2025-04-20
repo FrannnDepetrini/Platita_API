@@ -56,7 +56,21 @@ public class JobController : ControllerBase
         }
         catch (System.Exception)
         {
-            return StatusCode(404, "Job not found");
+            return NotFound();
+        }
+    }
+
+    [HttpPost("create")]
+    public async Task<ActionResult> Create([FromBody]JobRequest request)
+    {
+        try
+        {
+            await _jobService.Create(request);
+            return Ok();
+        }
+        catch (System.Exception)
+        {
+            return BadRequest();
         }
     }
 }
