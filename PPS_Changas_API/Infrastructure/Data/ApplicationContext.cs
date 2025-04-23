@@ -43,8 +43,8 @@ namespace Infrastructure.Data
 
             // Esto lo agrego para que en la tabla Users no me agregue las columnas SysAdminId y ModeratorId
             // Despues hay que ver bien si en las entidades SysAdmin y Moderator hace falta que tenga una lista de Users
-            modelBuilder.Entity<SysAdmin>().Ignore(s => s.Users);
-            modelBuilder.Entity<Moderator>().Ignore(s => s.Users);
+            //modelBuilder.Entity<SysAdmin>().Ignore(s => s.Users);
+            //modelBuilder.Entity<Moderator>().Ignore(s => s.Users);
 
             modelBuilder.Entity<Job>().HasData(new Job
             {
