@@ -12,11 +12,9 @@ namespace Application.Model.Requests
     {
         public string EmployerName {get; set;}
         public string Title { get; set; }
-        public float AveragePrice { get; set; }
-        public DateTime DateTime { get; set; }
         public string Location { get; set; }
         public string Description { get; set; }
-        public CategoryEnum CategoryEnum {get; set;}
+        public CategoryEnum Category {get; set;}
     }
 }
 
