@@ -25,7 +25,20 @@ namespace Domain.Entities
         public string Location { get; set; }
         public string Description { get; set; }
         public CategoryEnum Category { get; set; }
+        public Job(){}
+
+        public Job(string employerName, string title, string location, string description, CategoryEnum category)
+        {
+            EmployerName = employerName;
+            Title = title;
+            Location = location;
+            Description = description;
+            Category = category;
+        }
+
     }
+
+
 
     
 }

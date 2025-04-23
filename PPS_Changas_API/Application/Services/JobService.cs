@@ -56,12 +56,20 @@ namespace Application.Services
             job.DateTime = request.DateTime;
             job.Location = request.Location;
             job.Description = request.Description;
-            job.Category = request.CategoryEnum;
+            job.Category = request.Category;
             
             await _jobRepository.Update(job);
 
             return job;
 
+        }
+
+        public async Task<Job> Create(JobRequest request)
+        {
+            var newJob = new Job(request.EmployerName,request.Title, request.Location, request.Description, request.Category);
+            await _jobRepository.Create(newJob);
+
+            return newJob;
         }
 
         // public Job Create(JobRequest request)

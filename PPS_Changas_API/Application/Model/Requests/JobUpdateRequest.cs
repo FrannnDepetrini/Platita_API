@@ -16,6 +16,6 @@ namespace Application.Model.Requests
         public DateTime DateTime { get; set; } = DateTime.Today;
         public string Location { get; set; }
         public string Description { get; set; }
-        public CategoryEnum CategoryEnum {get; set;}
+        public CategoryEnum Category {get; set;}
     }
 }

@@ -12,6 +12,7 @@ namespace Application.Interfaces
     public interface IJobService
 {
     //Task<JobsDTO> GetById(int id);
+    Task<Job> Create(JobRequest request);
     Task<Job> Update(JobUpdateRequest request, int id);
     Task Delete(int id);
     Task DeleteLogic(int id);
