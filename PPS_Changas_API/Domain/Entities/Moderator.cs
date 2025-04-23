@@ -8,5 +8,5 @@ namespace Domain.Entities;
 
 public class Moderator : User
 {
-    public List<User> Users { get; set; }
+
 }

@@ -8,5 +8,5 @@ namespace Domain.Entities;
 
 public class SysAdmin : User
 {
-    public List<User> Users { get; set; }
+
 }
