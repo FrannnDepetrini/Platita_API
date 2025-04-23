@@ -28,7 +28,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             };
         });
 
-
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("SysAdminPolicy", policy => policy.RequireRole("SysAdmin"));
+    options.AddPolicy("ModeratorPolicy", policy => policy.RequireRole("Moderator"));
+    options.AddPolicy("EmployeePolicy", policy => policy.RequireRole("Employee"));
+    options.AddPolicy("EmployerPolicy", policy => policy.RequireRole("Employer"));
+    
+});
 // Add services to the container.
 
 builder.Services.AddControllers();
