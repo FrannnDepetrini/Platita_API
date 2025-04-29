@@ -14,7 +14,9 @@ namespace Domain.Entities
         public string City {get; set;}
         public List<Rating> Ratings { get; set; } = new();
         public List<Job> Jobs { get; set; } = new();
-        public PaymentEnum Payment {get; set;}
+
+        public List<Postulation> Postulations { get; set; } = new List<Postulation>();
+        public Payment Payment { get; set; } = default!;
         public float Reputation => Ratings.Count == 0 ? 0 : Ratings.Sum(v => v.Score) / Ratings.Count;
     }
 }

@@ -9,6 +9,6 @@ namespace Domain.Constants
     public enum PaymentEnum
     {
         MercadoPago,
-        Transferencia,
+        Transference,
     }
 }

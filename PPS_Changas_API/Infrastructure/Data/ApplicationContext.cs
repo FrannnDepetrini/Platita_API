@@ -18,8 +18,8 @@ namespace Infrastructure.Data
         // Esto de acá no crea todas estas tablas sino que las hace disponibles para consultas en vez de tener que llamar a la tabla Users
         public DbSet<SysAdmin> SysAdmins { get; set; }
         public DbSet<Moderator> Moderators { get; set; }
-        public DbSet<Employer> Employers { get; set; }
-        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Client> Clients { get; set; }
+        public DbSet<Support> Supports { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
 
@@ -33,52 +33,90 @@ namespace Infrastructure.Data
                 .HasDiscriminator<string>("Role")
                 .HasValue<SysAdmin>("SysAdmin")
                 .HasValue<Moderator>("Moderator")
-                .HasValue<Employer>("Employer")
-                .HasValue<Employee>("Employee");
+                .HasValue<Client>("Client")
+                .HasValue<Support>("Support");
+
+
+            modelBuilder.Entity<Job>()
+                .HasOne(j => j.Client)
+                .WithMany(c => c.Jobs)
+                .HasForeignKey(j => j.ClientId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Postulation>()
+               .HasOne(j => j.Client)
+               .WithMany(c => c.Postulations)
+               .HasForeignKey(j => j.ClientId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Client>()
+                .HasMany(c => c.Ratings)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Job>()
+                .HasMany(j => j.Postulations)
+                .WithOne(p => p.Job)
+                .HasForeignKey(p => p.JobId);
+
+            modelBuilder.Entity<Complaint>()
+                .HasOne(c => c.Client)
+                .WithMany()
+                .HasForeignKey(c => c.ClientId);
+
+            modelBuilder.Entity<Complaint>()
+                .HasOne(c => c.Support)
+                .WithMany(s => s.Complaints)
+                .HasForeignKey(c => c.SupportId);
+
+            modelBuilder.Entity<Rating>()
+                .HasOne(r => r.Job)
+                .WithMany()
+                .HasForeignKey(r => r.JobId);
 
 
             //ignora claves foraneas
             //modelBuilder.Entity<Job>().Ignore(j => j.Employer);
-            modelBuilder.Entity<Job>().Ignore(j => j.Postulations);
+            //modelBuilder.Entity<Job>().Ignore(j => j.Postulations);
 
             // Esto lo agrego para que en la tabla Users no me agregue las columnas SysAdminId y ModeratorId
             // Despues hay que ver bien si en las entidades SysAdmin y Moderator hace falta que tenga una lista de Users
             //modelBuilder.Entity<SysAdmin>().Ignore(s => s.Users);
             //modelBuilder.Entity<Moderator>().Ignore(s => s.Users);
 
-            modelBuilder.Entity<Job>().HasData(new Job
-            {
-                Id = 1,
-                Title = "Busco electricista",
-                EmployerName = "Juan",
-                Available = true,
-                Location = "Rosario",
-                Description = "busco electricista para que me cambie una lamparita",
-                Category = CategoryEnum.Electricity,
-                DateTime = DateTime.Now
-            }, new Job
-            {
-                Id = 2,
-                Title = "Busco plomero",
-                EmployerName = "Maria",
-                Available = true,
-                Location = "Rosario",
-                Description = "busco plomero para arreglar mi bano",
-                Category = CategoryEnum.Plumbing,
-                DateTime = DateTime.Now
-            }, new Job
-            {
-                Id = 3,
-                Title = "Busco Jardinero",
-                EmployerName = "Marta",
-                Available = true,
-                Location = "Buenos Aires",
-                Description = "necesito cortar el pasto",
-                Category = CategoryEnum.Gardening,
-                DateTime = DateTime.Now
-            }
+            //modelBuilder.Entity<Job>().HasData(new Job
+            //{
+            //    Id = 1,
+            //    Title = "Busco electricista",
+            //    EmployerName = "Juan",
+            //    Available = true,
+            //    Location = "Rosario",
+            //    Description = "busco electricista para que me cambie una lamparita",
+            //    Category = CategoryEnum.Electricity,
+            //    DateTime = DateTime.Now
+            //}, new Job
+            //{
+            //    Id = 2,
+            //    Title = "Busco plomero",
+            //    EmployerName = "Maria",
+            //    Available = true,
+            //    Location = "Rosario",
+            //    Description = "busco plomero para arreglar mi bano",
+            //    Category = CategoryEnum.Plumbing,
+            //    DateTime = DateTime.Now
+            //}, new Job
+            //{
+            //    Id = 3,
+            //    Title = "Busco Jardinero",
+            //    EmployerName = "Marta",
+            //    Available = true,
+            //    Location = "Buenos Aires",
+            //    Description = "necesito cortar el pasto",
+            //    Category = CategoryEnum.Gardening,
+            //    DateTime = DateTime.Now
+            //}
 
-            );
+            //);
         }
 
     }

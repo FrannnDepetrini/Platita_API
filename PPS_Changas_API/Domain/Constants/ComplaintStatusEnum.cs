@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Constants
+namespace Domain.Constants;
+
+public enum ComplaintStatusEnum
 {
-    public enum StatusEnum
-    {
-        Success,
-        Pending,
-        Failed
-    }
+    Solved,
+    Pending,
+    InProcess
 }

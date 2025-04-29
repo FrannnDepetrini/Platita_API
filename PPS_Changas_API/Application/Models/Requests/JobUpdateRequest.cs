@@ -6,16 +6,20 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Constants;
 
-namespace Application.Model.Requests
+namespace Application.Models.Requests
 {
     public class JobUpdateRequest
     {
-        public string EmployerName {get; set;} //Tendria que ir la entidad employer
         public string Title { get; set; }
         //public float AveragePrice { get; set; }
         public DateTime DateTime { get; set; } = DateTime.Today;
-        public string Location { get; set; }
-        public string Description { get; set; }
+
         public CategoryEnum Category {get; set;}
+
+        public string State { get; set; }
+        public string City { get; set; }
+        public string Description { get; set; }
+
+        public string Picture { get; set; }
     }
 }

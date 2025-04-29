@@ -2,6 +2,7 @@ using Application.Interfaces;
 using Application.Services;
 using Domain.Interfaces;
 using Infrastructure.Data;
+using Infrastructure.Data.Repositories;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Data.Sqlite;
@@ -9,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,13 +34,17 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("SysAdminPolicy", policy => policy.RequireRole("SysAdmin"));
     options.AddPolicy("ModeratorPolicy", policy => policy.RequireRole("Moderator"));
-    options.AddPolicy("EmployeePolicy", policy => policy.RequireRole("Employee"));
-    options.AddPolicy("EmployerPolicy", policy => policy.RequireRole("Employer"));
+    options.AddPolicy("ClientPolicy", policy => policy.RequireRole("Client"));
+    options.AddPolicy("SupportPolicy", policy => policy.RequireRole("Support"));
     
 });
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    }
+);
 
 // Configuración de Swagger y JWT
 builder.Services.AddSwaggerGen(setupAction =>
