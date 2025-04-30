@@ -1,5 +1,5 @@
 ﻿using Application.Interfaces;
-using Application.Model.Requests;
+using Application.Models.Requests;
 using Microsoft.AspNetCore.Http;
 //using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
