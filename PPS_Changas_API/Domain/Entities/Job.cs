@@ -15,22 +15,20 @@ namespace Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id {get; set;}
         public int ClientId {get; set;}
-        //public Employer Employer { get; set; }
-        public Client Client {get; set;}
+        public Client Client { get; set; } = default!;
         public List<Postulation> Postulations { get; set; } = new();
-        public int PostulationSelected {get; set;} //?
+        public int PostulationSelected {get; set;} 
         public string Title { get; set; }
         public float AveragePrice => Postulations.Count == 0 ? 0 : Postulations.Sum(x => x.Budget) / Postulations.Count;
         public int AmountPostulations => Postulations.Count;
         public DateTime? DateTime { get; set; }
-        public bool Available { get; set; }
-        public string Location { get; set; }
+        public JobStatusEnum Status { get; set; }
         public string Description { get; set; }
         public CategoryEnum Category { get; set; }
         public string Picture { get; set; }
         public string State { get; set; }
         public string City { get; set; }
-        public Job(){}
+      
 
 
     }

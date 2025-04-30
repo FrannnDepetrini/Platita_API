@@ -1,8 +1,12 @@
+using Application.Extensions;
 using Application.Interfaces;
-using Application.Model;
-using Application.Model.Requests;
+using Application.Models;
+using Application.Models.Requests;
+using Application.Models.Responses;
+using Domain.Constants;
 using Domain.Entities;
 using Domain.Interfaces;
+using System.Security.Claims;
 
 namespace Application.Services
 {
@@ -10,26 +14,35 @@ namespace Application.Services
 
     {
         private readonly IJobRepository _jobRepository;
+        private readonly IUserRepository _userRepository;
 
-        public JobService(IJobRepository jobRepository)
+        public JobService(IJobRepository jobRepository, IUserRepository userRepository)
         {
             _jobRepository = jobRepository;
+            _userRepository = userRepository;
         }
+
+
         //baja fisica
-        public async Task Delete(int id)
+        public async Task Delete(int id, ClaimsPrincipal user)
         {
             var job = await _jobRepository.GetById(id);
 
             if (job == null)
             {
                 throw new Exception("Job not found");
+            }
+
+            if (job.Client.Id != user.GetUserIntId())
+            {
+                throw new UnauthorizedAccessException("You dont have permission");
             }
 
             await _jobRepository.Delete(job);
         }
 
         //baja logica
-        public async Task DeleteLogic(int id)
+        public async Task DeleteLogic(int id, ClaimsPrincipal user)
         {
             var job = await _jobRepository.GetById(id);
 
@@ -38,57 +51,79 @@ namespace Application.Services
                 throw new Exception("Job not found");
             }
 
-            job.Available = false;
+            if (job.Client.Id != user.GetUserIntId())
+            {
+                throw new UnauthorizedAccessException("You dont have permission");
+            }
+
+            job.Status = JobStatusEnum.Deleted;
             job.DateTime = null;
 
             await _jobRepository.Update(job);
         }
 
-        public async Task<Job> Update(JobUpdateRequest request, int id)
+        public async Task<JobDTO> Update(JobUpdateRequest request, int id, ClaimsPrincipal user)
         {
             var job = await _jobRepository.GetById(id);
             if (job == null)
             {
                 throw new Exception("Job not found");
             }
-            job.EmployerName = request.EmployerName;
+
+            if(job.Client.Id != user.GetUserIntId())
+            {
+                throw new UnauthorizedAccessException("You dont have permission");
+            }
+
+            if(job.Status == JobStatusEnum.Taken)
+            {
+                throw new Exception("You cant modify a job that has been taken");
+            }
+
             job.Title = request.Title;
             job.DateTime = request.DateTime;
-            job.Location = request.Location;
+            job.State = request.State;
+            job.City = request.City;
             job.Description = request.Description;
             job.Category = request.Category;
+            job.Picture = request.Picture;
+           
             
-            await _jobRepository.Update(job);
+            var updatedJob = await _jobRepository.Update(job);
 
-            return job;
+            var jobDTO = JobDTO.Create(updatedJob);
+
+            return jobDTO;
 
         }
 
-        public async Task<Job> Create(JobRequest request)
+        public async Task<JobDTO> Create(JobRequest request, ClaimsPrincipal user)
         {
-            var newJob = new Job(request.EmployerName,request.Title, request.Location, request.Description, request.Category);
+            var clientId = user.GetUserIntId();
+
+            //if (client is null)
+            //{
+            //    throw new Exception("No user with that id");
+            //}
+
+            var newJob = new Job()
+            {
+                ClientId = clientId,
+                Title = request.Title,
+                Status = JobStatusEnum.Available,
+                Description = request.Description,
+                Category = request.Category,
+                DateTime = request.DateTime,
+                Picture = request.Picture,
+                State = request.State,
+                City = request.City
+            };
             await _jobRepository.Create(newJob);
 
-            return newJob;
+            var jobDTO = JobDTO.Create(newJob);
+
+            return jobDTO;
         }
-
-        // public Job Create(JobRequest request)
-        // {
-        //     var newJob = new Job{
-        //         Title = request.Title,
-        //         Price = request.Price,
-        //         DateTime = request.DateTime,
-        //         Location = request.Location,
-        //         Description = request.Description,
-        //         //Falta Employer.Username
-        //         CategoryEnum = request.CategoryEnum,
-        //     };
-
-        //     return newJob;
-        // }
-
-        //Faltan demas firmas
-
 
     }
 }

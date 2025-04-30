@@ -81,7 +81,7 @@ public class AuthService(IUserRepository userRepository, ITokenService tokenServ
                 UserName = userName,
                 PhoneNumber = phoneNumber
             },
-            RolesEnum.Employer => new Employer
+            RolesEnum.Client => new Client
             {
                 Email = email,
                 Password = password,
@@ -89,7 +89,7 @@ public class AuthService(IUserRepository userRepository, ITokenService tokenServ
                 UserName = userName,
                 PhoneNumber = phoneNumber
             },
-            RolesEnum.Employee => new Employee
+            RolesEnum.Support => new Support
             {
                 Email = email,
                 Password = password,

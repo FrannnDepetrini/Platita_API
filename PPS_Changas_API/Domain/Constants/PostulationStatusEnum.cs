@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Domain.Constants
 {
-    public enum RolesEnum
+    public enum PostulationStatusEnum
     {
-        SysAdmin,
-        Moderator,
-        Client,
-        Support
+        Success,
+        Pending,
+        Failed
     }
 }
