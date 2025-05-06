@@ -24,7 +24,7 @@ namespace Application.Services
 
 
         //baja fisica
-        public async Task Delete(int id, ClaimsPrincipal user)
+        public async Task Delete(int id, int userId)
         {
             var job = await _jobRepository.GetById(id);
 
@@ -33,7 +33,7 @@ namespace Application.Services
                 throw new Exception("Job not found");
             }
 
-            if (job.Client.Id != user.GetUserIntId())
+            if (job.Client.Id != userId)
             {
                 throw new UnauthorizedAccessException("You dont have permission");
             }
@@ -42,7 +42,7 @@ namespace Application.Services
         }
 
         //baja logica
-        public async Task DeleteLogic(int id, ClaimsPrincipal user)
+        public async Task DeleteLogic(int id, int userId)
         {
             var job = await _jobRepository.GetById(id);
 
@@ -51,7 +51,7 @@ namespace Application.Services
                 throw new Exception("Job not found");
             }
 
-            if (job.Client.Id != user.GetUserIntId())
+            if (job.Client.Id != userId)
             {
                 throw new UnauthorizedAccessException("You dont have permission");
             }
@@ -62,7 +62,7 @@ namespace Application.Services
             await _jobRepository.Update(job);
         }
 
-        public async Task<JobDTO> Update(JobUpdateRequest request, int id, ClaimsPrincipal user)
+        public async Task<JobDTO> Update(JobUpdateRequest request, int id, int userId)
         {
             var job = await _jobRepository.GetById(id);
             if (job == null)
@@ -70,7 +70,7 @@ namespace Application.Services
                 throw new Exception("Job not found");
             }
 
-            if(job.Client.Id != user.GetUserIntId())
+            if(job.Client.Id != userId)
             {
                 throw new UnauthorizedAccessException("You dont have permission");
             }
@@ -97,9 +97,9 @@ namespace Application.Services
 
         }
 
-        public async Task<JobDTO> Create(JobRequest request, ClaimsPrincipal user)
+        public async Task<JobDTO> Create(JobRequest request, int userId)
         {
-            var clientId = user.GetUserIntId();
+            //var clientId = user.GetUserIntId();
 
             //if (client is null)
             //{
@@ -108,7 +108,7 @@ namespace Application.Services
 
             var newJob = new Job()
             {
-                ClientId = clientId,
+                ClientId = userId,
                 Title = request.Title,
                 Status = JobStatusEnum.Available,
                 Description = request.Description,

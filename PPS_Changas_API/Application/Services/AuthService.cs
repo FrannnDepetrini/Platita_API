@@ -29,7 +29,7 @@ public class AuthService(IUserRepository userRepository, ITokenService tokenServ
         return _tokenService.GenerateToken(user);
     }
 
-    public async Task<bool> Register(ClaimsPrincipal user, string email, string password, string role, string userName, int phoneNumber)
+    public async Task<bool> Register(string? creatorRole, string email, string password, string role, string userName, int phoneNumber)
     {
         var exisitingUser = await _userRepository.GetUserByEmail(email);
         if (exisitingUser is not null)
@@ -44,9 +44,7 @@ public class AuthService(IUserRepository userRepository, ITokenService tokenServ
 
         if (userRole == RolesEnum.SysAdmin || userRole == RolesEnum.Moderator)
         {
-            var creatorRole = user.FindFirst(ClaimTypes.Role)?.Value;
-
-            if (creatorRole is null || creatorRole != RolesEnum.SysAdmin.ToString())
+            if (creatorRole != RolesEnum.SysAdmin.ToString())
             {
                 throw new UnauthorizedAccessException("Solo un SysAdmin puede registrar usuarios de tipo SysAdmin o Moderator.");
             }

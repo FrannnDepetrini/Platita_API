@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Application.Interfaces;
 using Application.Models.Requests;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Web.Extensions;
 
 namespace Web.Controllers;
 
@@ -23,7 +24,7 @@ public class JobController : ControllerBase
     {
         try
         {
-            await _jobService.Delete(id, User);
+            await _jobService.Delete(id, User.GetUserIntId());
             return Ok();
         }
         catch (System.Exception)
@@ -37,7 +38,7 @@ public class JobController : ControllerBase
     {
         try
         {
-            await _jobService.DeleteLogic(id, User);
+            await _jobService.DeleteLogic(id, User.GetUserIntId());
             return Ok();
         }
         catch (System.Exception)
@@ -51,7 +52,7 @@ public class JobController : ControllerBase
     {
         try
         {
-            await _jobService.Update(request, id, User);
+            await _jobService.Update(request, id, User.GetUserIntId());
             return Ok();
         }
         catch (System.Exception)
@@ -65,7 +66,7 @@ public class JobController : ControllerBase
     {
         try
         {
-            await _jobService.Create(request, User);
+            await _jobService.Create(request, User.GetUserIntId());
             return Ok();
         }
         catch (System.Exception)
