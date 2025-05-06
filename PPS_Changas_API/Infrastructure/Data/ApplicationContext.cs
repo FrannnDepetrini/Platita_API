@@ -12,8 +12,11 @@ namespace Infrastructure.Data
     public class ApplicationContext : DbContext
     {
         public DbSet<Job> Jobs { get; set; }
-
         public DbSet<User> Users { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
+        public DbSet<Postulation> Postulations { get; set; }
+        public DbSet<Complaint> Complaints { get; set; }
+        public DbSet<Payment> Payments { get; set; }
 
         // Esto de acá no crea todas estas tablas sino que las hace disponibles para consultas en vez de tener que llamar a la tabla Users
         public DbSet<SysAdmin> SysAdmins { get; set; }
@@ -74,7 +77,12 @@ namespace Infrastructure.Data
                 .WithMany()
                 .HasForeignKey(r => r.JobId);
 
-
+            //modelBuilder.Entity<Payment>().HasData(new Payment
+            //{
+            //    Id = 1,
+            //    Type = PaymentEnum.MercadoPago,
+            //    Description = "podes pagar con mp"
+            //});
             //ignora claves foraneas
             //modelBuilder.Entity<Job>().Ignore(j => j.Employer);
             //modelBuilder.Entity<Job>().Ignore(j => j.Postulations);

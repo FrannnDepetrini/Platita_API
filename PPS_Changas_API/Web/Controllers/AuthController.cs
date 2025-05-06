@@ -3,6 +3,7 @@ using Application.Models.Requests;
 using Microsoft.AspNetCore.Http;
 //using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Web.Controllers
 {
@@ -30,17 +31,39 @@ namespace Web.Controllers
             return Ok(token);
         }
 
+        //[HttpPost("[action]")]
+        //public async Task<IActionResult> Register([FromBody]RegisterRequest user)
+        //{
+
+        //    var result = await _authService.Register(User, user.Email, user.Password, user.Role, user.UserName, user.PhoneNumber);
+        //    if (!result)
+        //    {
+        //        return BadRequest("User already exists");
+        //    }    
+        //    return Ok("Usuario registrado");
+
+        //}
+
         [HttpPost("[action]")]
-        public async Task<IActionResult> Register([FromBody]RegisterRequest user)
+        public async Task<IActionResult> Register([FromBody] RegisterRequest user)
         {
-            
-            var result = await _authService.Register(User, user.Email, user.Password, user.Role, user.UserName, user.PhoneNumber);
+            var creatorRole = User.FindFirst(ClaimTypes.Role)?.Value;
+
+            var result = await _authService.Register(
+                creatorRole,
+                user.Email,
+                user.Password,
+                user.Role,
+                user.UserName,
+                user.PhoneNumber
+            );
+
             if (!result)
             {
                 return BadRequest("User already exists");
-            }    
+            }
+
             return Ok("Usuario registrado");
-            
         }
     }
 }
