@@ -10,5 +10,5 @@ namespace Application.Interfaces;
 public interface IAuthService
 {
     Task<string?> Login(string email, string password);
-    Task<bool> Register(ClaimsPrincipal user, string email, string password, string role, string userName, int phoneNumber);
+    Task<bool> Register(string? creatorRole, string email, string password, string role, string userName, int phoneNumber);
 }

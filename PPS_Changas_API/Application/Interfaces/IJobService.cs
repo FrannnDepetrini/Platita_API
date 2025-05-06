@@ -14,10 +14,10 @@ namespace Application.Interfaces
     public interface IJobService
 {
     //Task<JobsDTO> GetById(int id);
-    Task<JobDTO> Create(JobRequest request, ClaimsPrincipal user);
-    Task<JobDTO> Update(JobUpdateRequest request, int id, ClaimsPrincipal user);
-    Task Delete(int id, ClaimsPrincipal user);
-    Task DeleteLogic(int id, ClaimsPrincipal user);
+    Task<JobDTO> Create(JobRequest request, int userId);
+    Task<JobDTO> Update(JobUpdateRequest request, int id, int userId);
+    Task Delete(int id, int userId);
+    Task DeleteLogic(int id, int userId);
 }
 
 }
