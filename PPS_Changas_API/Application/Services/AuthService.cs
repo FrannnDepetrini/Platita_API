@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace Application.Services;
 
-public class AuthService(IUserRepository userRepository, ITokenService tokenService, IPasswordHasher passwordHasher) : IAuthService
+public class AuthService(IUserRepository userRepository, ITokenService tokenService, IPasswordHasher passwordHasher, IEmailService emailService) : IAuthService
 {
 
     private readonly IUserRepository _userRepository = userRepository;
     private readonly ITokenService _tokenService = tokenService;
     private readonly IPasswordHasher _passwordHasher = passwordHasher;
-
+    private readonly IEmailService _emailService = emailService;
     public async Task<string?> Login(string email, string password)
     {
         var user = await _userRepository.GetUserByEmail(email);
@@ -111,7 +111,7 @@ public class AuthService(IUserRepository userRepository, ITokenService tokenServ
         }
 
         // Generar un token JWT para el usuario
-        var token = _tokenService.GeneratePasswordResetToken(user);
+        var token = _tokenService.GenerateTemporaryToken(user);
 
         // Enviar el email con el enlace de recuperación
         await _emailService.SendPasswordRecoveryEmailAsync(email, token);

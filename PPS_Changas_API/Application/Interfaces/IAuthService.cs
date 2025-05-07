@@ -11,4 +11,6 @@ public interface IAuthService
 {
     Task<string?> Login(string email, string password);
     Task<bool> Register(string? creatorRole, string email, string password, string role, string userName, int phoneNumber);
+
+    Task ForgotPasswordAsync(string email);
 }

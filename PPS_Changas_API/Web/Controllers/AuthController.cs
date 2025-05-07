@@ -1,9 +1,8 @@
 ﻿using Application.Interfaces;
 using Application.Models.Requests;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity.Data;
-
 //using Microsoft.AspNetCore.Identity.Data;
+
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
