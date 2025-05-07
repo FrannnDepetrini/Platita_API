@@ -14,7 +14,6 @@ namespace Application.Models.Responses
         public string City {get; set;}
         public DateTime? DateTime { get; set; }
         public string Description{get; set;}
-        public CategoryEnum CategoryEnum {get; set;}
         public CategoryEnum Category { get; set; }
         public string Picture { get; set; }
 
@@ -32,6 +31,7 @@ namespace Application.Models.Responses
                 City = Job.City,
                 DateTime = Job.DateTime,
                 Description = Job.Description,
+                Category = Job.Category,
                 Picture = Job.Picture
             };
 

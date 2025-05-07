@@ -4,12 +4,14 @@ using Application.Interfaces;
 using Application.Models.Requests;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Web.Extensions;
+using Microsoft.AspNetCore.Authorization;
+using Application.Models.Responses;
 
 namespace Web.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-
+[Authorize]
 public class JobController : ControllerBase
 {
     private readonly IJobService _jobService;
@@ -48,7 +50,7 @@ public class JobController : ControllerBase
     }
 
     [HttpPut("update/{id}")]
-    public async Task<ActionResult> Update([FromBody] JobUpdateRequest request, [FromRoute] int id)
+    public async Task<ActionResult<JobDTO>> Update([FromBody] JobUpdateRequest request, [FromRoute] int id)
     {
         try
         {
@@ -62,12 +64,12 @@ public class JobController : ControllerBase
     }
 
     [HttpPost("create")]
-    public async Task<ActionResult> Create([FromBody]JobRequest request)
+    public async Task<ActionResult<JobDTO>> Create([FromBody]JobRequest request)
     {
         try
         {
-            await _jobService.Create(request, User.GetUserIntId());
-            return Ok();
+            var job = await _jobService.Create(request, User.GetUserIntId());
+            return Ok(job);
         }
         catch (System.Exception)
         {
