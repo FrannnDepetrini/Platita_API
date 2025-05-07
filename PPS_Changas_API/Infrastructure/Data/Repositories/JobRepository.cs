@@ -1,5 +1,7 @@
-﻿using Domain.Entities;
+﻿using Application.Models.Responses;
+using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,14 @@ namespace Infrastructure.Data.Repositories
         public JobRepository(ApplicationContext context) : base(context) 
         { 
             _context = context;
+        }
+
+        public override async Task<Job?> GetById(int id)
+        {
+            return await _context.Jobs
+                .Include(j => j.Client)
+                .Include(j => j.Postulations)
+                .FirstOrDefaultAsync(j => j.Id == id);
         }
     }
 }

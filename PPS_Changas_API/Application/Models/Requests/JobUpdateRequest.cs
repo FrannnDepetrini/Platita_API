@@ -14,7 +14,7 @@ namespace Application.Models.Requests
         //public float AveragePrice { get; set; }
         public DateTime DateTime { get; set; } = DateTime.Today;
 
-        public CategoryEnum Category {get; set;}
+        public string Category {get; set;}
 
         public string State { get; set; }
         public string City { get; set; }
