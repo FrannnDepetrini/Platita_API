@@ -87,6 +87,7 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IUserService, UserService> ();
 #endregion
 //Envio de mail
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
