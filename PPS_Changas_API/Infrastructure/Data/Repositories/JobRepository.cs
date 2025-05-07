@@ -26,5 +26,14 @@ namespace Infrastructure.Data.Repositories
                 .Include(j => j.Postulations)
                 .FirstOrDefaultAsync(j => j.Id == id);
         }
+
+        public async Task<List<Job>> GetJobsByLocationAsync(string state, string city)
+        {
+            return await _context.Jobs
+            .Include(j => j.Client)
+            .Include(j => j.Postulations)
+            .Where(j => j.State == state && j.City == city)
+            .ToListAsync();
+        }
     }
 }
