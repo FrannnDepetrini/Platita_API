@@ -98,6 +98,24 @@ public class AuthService(IUserRepository userRepository, ITokenService tokenServ
             _ => throw new ArgumentException("Rol inválido")
         };
     }
+
+    // Método para la recuperación de contraseña
+    public async Task ForgotPasswordAsync(string email)
+    {
+        // Verificar si el usuario existe
+        var user = await _userRepository.GetUserByEmail(email);
+        if (user == null)
+        {
+            // No le decimos al cliente si el usuario no existe por razones de seguridad.
+            return;
+        }
+
+        // Generar un token JWT para el usuario
+        var token = _tokenService.GeneratePasswordResetToken(user);
+
+        // Enviar el email con el enlace de recuperación
+        await _emailService.SendPasswordRecoveryEmailAsync(email, token);
+    }
 }
 
 
