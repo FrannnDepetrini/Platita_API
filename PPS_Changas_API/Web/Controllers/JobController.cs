@@ -86,6 +86,13 @@ public class JobController : ControllerBase
         var jobs = await _jobService.GetJobsByClientLocationAsync(userId);
         return Ok(jobs);
     }
+
+    [HttpPost("[action]")]
+    public async Task<ActionResult<List<JobDTO>>> GetJobForSearch(string state, string city)
+    {
+        var jobs = await _jobService.GetJobsBySearchLocationAsync(state, city);
+        return Ok(jobs);
+    }
 }
 
 
