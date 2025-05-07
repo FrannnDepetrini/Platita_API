@@ -1,14 +1,16 @@
 namespace Application.Interfaces;
 
-    public interface IUser
+    public interface IUserService
     {
-        Task ChangePassword(string email,
+        Task ChangePasswordAsync(int userId,
                             string password,
                             string newPassword
+                            
                             );
-        Task UpdateUser(string ? email,
-                        string ? username,
-                        int ? phoneNumber
+        Task UpdateUser(string? email,
+                        string? username,
+                        int? phoneNumber,
+                        int userId
                         );
 
         Task ResetPassword (string token,
