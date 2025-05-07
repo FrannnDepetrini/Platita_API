@@ -2,6 +2,7 @@
 using Application.Models.Requests;
 using Microsoft.AspNetCore.Http;
 //using Microsoft.AspNetCore.Identity.Data;
+
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -29,6 +30,13 @@ namespace Web.Controllers
             }
 
             return Ok(token);
+        }
+
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
+        {
+            await _authService.ForgotPasswordAsync(request.Email);
+            return Ok("Si el correo está registrado, se envió un enlace para restablecer la contraseña.");
         }
 
         //[HttpPost("[action]")]

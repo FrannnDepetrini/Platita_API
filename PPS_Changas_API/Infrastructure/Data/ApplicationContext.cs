@@ -91,41 +91,52 @@ namespace Infrastructure.Data
             // Despues hay que ver bien si en las entidades SysAdmin y Moderator hace falta que tenga una lista de Users
             //modelBuilder.Entity<SysAdmin>().Ignore(s => s.Users);
             //modelBuilder.Entity<Moderator>().Ignore(s => s.Users);
+            modelBuilder.Entity<Client>().HasData(new Client
+            {
+                Id = 4,
+                State = "Santa Fe",
+                City = "Rosario",
+                Email = "marmax0504@gmail.com",
+                UserName = "Maximo",
+                Password = "1234",
+                PhoneNumber = 341,
+                
+            }
+                );
+        //modelBuilder.Entity<Job>().HasData(new Job
+        //{
+        //    Id = 1,
+        //    Title = "Busco electricista",
+        //    EmployerName = "Juan",
+        //    Available = true,
+        //    Location = "Rosario",
+        //    Description = "busco electricista para que me cambie una lamparita",
+        //    Category = CategoryEnum.Electricity,
+        //    DateTime = DateTime.Now
+        //}, new Job
+        //{
+        //    Id = 2,
+        //    Title = "Busco plomero",
+        //    EmployerName = "Maria",
+        //    Available = true,
+        //    Location = "Rosario",
+        //    Description = "busco plomero para arreglar mi bano",
+        //    Category = CategoryEnum.Plumbing,
+        //    DateTime = DateTime.Now
+        //}, new Job
+        //{
+        //    Id = 3,
+        //    Title = "Busco Jardinero",
+        //    EmployerName = "Marta",
+        //    Available = true,
+        //    Location = "Buenos Aires",
+        //    Description = "necesito cortar el pasto",
+        //    Category = CategoryEnum.Gardening,
+        //    DateTime = DateTime.Now
+        //}
 
-            //modelBuilder.Entity<Job>().HasData(new Job
-            //{
-            //    Id = 1,
-            //    Title = "Busco electricista",
-            //    EmployerName = "Juan",
-            //    Available = true,
-            //    Location = "Rosario",
-            //    Description = "busco electricista para que me cambie una lamparita",
-            //    Category = CategoryEnum.Electricity,
-            //    DateTime = DateTime.Now
-            //}, new Job
-            //{
-            //    Id = 2,
-            //    Title = "Busco plomero",
-            //    EmployerName = "Maria",
-            //    Available = true,
-            //    Location = "Rosario",
-            //    Description = "busco plomero para arreglar mi bano",
-            //    Category = CategoryEnum.Plumbing,
-            //    DateTime = DateTime.Now
-            //}, new Job
-            //{
-            //    Id = 3,
-            //    Title = "Busco Jardinero",
-            //    EmployerName = "Marta",
-            //    Available = true,
-            //    Location = "Buenos Aires",
-            //    Description = "necesito cortar el pasto",
-            //    Category = CategoryEnum.Gardening,
-            //    DateTime = DateTime.Now
-            //}
-
-            //);
-        }
+        //);
+    }
 
     }
 }

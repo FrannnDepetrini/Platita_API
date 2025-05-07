@@ -1,6 +1,7 @@
 using Application.Interfaces;
 using Application.Services;
 using Domain.Interfaces;
+using Infrastructure.Configuration;
 using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
 using Infrastructure.Services;
@@ -85,7 +86,10 @@ builder.Services.AddScoped<IJobService, JobService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 #endregion
+//Envio de mail
+builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
 
 #region Repositories
 builder.Services.AddScoped<IJobRepository, JobRepository>();

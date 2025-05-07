@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace Application.Services;
 
-public class AuthService(IUserRepository userRepository, ITokenService tokenService, IPasswordHasher passwordHasher) : IAuthService
+public class AuthService(IUserRepository userRepository, ITokenService tokenService, IPasswordHasher passwordHasher, IEmailService emailService) : IAuthService
 {
 
     private readonly IUserRepository _userRepository = userRepository;
     private readonly ITokenService _tokenService = tokenService;
     private readonly IPasswordHasher _passwordHasher = passwordHasher;
-
+    private readonly IEmailService _emailService = emailService;
     public async Task<string?> Login(string email, string password)
     {
         var user = await _userRepository.GetUserByEmail(email);
@@ -97,6 +97,24 @@ public class AuthService(IUserRepository userRepository, ITokenService tokenServ
             },
             _ => throw new ArgumentException("Rol inválido")
         };
+    }
+
+    // Método para la recuperación de contraseña
+    public async Task ForgotPasswordAsync(string email)
+    {
+        // Verificar si el usuario existe
+        var user = await _userRepository.GetUserByEmail(email);
+        if (user == null)
+        {
+            // No le decimos al cliente si el usuario no existe por razones de seguridad.
+            return;
+        }
+
+        // Generar un token JWT para el usuario
+        var token = _tokenService.GenerateTemporaryToken(user);
+
+        // Enviar el email con el enlace de recuperación
+        await _emailService.SendPasswordRecoveryEmailAsync(email, token);
     }
 }
 
