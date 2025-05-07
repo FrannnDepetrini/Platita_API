@@ -13,7 +13,7 @@ namespace Application.Interfaces;
                         int userId
                         );
 
-        Task ResetPassword (string token,
+        Task ResetForgottenPassword (string token,
                             string newPassword);
         Task SendResetPasswordEmail(string email);
     }
