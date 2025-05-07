@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Web.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Application.Models.Responses;
+using Application.Services;
+using Domain.Entities;
 
 namespace Web.Controllers;
 
@@ -76,6 +78,15 @@ public class JobController : ControllerBase
             return BadRequest();
         }
     }
+
+    [HttpGet("by-location")]
+    public async Task<ActionResult<List<JobDTO>>> GetJobsByLocation()
+    {
+        var userId = User.GetUserIntId();
+        var jobs = await _jobService.GetJobsByClientLocationAsync(userId);
+        return Ok(jobs);
+    }
 }
+
 
 

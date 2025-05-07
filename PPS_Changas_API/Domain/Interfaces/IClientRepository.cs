@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
-    public interface IJobRepository : IBaseRepository<Job>
+    public interface IClientRepository : IBaseRepository<Client>
     {
-        Task<List<Job>> GetJobsByLocationAsync(string state, string city);
+       
     }
 }

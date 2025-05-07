@@ -14,11 +14,12 @@ namespace Application.Services
     {
         private readonly IJobRepository _jobRepository;
         private readonly IUserRepository _userRepository;
-
-        public JobService(IJobRepository jobRepository, IUserRepository userRepository)
+        private readonly IClientRepository _clientRepository;
+        public JobService(IJobRepository jobRepository, IUserRepository userRepository, IClientRepository clientRepository)
         {
             _jobRepository = jobRepository;
             _userRepository = userRepository;
+            _clientRepository = clientRepository;
         }
 
 
@@ -69,12 +70,12 @@ namespace Application.Services
                 throw new Exception("Job not found");
             }
 
-            if(job.Client.Id != userId)
+            if (job.Client.Id != userId)
             {
                 throw new UnauthorizedAccessException("You dont have permission");
             }
 
-            if(job.Status == JobStatusEnum.Taken)
+            if (job.Status == JobStatusEnum.Taken)
             {
                 throw new Exception("You cant modify a job that has been taken");
             }
@@ -92,8 +93,8 @@ namespace Application.Services
             job.Description = request.Description;
             job.Category = parsedCategory;
             job.Picture = request.Picture;
-           
-            
+
+
             var updatedJob = await _jobRepository.Update(job);
 
             var jobDTO = JobDTO.Create(updatedJob);
@@ -131,5 +132,36 @@ namespace Application.Services
             return jobDTO;
         }
 
+        //public async Task GetJobsByClientLocationAsync(int userId)
+        //{
+        //    var existingUser = await _clientRepository.GetById(userId);
+        //    if (existingUser == null)
+        //    {
+        //        throw new Exception("Usuario no encontrado.");
+        //    }
+
+        //    var jobs = await _jobRepository.GetJobsByLocationAsync(existingUser.State, existingUser.City);
+
+        //}
+        public async Task<List<JobDTO>> GetJobsByClientLocationAsync(int userId)
+        {
+            var existingUser = await _clientRepository.GetById(userId);
+            if (existingUser == null)
+            {
+                throw new Exception("Usuario no encontrado.");
+            }
+            var jobs = await _jobRepository.GetJobsByLocationAsync(existingUser.State, existingUser.City);
+
+            var jobDtos = jobs.Select(j => new JobDTO
+            {
+
+                Title = j.Title,
+                Description = j.Description,
+                State = j.State,
+                City = j.City
+            }).ToList();
+            return jobDtos;
+
+        }
     }
 }
