@@ -8,24 +8,36 @@ using System.Threading.Tasks;
 
 namespace Application.Services
 {
-    public class UserService(IUserRepository userRepository, IPasswordHasher passwordHasher) : IUserService
+    public class UserService(IUserRepository userRepository, IPasswordHasher passwordHasher, ITokenService tokenService) : IUserService
     {
 
         private readonly IUserRepository _userRepository = userRepository;
         private readonly IPasswordHasher _passwordHasher = passwordHasher;
+        private readonly ITokenService _tokenService = tokenService;
 
 
-        public Task ResetPassword(string token, string newPassword)
+        public async Task ResetForgottenPassword(string token, string newPassword)
+        {
+            var email = _tokenService.GetEmailFromToken(token);
+
+            var user = await _userRepository.GetUserByEmail(email);
+
+            if (user is null)
+            {
+                throw new Exception("User not found");
+            }
+
+            user.Password = _passwordHasher.HashPassword(newPassword);
+
+            await _userRepository.Update(user);
+        }
+
+        public async Task SendResetPasswordEmail(string email)
         {
             throw new NotImplementedException();
         }
 
-        public Task SendResetPasswordEmail(string email)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateUser(string? email, string? username, int? phoneNumber, int userId)
+        public async Task UpdateUser(string? email, string? username, int? phoneNumber, int userId)
         {
             throw new NotImplementedException();
         }

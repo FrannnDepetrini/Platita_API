@@ -12,4 +12,6 @@ public interface ITokenService
     string GenerateToken(User user);
 
     string GenerateTemporaryToken(User user);
+
+    string GetEmailFromToken(string token);
 }
