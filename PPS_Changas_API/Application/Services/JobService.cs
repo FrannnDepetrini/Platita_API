@@ -1,4 +1,3 @@
-using Application.Extensions;
 using Application.Interfaces;
 using Application.Models;
 using Application.Models.Requests;
@@ -80,12 +79,18 @@ namespace Application.Services
                 throw new Exception("You cant modify a job that has been taken");
             }
 
+            if (!Enum.TryParse<CategoryEnum>(request.Category, ignoreCase: true, out var parsedCategory) ||
+          !Enum.IsDefined(typeof(CategoryEnum), parsedCategory))
+            {
+                throw new ArgumentException($"Invalid category value: {request.Category}");
+            }
+
             job.Title = request.Title;
             job.DateTime = request.DateTime;
             job.State = request.State;
             job.City = request.City;
             job.Description = request.Description;
-            job.Category = request.Category;
+            job.Category = parsedCategory;
             job.Picture = request.Picture;
            
             
@@ -99,12 +104,11 @@ namespace Application.Services
 
         public async Task<JobDTO> Create(JobRequest request, int userId)
         {
-            //var clientId = user.GetUserIntId();
-
-            //if (client is null)
-            //{
-            //    throw new Exception("No user with that id");
-            //}
+            if (!Enum.TryParse<CategoryEnum>(request.Category, ignoreCase: true, out var parsedCategory) ||
+            !Enum.IsDefined(typeof(CategoryEnum), parsedCategory))
+            {
+                throw new ArgumentException($"Invalid category value: {request.Category}");
+            }
 
             var newJob = new Job()
             {
@@ -112,7 +116,7 @@ namespace Application.Services
                 Title = request.Title,
                 Status = JobStatusEnum.Available,
                 Description = request.Description,
-                Category = request.Category,
+                Category = parsedCategory,
                 DateTime = request.DateTime,
                 Picture = request.Picture,
                 State = request.State,
@@ -120,7 +124,9 @@ namespace Application.Services
             };
             await _jobRepository.Create(newJob);
 
-            var jobDTO = JobDTO.Create(newJob);
+            var job = await _jobRepository.GetById(newJob.Id);
+
+            var jobDTO = JobDTO.Create(job);
 
             return jobDTO;
         }

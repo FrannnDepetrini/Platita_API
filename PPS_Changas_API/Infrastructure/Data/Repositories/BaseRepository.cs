@@ -24,7 +24,7 @@ namespace Infrastructure.Data.Repositories
             return entity;
         }
 
-        public async Task<T>  GetById(int id)
+        public virtual async Task<T>  GetById(int id)
         {
 
             var entity = await _context.Set<T>().FindAsync(id);
