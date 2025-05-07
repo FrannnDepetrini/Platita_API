@@ -1,4 +1,3 @@
-using Application.Extensions;
 using Application.Interfaces;
 using Application.Models;
 using Application.Models.Requests;
