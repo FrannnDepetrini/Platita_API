@@ -45,7 +45,7 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasIndex("SupportId");
 
-                    b.ToTable("Complaints");
+                    b.ToTable("Complaints", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Job", b =>
@@ -93,7 +93,7 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("Jobs");
+                    b.ToTable("Jobs", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Payment", b =>
@@ -111,7 +111,7 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Payments");
+                    b.ToTable("Payments", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Postulation", b =>
@@ -138,7 +138,7 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasIndex("JobId");
 
-                    b.ToTable("Postulations");
+                    b.ToTable("Postulations", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Rating", b =>
@@ -172,7 +172,7 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasIndex("JobId");
 
-                    b.ToTable("Ratings");
+                    b.ToTable("Ratings", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -189,8 +189,8 @@ namespace Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<float>("PhoneNumber")
-                        .HasColumnType("REAL");
+                    b.Property<int>("PhoneNumber")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Role")
                         .IsRequired()
@@ -203,7 +203,7 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
 
                     b.HasDiscriminator<string>("Role").HasValue("User");
 
@@ -232,29 +232,9 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 4,
                             Email = "marmax0504@gmail.com",
-                            Password = "$2a$11$tIV6DXe.ShRbz9.ug0euWOk9rtSnkry4jsIo6HXAZWU/.oiQDXaFC",
-                            PhoneNumber = 3.4965025E+09f,
+                            Password = "1234",
+                            PhoneNumber = 341,
                             UserName = "Maximo",
-                            City = "Rosario",
-                            State = "Santa Fe"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Email = "joako.tanlon@gmail.com",
-                            Password = "$2a$11$nXNyRCvy/Hn7h6KUK8veEONsqe.uzBGTrAG/J1yKfBPTSm3Bl1oZy",
-                            PhoneNumber = 3.412123E+09f,
-                            UserName = "Joaquin",
-                            City = "La Plata",
-                            State = "Buenos Aires"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Email = "marucomass@gmail.com",
-                            Password = "$2a$11$DyBYyv9cASZBFoz0cbU6IuUPHTBYKwtS6oHIf4rAWpFk9O2kQpykC",
-                            PhoneNumber = 3.4676372E+09f,
-                            UserName = "Mario",
                             City = "Rosario",
                             State = "Santa Fe"
                         });
