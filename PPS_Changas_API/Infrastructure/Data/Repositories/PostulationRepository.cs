@@ -16,11 +16,6 @@ namespace Infrastructure.Data.Repositories
             _context = context;
         }
 
-        public Task AddAsync(Postulation postulation)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<Postulation?> GetByIdAsync(int id)
         {
             throw new NotImplementedException();
@@ -36,14 +31,5 @@ namespace Infrastructure.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public Task RemoveAsync(Postulation postulation)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateAsync(Postulation postulation)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

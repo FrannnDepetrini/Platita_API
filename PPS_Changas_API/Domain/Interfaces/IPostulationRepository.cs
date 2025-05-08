@@ -12,8 +12,6 @@ namespace Domain.Interfaces
         Task<Postulation?> GetByIdAsync(int id);
         Task<IEnumerable<Postulation>> GetByUserIdAsync(int userId);
         Task<IEnumerable<Postulation>> GetByJobIdAsync(int jobId);
-        Task AddAsync(Postulation postulation);
-        Task RemoveAsync(Postulation postulation);
-        Task UpdateAsync(Postulation postulation);
+        
     }
 }
