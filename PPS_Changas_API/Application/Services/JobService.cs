@@ -132,17 +132,6 @@ namespace Application.Services
             return jobDTO;
         }
 
-        //public async Task GetJobsByClientLocationAsync(int userId)
-        //{
-        //    var existingUser = await _clientRepository.GetById(userId);
-        //    if (existingUser == null)
-        //    {
-        //        throw new Exception("Usuario no encontrado.");
-        //    }
-
-        //    var jobs = await _jobRepository.GetJobsByLocationAsync(existingUser.State, existingUser.City);
-
-        //}
         public async Task<List<JobDTO>> GetJobsByClientLocationAsync(int userId)
         {
             var existingUser = await _clientRepository.GetById(userId);
@@ -164,6 +153,24 @@ namespace Application.Services
 
         }
 
+        public async Task<List<JobDTO>> GetJobsByClientAsync(int userId)
+        {
+            var client = await _clientRepository.GetById(userId);
+            if (client == null)
+            {
+                throw new Exception("Cliente no encontrado");
+            }
+            var jobs = await _jobRepository.GetByClientId(userId);
+            var jobDtos = jobs.Select(j => new JobDTO
+            {
+
+                Title = j.Title,
+                Description = j.Description,
+                State = j.State,
+                City = j.City
+            }).ToList();
+            return jobDtos;
+        }
         public async Task<List<JobDTO>> GetJobsBySearchLocationAsync(string state, string city)
         {
             var jobs = await _jobRepository.GetJobsByLocationAsync(state, city);
@@ -178,6 +185,19 @@ namespace Application.Services
             }).ToList();
 
             return jobDtos;
+        }
+        
+        public async Task<IEnumerable<JobDTO>> GetJobsByCategory(JobFilteredByCategoryRequest request)
+        {
+            var jobs = await _jobRepository.GetJobsByCategory(request.Category);
+
+            return jobs.Select(job => new JobDTO
+            {
+                Title = job.Title,
+                Description = job.Description,
+                Category = job.Category,
+                // agregue solo 3 props para el test
+            });
         }
     }
 }

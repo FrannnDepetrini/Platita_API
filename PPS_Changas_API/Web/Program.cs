@@ -48,7 +48,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     }
 );
 
-// Configuración de Swagger y JWT
+// Configuraciï¿½n de Swagger y JWT
 builder.Services.AddSwaggerGen(setupAction =>
 {
     setupAction.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
