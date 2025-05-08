@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authorization;
 using Application.Models.Responses;
 using Application.Models;
 using Domain.Constants;
+using Application.Services;
+using Domain.Entities;
 
 namespace Web.Controllers;
 
@@ -17,7 +19,7 @@ namespace Web.Controllers;
 public class JobController : ControllerBase
 {
     private readonly IJobService _jobService;
-    
+
     public JobController(IJobService jobService)
     {
         _jobService = jobService;
@@ -66,7 +68,7 @@ public class JobController : ControllerBase
     }
 
     [HttpPost("create")]
-    public async Task<ActionResult<JobDTO>> Create([FromBody]JobRequest request)
+    public async Task<ActionResult<JobDTO>> Create([FromBody] JobRequest request)
     {
         try
         {
@@ -79,14 +81,41 @@ public class JobController : ControllerBase
         }
     }
 
+    [HttpGet("by-location")]
+    public async Task<ActionResult<List<JobDTO>>> GetJobsByLocation()
+    {
+        var userId = User.GetUserIntId();
+        var jobs = await _jobService.GetJobsByClientLocationAsync(userId);
+        return Ok(jobs);
+    }
+
+    [HttpPost("[action]")]
+    public async Task<ActionResult<List<JobDTO>>> GetJobForSearch(string state, string city)
+    {
+        var jobs = await _jobService.GetJobsBySearchLocationAsync(state, city);
+        return Ok(jobs);
+    }
+
+    [HttpGet("my-jobs")]
+    public async Task<ActionResult<List<JobDTO>>> GetMyJobs()
+    {
+        var userId = User.GetUserIntId();
+        var jobs = await _jobService.GetJobsByClientAsync(userId);
+        if (jobs == null || !jobs.Any())
+        {
+            return NotFound("No se encontraron trabajos para este cliente.");
+        }
+        return Ok(jobs);
+    }
+
     [HttpPost("FilteredForCategory")]
-    public async Task<ActionResult<IEnumerable<JobDTO>>> GetJobByCategory([FromBody]JobFilteredByCategoryRequest request)
+    public async Task<ActionResult<IEnumerable<JobDTO>>> GetJobByCategory([FromBody] JobFilteredByCategoryRequest request)
     {
         try
         {
             var jobs = await _jobService.GetJobsByCategory(request);
             return Ok(jobs);
-            
+
         }
         catch (System.Exception)
         {
@@ -94,5 +123,7 @@ public class JobController : ControllerBase
         }
     }
 }
+
+
 
 
