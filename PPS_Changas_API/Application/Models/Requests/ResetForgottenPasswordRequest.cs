@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Application.Models.Requests;
 
-public  class ResetPasswordRequest
+public  class ResetForgottenPasswordRequest
 {
-    [Required]
-    public string Token { get; set; }
 
-    [Required]
-    public string NewPassword { get; set; }
+    public required string Token { get; set; }
+
+    public required string NewPassword { get; set; }
+ 
 }

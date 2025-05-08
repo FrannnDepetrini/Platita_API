@@ -7,13 +7,22 @@ using System.Threading.Tasks;
 
 namespace Application.Models.Requests
 {
-    public class LoginRequest
+    public class RegisterForSysAdminRequest
     {
-        [Required]
+
         [EmailAddress]
         public required string Email { get; set; }
 
-        [Required]
+
         public required string Password { get; set; }
+
+
+        public required string Role { get; set; }
+
+      
+        public required string UserName { get; set; }
+
+     
+        public required int PhoneNumber { get; set; }
     }
 }
