@@ -20,22 +20,6 @@ namespace Web.Controllers
         }
 
 
-        [HttpPost("change-password")]
-        public async Task<IActionResult>ChangePassword(string oldPassword, string newPassword)
-        {
-            var userId = User.GetUserIntId();
-
-            await _userService.ChangePasswordAsync(userId, oldPassword, newPassword);
-
-            return Ok();
-        }
-
-        [AllowAnonymous]
-        [HttpPut("reset-password")]
-        public async Task<IActionResult> ResetForgottenPassword(ResetPasswordRequest request)
-        {
-            await _userService.ResetForgottenPassword(request.Token, request.NewPassword);
-            return Ok();
-        }
+       
     }
 }
