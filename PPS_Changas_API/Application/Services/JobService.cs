@@ -164,6 +164,24 @@ namespace Application.Services
 
         }
 
+        public async Task<List<JobDTO>> GetJobsByClientAsync(int userId)
+        {
+            var client = await _clientRepository.GetById(userId);
+            if (client == null)
+            {
+                throw new Exception("Cliente no encontrado");
+            }
+            var jobs = await _jobRepository.GetByClientId(userId);
+            var jobDtos = jobs.Select(j => new JobDTO
+            {
+
+                Title = j.Title,
+                Description = j.Description,
+                State = j.State,
+                City = j.City
+            }).ToList();
+            return jobDtos;
+        }
         public async Task<List<JobDTO>> GetJobsBySearchLocationAsync(string state, string city)
         {
             var jobs = await _jobRepository.GetJobsByLocationAsync(state, city);

@@ -23,6 +23,8 @@ namespace Application.Interfaces
     Task<List<JobDTO>> GetJobsByClientLocationAsync(int userId);
         //Task JobByLocationRequest(string city, string state);
     Task<List<JobDTO>> GetJobsBySearchLocationAsync(string state, string city);
+    
+    Task<List<JobDTO>> GetJobsByClientAsync(int userId);
     }
 
 }

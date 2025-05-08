@@ -93,6 +93,18 @@ public class JobController : ControllerBase
         var jobs = await _jobService.GetJobsBySearchLocationAsync(state, city);
         return Ok(jobs);
     }
+
+    [HttpGet("my-jobs")]
+    public async Task<ActionResult<List<JobDTO>>> GetMyJobs()
+    {
+        var userId = User.GetUserIntId();
+        var jobs = await _jobService.GetJobsByClientAsync(userId);
+        if (jobs == null || !jobs.Any())
+        {
+            return NotFound("No se encontraron trabajos para este cliente.");
+        }
+        return Ok(jobs);
+    }
 }
 
 
