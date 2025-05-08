@@ -6,14 +6,18 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Web.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Application.Models.Responses;
+
+using Application.Models;
+using Domain.Constants;
 using Application.Services;
 using Domain.Entities;
+
 
 namespace Web.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
+//[Authorize]
 public class JobController : ControllerBase
 {
     private readonly IJobService _jobService;
@@ -77,7 +81,20 @@ public class JobController : ControllerBase
         {
             return BadRequest();
         }
-    }
+
+    [HttpPost("FilteredForCategory")]
+    public async Task<ActionResult<IEnumerable<JobDTO>>> GetJobByCategory([FromBody]JobFilteredByCategoryRequest request)
+    {
+        try
+        {
+            var jobs = await _jobService.GetJobsByCategory(request);
+            return Ok(jobs);
+            
+        }
+        catch (System.Exception)
+        {
+            return NotFound();
+        }
 
     [HttpGet("by-location")]
     public async Task<ActionResult<List<JobDTO>>> GetJobsByLocation()
@@ -92,6 +109,7 @@ public class JobController : ControllerBase
     {
         var jobs = await _jobService.GetJobsBySearchLocationAsync(state, city);
         return Ok(jobs);
+
     }
 }
 

@@ -132,6 +132,22 @@ namespace Application.Services
             return jobDTO;
         }
 
+
+        public async Task<IEnumerable<JobDTO>> GetJobsByCategory(JobFilteredByCategoryRequest request)
+        {
+            var jobs = await _jobRepository.GetJobsByCategory(request.Category);
+
+            return jobs.Select(job => new JobDTO
+            {
+                Title = job.Title,
+                Description = job.Description,
+                Category = job.Category,
+                // agregue solo 3 props para el test
+            });
+        }
+
+
+
         //public async Task GetJobsByClientLocationAsync(int userId)
         //{
         //    var existingUser = await _clientRepository.GetById(userId);
@@ -179,5 +195,6 @@ namespace Application.Services
 
             return jobDtos;
         }
+
     }
 }

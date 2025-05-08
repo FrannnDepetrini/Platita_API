@@ -1,7 +1,9 @@
 ﻿using Application.Models.Responses;
+using Domain.Constants;
 using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +16,8 @@ namespace Infrastructure.Data.Repositories
     {
         private readonly ApplicationContext _context;
 
-        public JobRepository(ApplicationContext context) : base(context) 
-        { 
+        public JobRepository(ApplicationContext context) : base(context)
+        {
             _context = context;
         }
 
@@ -27,6 +29,13 @@ namespace Infrastructure.Data.Repositories
                 .FirstOrDefaultAsync(j => j.Id == id);
         }
 
+
+        public async Task<IEnumerable<Job>> GetJobsByCategory(CategoryEnum category)
+        {
+            return await _context.Set<Job>()
+                                .Where(j => j.Category == category)
+                                .ToListAsync();
+
         public async Task<List<Job>> GetJobsByLocationAsync(string state, string city)
         {
             return await _context.Jobs
@@ -34,6 +43,7 @@ namespace Infrastructure.Data.Repositories
             .Include(j => j.Postulations)
             .Where(j => j.State == state && j.City == city)
             .ToListAsync();
+
         }
     }
 }

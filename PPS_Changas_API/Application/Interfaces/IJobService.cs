@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Application.Models;
 using Application.Models.Requests;
 using Application.Models.Responses;
+using Domain.Constants;
 using Domain.Entities;
 
 namespace Application.Interfaces
@@ -19,10 +20,16 @@ namespace Application.Interfaces
     Task Delete(int id, int userId);
     Task DeleteLogic(int id, int userId);
 
+    Task<IEnumerable<JobDTO>> GetJobsByCategory(JobFilteredByCategoryRequest request);
+
+}
+
+
     //Task GetJobsByClientLocationAsync(int userId);
     Task<List<JobDTO>> GetJobsByClientLocationAsync(int userId);
         //Task JobByLocationRequest(string city, string state);
     Task<List<JobDTO>> GetJobsBySearchLocationAsync(string state, string city);
     }
+
 
 }
