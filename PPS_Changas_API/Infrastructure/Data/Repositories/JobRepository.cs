@@ -29,11 +29,21 @@ namespace Infrastructure.Data.Repositories
                 .FirstOrDefaultAsync(j => j.Id == id);
         }
 
+
         public async Task<IEnumerable<Job>> GetJobsByCategory(CategoryEnum category)
         {
             return await _context.Set<Job>()
                                 .Where(j => j.Category == category)
                                 .ToListAsync();
+
+        public async Task<List<Job>> GetJobsByLocationAsync(string state, string city)
+        {
+            return await _context.Jobs
+            .Include(j => j.Client)
+            .Include(j => j.Postulations)
+            .Where(j => j.State == state && j.City == city)
+            .ToListAsync();
+
         }
     }
 }

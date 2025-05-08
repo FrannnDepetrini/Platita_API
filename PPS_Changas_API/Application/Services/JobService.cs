@@ -14,11 +14,12 @@ namespace Application.Services
     {
         private readonly IJobRepository _jobRepository;
         private readonly IUserRepository _userRepository;
-
-        public JobService(IJobRepository jobRepository, IUserRepository userRepository)
+        private readonly IClientRepository _clientRepository;
+        public JobService(IJobRepository jobRepository, IUserRepository userRepository, IClientRepository clientRepository)
         {
             _jobRepository = jobRepository;
             _userRepository = userRepository;
+            _clientRepository = clientRepository;
         }
 
 
@@ -131,6 +132,7 @@ namespace Application.Services
             return jobDTO;
         }
 
+
         public async Task<IEnumerable<JobDTO>> GetJobsByCategory(JobFilteredByCategoryRequest request)
         {
             var jobs = await _jobRepository.GetJobsByCategory(request.Category);
@@ -144,6 +146,55 @@ namespace Application.Services
             });
         }
 
+
+
+        //public async Task GetJobsByClientLocationAsync(int userId)
+        //{
+        //    var existingUser = await _clientRepository.GetById(userId);
+        //    if (existingUser == null)
+        //    {
+        //        throw new Exception("Usuario no encontrado.");
+        //    }
+
+        //    var jobs = await _jobRepository.GetJobsByLocationAsync(existingUser.State, existingUser.City);
+
+        //}
+        public async Task<List<JobDTO>> GetJobsByClientLocationAsync(int userId)
+        {
+            var existingUser = await _clientRepository.GetById(userId);
+            if (existingUser == null)
+            {
+                throw new Exception("Usuario no encontrado.");
+            }
+            var jobs = await _jobRepository.GetJobsByLocationAsync(existingUser.State, existingUser.City);
+
+            var jobDtos = jobs.Select(j => new JobDTO
+            {
+
+                Title = j.Title,
+                Description = j.Description,
+                State = j.State,
+                City = j.City
+            }).ToList();
+            return jobDtos;
+
+        }
+
+        public async Task<List<JobDTO>> GetJobsBySearchLocationAsync(string state, string city)
+        {
+            var jobs = await _jobRepository.GetJobsByLocationAsync(state, city);
+
+            var jobDtos = jobs.Select(j => new JobDTO
+            {
+
+                Title = j.Title,
+                Description = j.Description,
+                State = j.State,
+                City = j.City
+            }).ToList();
+
+            return jobDtos;
+        }
 
     }
 }

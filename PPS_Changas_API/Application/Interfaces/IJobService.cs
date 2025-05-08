@@ -19,8 +19,17 @@ namespace Application.Interfaces
     Task<JobDTO> Update(JobUpdateRequest request, int id, int userId);
     Task Delete(int id, int userId);
     Task DeleteLogic(int id, int userId);
+
     Task<IEnumerable<JobDTO>> GetJobsByCategory(JobFilteredByCategoryRequest request);
 
 }
+
+
+    //Task GetJobsByClientLocationAsync(int userId);
+    Task<List<JobDTO>> GetJobsByClientLocationAsync(int userId);
+        //Task JobByLocationRequest(string city, string state);
+    Task<List<JobDTO>> GetJobsBySearchLocationAsync(string state, string city);
+    }
+
 
 }

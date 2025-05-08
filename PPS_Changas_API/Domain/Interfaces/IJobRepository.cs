@@ -10,7 +10,11 @@ namespace Domain.Interfaces
 {
     public interface IJobRepository : IBaseRepository<Job>
     {
+
         Task<IEnumerable<Job>> GetJobsByCategory(CategoryEnum category);
+
+
+        Task<List<Job>> GetJobsByLocationAsync(string state, string city);
 
     }
 }

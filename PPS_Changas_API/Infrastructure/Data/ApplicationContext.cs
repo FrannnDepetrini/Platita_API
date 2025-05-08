@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Constants;
+using Infrastructure.Services;
 
 namespace Infrastructure.Data
 {
@@ -98,9 +99,27 @@ namespace Infrastructure.Data
                 City = "Rosario",
                 Email = "marmax0504@gmail.com",
                 UserName = "Maximo",
-                Password = "1234",
-                PhoneNumber = 341,
-                
+                Password = BCrypt.Net.BCrypt.HashPassword("123"),
+                PhoneNumber = 3496502453,
+
+            }, new Client
+            {
+                Id = 6,
+                State = "Buenos Aires",
+                City = "La Plata",
+                Email = "joako.tanlon@gmail.com",
+                UserName = "Joaquin",
+                Password = BCrypt.Net.BCrypt.HashPassword("321"),
+                PhoneNumber = 3412122907,
+            }, new Client
+            {
+                Id = 7,
+                State = "Santa Fe",
+                City = "Rosario",
+                Email = "marucomass@gmail.com",
+                UserName = "Mario",
+                Password = BCrypt.Net.BCrypt.HashPassword("456"),
+                PhoneNumber = 3467637190,
             }
                 );
         //modelBuilder.Entity<Job>().HasData(new Job
