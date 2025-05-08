@@ -163,5 +163,21 @@ namespace Application.Services
             return jobDtos;
 
         }
+
+        public async Task<List<JobDTO>> GetJobsBySearchLocationAsync(string state, string city)
+        {
+            var jobs = await _jobRepository.GetJobsByLocationAsync(state, city);
+
+            var jobDtos = jobs.Select(j => new JobDTO
+            {
+
+                Title = j.Title,
+                Description = j.Description,
+                State = j.State,
+                City = j.City
+            }).ToList();
+
+            return jobDtos;
+        }
     }
 }
