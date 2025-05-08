@@ -69,12 +69,12 @@ namespace Application.Services
                 throw new Exception("Job not found");
             }
 
-            if(job.Client.Id != userId)
+            if (job.Client.Id != userId)
             {
                 throw new UnauthorizedAccessException("You dont have permission");
             }
 
-            if(job.Status == JobStatusEnum.Taken)
+            if (job.Status == JobStatusEnum.Taken)
             {
                 throw new Exception("You cant modify a job that has been taken");
             }
@@ -92,8 +92,8 @@ namespace Application.Services
             job.Description = request.Description;
             job.Category = parsedCategory;
             job.Picture = request.Picture;
-           
-            
+
+
             var updatedJob = await _jobRepository.Update(job);
 
             var jobDTO = JobDTO.Create(updatedJob);
@@ -130,6 +130,20 @@ namespace Application.Services
 
             return jobDTO;
         }
+
+        public async Task<IEnumerable<JobDTO>> GetJobsByCategory(JobFilteredByCategoryRequest request)
+        {
+            var jobs = await _jobRepository.GetJobsByCategory(request.Category);
+
+            return jobs.Select(job => new JobDTO
+            {
+                Title = job.Title,
+                Description = job.Description,
+                Category = job.Category,
+                // agregue solo 3 props para el test
+            });
+        }
+
 
     }
 }

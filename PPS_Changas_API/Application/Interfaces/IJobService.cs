@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Application.Models;
 using Application.Models.Requests;
 using Application.Models.Responses;
+using Domain.Constants;
 using Domain.Entities;
 
 namespace Application.Interfaces
@@ -18,6 +19,8 @@ namespace Application.Interfaces
     Task<JobDTO> Update(JobUpdateRequest request, int id, int userId);
     Task Delete(int id, int userId);
     Task DeleteLogic(int id, int userId);
+    Task<IEnumerable<JobDTO>> GetJobsByCategory(JobFilteredByCategoryRequest request);
+
 }
 
 }

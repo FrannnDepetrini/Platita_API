@@ -42,8 +42,6 @@ namespace Application.Services
 
             user.Password = _passwordHasher.HashPassword(newPassword);
             await userRepository.Update(user);
-
-           
         }
     }
 }
