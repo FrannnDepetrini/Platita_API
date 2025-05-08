@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Web.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Application.Models.Responses;
+using Application.Models;
+using Domain.Constants;
 using Application.Services;
 using Domain.Entities;
 
@@ -13,11 +15,11 @@ namespace Web.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
+//[Authorize]
 public class JobController : ControllerBase
 {
     private readonly IJobService _jobService;
-    
+
     public JobController(IJobService jobService)
     {
         _jobService = jobService;
@@ -66,7 +68,7 @@ public class JobController : ControllerBase
     }
 
     [HttpPost("create")]
-    public async Task<ActionResult<JobDTO>> Create([FromBody]JobRequest request)
+    public async Task<ActionResult<JobDTO>> Create([FromBody] JobRequest request)
     {
         try
         {
@@ -105,7 +107,24 @@ public class JobController : ControllerBase
         }
         return Ok(jobs);
     }
+
+    [HttpPost("FilteredForCategory")]
+    public async Task<ActionResult<IEnumerable<JobDTO>>> GetJobByCategory([FromBody] JobFilteredByCategoryRequest request)
+    {
+        try
+        {
+            var jobs = await _jobService.GetJobsByCategory(request);
+            return Ok(jobs);
+
+        }
+        catch (System.Exception)
+        {
+            return NotFound();
+        }
+    }
 }
+
+
 
 
 
