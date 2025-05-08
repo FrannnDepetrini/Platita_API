@@ -5,6 +5,7 @@ namespace Application.Models.Responses
 {
     public class JobDTO
     {
+        public int Id { get; set; }
         public string UserName { get; set; } 
         public string Title {get; set;}
         public float AveragePrice { get; set; }
@@ -22,6 +23,7 @@ namespace Application.Models.Responses
         {
             return new JobDTO
             {
+                Id = Job.Id,
                 UserName = Job.Client.UserName,
                 Title = Job.Title,
                 AveragePrice = Job.AveragePrice,

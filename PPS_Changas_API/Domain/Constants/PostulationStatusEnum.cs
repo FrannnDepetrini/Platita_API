@@ -9,7 +9,6 @@ namespace Domain.Constants
     public enum PostulationStatusEnum
     {
         Success,
-        Pending,
-        Failed
+        Pending
     }
 }
