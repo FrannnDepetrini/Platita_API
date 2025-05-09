@@ -17,8 +17,8 @@ namespace Application.Services
             message.Subject = "Recuperación de Contraseña";
 
             // Crear el cuerpo del correo con el enlace para restablecer la contraseña
-            
-            string resetLink = $"https://tusitio.com/reset-password?token={token}";
+
+            string resetLink = $"http://localhost:5173/recover-password?token={token}";
             var builder = new BodyBuilder
             {
                 HtmlBody = $@"

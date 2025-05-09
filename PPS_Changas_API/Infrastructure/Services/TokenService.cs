@@ -42,6 +42,7 @@ namespace Infrastructure.Services
         {
             var claims = new[]
             {
+                new Claim(JwtRegisteredClaimNames.Name, "resetPassword"),
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email)
             };
