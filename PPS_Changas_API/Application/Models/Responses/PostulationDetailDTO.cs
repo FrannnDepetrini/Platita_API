@@ -15,7 +15,7 @@ namespace Application.Models.Responses
         public string Status { get; set; }
 
 
-        public static PostulationDetailDTO? Create(Postulation postulation)
+        internal static PostulationDetailDTO? Create(Postulation postulation)
         {
             if (postulation == null)
             {
@@ -30,5 +30,7 @@ namespace Application.Models.Responses
                 Status = postulation.Status.ToString()
             };
         }
+
+    
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Application.Models.Responses;
 using Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,32 +18,53 @@ namespace Application.Services
             throw new NotImplementedException();
         }
 
-        public Task<PostulationResponseDTO?> GetByIdAsync(int id)
+        public async Task<PostulationDetailDTO?> GetByIdForPublisherAsync(int id)
+        {
+            var postulation = await _postulationRepository.GetByIdForPublisherAsync(id);
+            if(postulation is null)
+            {
+                throw new Exception("Postulation not found");
+            }
+
+            var postulationDetailDTO = PostulationDetailDTO.Create(postulation);
+
+            return postulationDetailDTO;
+        }     
+        
+        public async Task<MyPostulationDTO?> GetByIdForApplicantAsync(int id)
+        {
+            var postulation = await _postulationRepository.GetByIdForApplicantAsync(id);
+            if(postulation is null)
+            {
+                throw new Exception("Postulation not found");
+            }
+
+            var myPostulationDTO = MyPostulationDTO.Create(postulation);
+
+            return myPostulationDTO;
+        }
+
+        public async Task<IEnumerable<PostulationResponseDTO>> GetMyPostulationsAsync(int userId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<PostulationResponseDTO>> GetMyPostulationsAsync(int userId)
+        public async Task<IEnumerable<PostulationResponseDTO>> GetPostulationsByJobIdAsync(int jobId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<PostulationResponseDTO>> GetPostulationsByJobIdAsync(int jobId)
+        public async Task PostulateAsync(int userId, int jobId, float budget)
         {
             throw new NotImplementedException();
         }
 
-        public Task PostulateAsync(int userId, int jobId, float budget)
+        public async Task RejectPostulationAsync(int postulationId)
         {
             throw new NotImplementedException();
         }
 
-        public Task RejectPostulationAsync(int postulationId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UnpostulateAsync(int userId, int jobId)
+        public async Task UnpostulateAsync(int userId, int jobId)
         {
             throw new NotImplementedException();
         }
