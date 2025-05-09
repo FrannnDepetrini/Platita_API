@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Application.Models.Responses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,8 @@ namespace Application.Interfaces
     {
         Task PostulateAsync(int userId, int jobId, float budget);
         Task UnpostulateAsync(int userId, int jobId);
-        Task<PostulationResponseDTO?> GetByIdAsync(int id);
+        Task<PostulationDetailDTO?> GetByIdForPublisherAsync(int id);
+        Task<MyPostulationDTO?> GetByIdForApplicantAsync(int id);
         Task<IEnumerable<PostulationResponseDTO>> GetMyPostulationsAsync(int userId);
         Task<IEnumerable<PostulationResponseDTO>> GetPostulationsByJobIdAsync(int jobId);
         Task AcceptPostulationAsync(int postulationId);

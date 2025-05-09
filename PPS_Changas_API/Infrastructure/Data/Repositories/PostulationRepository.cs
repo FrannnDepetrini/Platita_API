@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,18 @@ namespace Infrastructure.Data.Repositories
             _context = context;
         }
 
-        public Task<Postulation?> GetByIdAsync(int id)
+        public Task<Postulation?> GetByIdForPublisherAsync(int id)
         {
-            throw new NotImplementedException();
+            return _context.Postulations
+                .Include(p => p.Client)
+                .FirstOrDefaultAsync(p => p.id == id);
+        }  
+
+        public Task<Postulation?> GetByIdForApplicantAsync(int id)
+        {
+            return _context.Postulations
+                .Include(p => p.Job)
+                .FirstOrDefaultAsync(p => p.id == id);
         }
 
         public Task<IEnumerable<Postulation>> GetByJobIdAsync(int jobId)

@@ -9,7 +9,8 @@ namespace Domain.Interfaces
 {
     public interface IPostulationRepository : IBaseRepository<Postulation>
     {
-        Task<Postulation?> GetByIdAsync(int id);
+        Task<Postulation?> GetByIdForPublisherAsync(int id);
+        Task<Postulation?> GetByIdForApplicantAsync(int id);
         Task<IEnumerable<Postulation>> GetByUserIdAsync(int userId);
         Task<IEnumerable<Postulation>> GetByJobIdAsync(int jobId);
         
