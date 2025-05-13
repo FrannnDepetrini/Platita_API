@@ -15,5 +15,5 @@ En la raíz del proyecto Web, corré:
 ```en bash hacer este comando
 cp appsettings.example.json appsettings.json
 
-
-## Luego de hacer esto hay que pegar la clave real en el apartado key del appsetting.json
+### ➤ Paso 2: Reemplazar la clave de ejemplo por la clave real
+Luego de hacer esto hay que pegar la clave real en el apartado key del appsetting.json
