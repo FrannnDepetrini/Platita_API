@@ -13,8 +13,8 @@ namespace Application.Interfaces
         Task UnpostulateAsync(int userId, int jobId);
         Task<PostulationDetailDTO?> GetByIdForPublisherAsync(int id);
         Task<MyPostulationDTO?> GetByIdForApplicantAsync(int id);
-        Task<IEnumerable<PostulationResponseDTO>> GetMyPostulationsAsync(int userId);
-        Task<IEnumerable<PostulationResponseDTO>> GetPostulationsByJobIdAsync(int jobId);
+        Task<IEnumerable<PostulationDetailDTO>> GetMyPostulationsAsync(int userId);
+        Task<IEnumerable<PostulationDetailDTO>> GetPostulationsByJobIdAsync(int jobId);
         Task AcceptPostulationAsync(int postulationId);
         Task RejectPostulationAsync(int postulationId);
     }

@@ -44,12 +44,12 @@ namespace Application.Services
             return myPostulationDTO;
         }
 
-        public async Task<IEnumerable<PostulationResponseDTO>> GetMyPostulationsAsync(int userId)
+        public async Task<IEnumerable<PostulationDetailDTO>> GetMyPostulationsAsync(int userId)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<PostulationResponseDTO>> GetPostulationsByJobIdAsync(int jobId)
+        public async Task<IEnumerable<PostulationDetailDTO>> GetPostulationsByJobIdAsync(int jobId)
         {
             throw new NotImplementedException();
         }
