@@ -26,7 +26,7 @@ namespace Domain.Entities
         public string Description { get; set; }
         public CategoryEnum Category { get; set; }
         public string Picture { get; set; }
-        public string State { get; set; }
+        public string Province { get; set; }
         public string City { get; set; }
       
 

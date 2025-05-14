@@ -13,7 +13,7 @@ public class ClientForJobDTO
     public string UserName { get; set; }
     public float Reputation { get; set; }
     public string? City { get; set; }
-    public string? State { get; set; }
+    public string? Province { get; set; }
 
     public static ClientForJobDTO? Create(Client client)
     {
@@ -25,7 +25,7 @@ public class ClientForJobDTO
             UserName = client.UserName,
             Reputation = client.Reputation,
             City = client.City,
-            State = client.State
+            Province = client.Province
         };
     }
 }

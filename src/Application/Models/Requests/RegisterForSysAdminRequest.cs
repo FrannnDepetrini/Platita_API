@@ -23,6 +23,6 @@ namespace Application.Models.Requests
         public required string UserName { get; set; }
 
      
-        public required int PhoneNumber { get; set; }
+        public required string PhoneNumber { get; set; }
     }
 }

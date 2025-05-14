@@ -87,7 +87,7 @@ namespace Infrastructure.Data.Migrations
             migrationBuilder.RenameColumn(
                 name: "Location",
                 table: "Jobs",
-                newName: "State");
+                newName: "Province");
 
             migrationBuilder.RenameColumn(
                 name: "EmployerName",
@@ -112,7 +112,7 @@ namespace Infrastructure.Data.Migrations
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "State",
+                name: "Province",
                 table: "Users",
                 type: "TEXT",
                 nullable: true);
@@ -340,7 +340,7 @@ namespace Infrastructure.Data.Migrations
                 table: "Users");
 
             migrationBuilder.DropColumn(
-                name: "State",
+                name: "Province",
                 table: "Users");
 
             migrationBuilder.DropColumn(
@@ -393,7 +393,7 @@ namespace Infrastructure.Data.Migrations
                 newName: "Available");
 
             migrationBuilder.RenameColumn(
-                name: "State",
+                name: "Province",
                 table: "Jobs",
                 newName: "Location");
 

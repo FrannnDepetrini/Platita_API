@@ -21,14 +21,14 @@ namespace Infrastructure.Data.Repositories
         {
             return _context.Postulations
                 .Include(p => p.Client)
-                .FirstOrDefaultAsync(p => p.id == id);
+                .FirstOrDefaultAsync(p => p.Id == id);
         }  
 
         public Task<Postulation?> GetByIdForApplicantAsync(int id)
         {
             return _context.Postulations
                 .Include(p => p.Job)
-                .FirstOrDefaultAsync(p => p.id == id);
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public Task<IEnumerable<Postulation>> GetByJobIdAsync(int jobId)

@@ -24,7 +24,7 @@ namespace Application.Models.Responses
 
             return new PostulationDetailDTO
             {
-                Id = postulation.id,
+                Id = postulation.Id,
                 Budget = postulation.Budget,
                 Client = ClientForJobDTO.Create(postulation.Client)!,
                 Status = postulation.Status.ToString()

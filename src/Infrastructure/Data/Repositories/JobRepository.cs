@@ -35,12 +35,12 @@ namespace Infrastructure.Data.Repositories
                                 .Where(j => j.Category == category)
                                 .ToListAsync();
         }
-        public async Task<List<Job>> GetJobsByLocationAsync(string state, string city)
+        public async Task<List<Job>> GetJobsByLocationAsync(string Province, string city)
         {
             return await _context.Jobs
             .Include(j => j.Client)
             .Include(j => j.Postulations)
-            .Where(j => j.State == state && j.City == city)
+            .Where(j => j.Province == Province && j.City == city)
             .ToListAsync();
         }
 

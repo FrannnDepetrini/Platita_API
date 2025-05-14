@@ -9,7 +9,7 @@ namespace Domain.Entities
 {
     public class Client : User
     {
-        public string? State {get; set;}
+        public string? Province {get; set;}
         public string? City {get; set;}
         public List<Rating> Ratings { get; set; } = new List<Rating>();
         public List<Job> Jobs { get; set; } = new List<Job>();

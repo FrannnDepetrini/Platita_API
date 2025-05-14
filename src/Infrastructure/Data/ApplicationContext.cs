@@ -95,31 +95,31 @@ namespace Infrastructure.Data
             modelBuilder.Entity<Client>().HasData(new Client
             {
                 Id = 4,
-                State = "Santa Fe",
+                Province = "Santa Fe",
                 City = "Rosario",
                 Email = "marmax0504@gmail.com",
                 UserName = "Maximo",
                 Password = BCrypt.Net.BCrypt.HashPassword("123"),
-                PhoneNumber = 3496502453,
+                PhoneNumber = "3496502453",
 
             }, new Client
             {
                 Id = 6,
-                State = "Buenos Aires",
+                Province = "Buenos Aires",
                 City = "La Plata",
                 Email = "joako.tanlon@gmail.com",
                 UserName = "Joaquin",
                 Password = BCrypt.Net.BCrypt.HashPassword("321"),
-                PhoneNumber = 3412122907,
+                PhoneNumber = "3412122907",
             }, new Client
             {
                 Id = 7,
-                State = "Santa Fe",
+                Province = "Santa Fe",
                 City = "Rosario",
                 Email = "marucomass@gmail.com",
                 UserName = "Mario",
                 Password = BCrypt.Net.BCrypt.HashPassword("456"),
-                PhoneNumber = 3467637190,
+                PhoneNumber = "3467637190",
             }
                 );
         //modelBuilder.Entity<Job>().HasData(new Job
