@@ -90,6 +90,7 @@ builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IUserService, UserService> ();
 builder.Services.AddScoped<IPostulationService, PostulationService>();
+builder.Services.AddScoped<IClientService, ClientService>();
 #endregion
 //Envio de mail
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
