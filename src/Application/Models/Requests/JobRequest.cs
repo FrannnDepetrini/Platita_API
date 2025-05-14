@@ -11,7 +11,7 @@ namespace Application.Models.Requests
     public class JobRequest
     {
         public string Title { get; set; }
-        public string State { get; set; }
+        public string Province { get; set; }
         public string City { get; set; }
         public string Description { get; set; }
         public string Category {get; set;}

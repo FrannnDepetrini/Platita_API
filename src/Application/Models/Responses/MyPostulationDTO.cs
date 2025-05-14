@@ -26,7 +26,7 @@ public class MyPostulationDTO
 
         return new MyPostulationDTO
         {
-            Id = postulation.id,
+            Id = postulation.Id,
             Budget = postulation.Budget,
             Job = JobDTO.Create(postulation.Job),
             Status = postulation.Status.ToString()

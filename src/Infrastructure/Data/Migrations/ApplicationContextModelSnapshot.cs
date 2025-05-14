@@ -78,7 +78,7 @@ namespace Infrastructure.Data.Migrations
                     b.Property<int>("PostulationSelected")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("State")
+                    b.Property<string>("Province")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -116,7 +116,7 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Domain.Entities.Postulation", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -132,7 +132,7 @@ namespace Infrastructure.Data.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.HasIndex("ClientId");
 
@@ -189,8 +189,9 @@ namespace Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<float>("PhoneNumber")
-                        .HasColumnType("REAL");
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Role")
                         .IsRequired()
@@ -220,7 +221,7 @@ namespace Infrastructure.Data.Migrations
                     b.Property<int?>("PaymentId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("State")
+                    b.Property<string>("Province")
                         .HasColumnType("TEXT");
 
                     b.HasIndex("PaymentId");
@@ -232,31 +233,31 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 4,
                             Email = "marmax0504@gmail.com",
-                            Password = "$2a$11$I4kaU587/nd8O9pQPItBx.WynU/uQCnbAYoFW5c3udxmkntBBaOIm",
-                            PhoneNumber = 3.4965025E+09f,
+                            Password = "$2a$11$v4nO3utFdRzhBn/celeWI.AM62XtfQoPEhHl4xdBmdPMANbF3/MnO",
+                            PhoneNumber = "3496502453",
                             UserName = "Maximo",
                             City = "Rosario",
-                            State = "Santa Fe"
+                            Province = "Santa Fe"
                         },
                         new
                         {
                             Id = 6,
                             Email = "joako.tanlon@gmail.com",
-                            Password = "$2a$11$EwrulhaYqrUbUR2YDaQEf.d0Ez5viPNNnzaN3E/fe9AZAa2zurDQm",
-                            PhoneNumber = 3.412123E+09f,
+                            Password = "$2a$11$0J0q1qnCrOJsMn3mS3nQy.mdRiUbe5rAz0ZtkjPI2qgvuXmQugSkG",
+                            PhoneNumber = "3412122907",
                             UserName = "Joaquin",
                             City = "La Plata",
-                            State = "Buenos Aires"
+                            Province = "Buenos Aires"
                         },
                         new
                         {
                             Id = 7,
                             Email = "marucomass@gmail.com",
-                            Password = "$2a$11$5yeRvqH2bkOcaar4OnPB2Op4Q2.8v43JdIQdswiQeULf3Io0OFAQe",
-                            PhoneNumber = 3.4676372E+09f,
+                            Password = "$2a$11$dl2U0Xyg/Nix.CacXSHD.upmcrwFdeH.rC7QRyLwYVZCoWPl4rKIi",
+                            PhoneNumber = "3467637190",
                             UserName = "Mario",
                             City = "Rosario",
-                            State = "Santa Fe"
+                            Province = "Santa Fe"
                         });
                 });
 

@@ -12,7 +12,7 @@ namespace Infrastructure.Data.Migrations
         {
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "City", "Email", "Password", "PaymentId", "PhoneNumber", "Role", "State", "UserName" },
+                columns: new[] { "Id", "City", "Email", "Password", "PaymentId", "PhoneNumber", "Role", "Province", "UserName" },
                 values: new object[] { 4, "Rosario", "marmax0504@gmail.com", "1234", null, 341, "Client", "Santa Fe", "Maximo" });
         }
 

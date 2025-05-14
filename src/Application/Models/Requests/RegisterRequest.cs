@@ -19,7 +19,7 @@ namespace Application.Models.Requests
 
 
         [StringLength(100, MinimumLength = 3)]
-        public required string State{ get; set; }
+        public required string Province{ get; set; }
 
   
         [StringLength(100, MinimumLength = 3)]
@@ -30,6 +30,6 @@ namespace Application.Models.Requests
         public required string UserName { get; set; }
 
    
-        public required int PhoneNumber { get; set; }
+        public required string PhoneNumber { get; set; }
     }
 }

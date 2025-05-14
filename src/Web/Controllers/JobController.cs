@@ -90,9 +90,9 @@ public class JobController : ControllerBase
     }
 
     [HttpPost("[action]")]
-    public async Task<ActionResult<List<JobDTO>>> GetJobForSearch(string state, string city)
+    public async Task<ActionResult<List<JobDTO>>> GetJobForSearch(string Province, string city)
     {
-        var jobs = await _jobService.GetJobsBySearchLocationAsync(state, city);
+        var jobs = await _jobService.GetJobsBySearchLocationAsync(Province, city);
         return Ok(jobs);
     }
 

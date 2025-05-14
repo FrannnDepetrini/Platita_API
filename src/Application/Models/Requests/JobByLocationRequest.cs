@@ -8,7 +8,7 @@ namespace Application.Models.Requests
 {
     public class JobByLocationRequest
     {
-        public string State { get; set; }
+        public string Province { get; set; }
         public string City { get; set; }
         
     }

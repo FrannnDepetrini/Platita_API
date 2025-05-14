@@ -81,7 +81,7 @@ namespace Infrastructure.Data.Migrations
                     b.Property<int>("PostulationSelected")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("State")
+                    b.Property<string>("Province")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -223,7 +223,7 @@ namespace Infrastructure.Data.Migrations
                     b.Property<int?>("PaymentId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("State")
+                    b.Property<string>("Province")
                         .HasColumnType("TEXT");
 
                     b.HasIndex("PaymentId");
@@ -239,7 +239,7 @@ namespace Infrastructure.Data.Migrations
                             PhoneNumber = 341,
                             UserName = "Maximo",
                             City = "Rosario",
-                            State = "Santa Fe"
+                            Province = "Santa Fe"
                         });
                 });
 

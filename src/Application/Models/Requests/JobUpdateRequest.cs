@@ -16,7 +16,7 @@ namespace Application.Models.Requests
 
         public string Category {get; set;}
 
-        public string State { get; set; }
+        public string Province { get; set; }
         public string City { get; set; }
         public string Description { get; set; }
 

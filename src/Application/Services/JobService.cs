@@ -88,7 +88,7 @@ namespace Application.Services
 
             job.Title = request.Title;
             job.DateTime = request.DateTime;
-            job.State = request.State;
+            job.Province = request.Province;
             job.City = request.City;
             job.Description = request.Description;
             job.Category = parsedCategory;
@@ -120,7 +120,7 @@ namespace Application.Services
                 Category = parsedCategory,
                 DateTime = request.DateTime,
                 Picture = request.Picture,
-                State = request.State,
+                Province = request.Province,
                 City = request.City
             };
             await _jobRepository.Create(newJob);
@@ -139,14 +139,14 @@ namespace Application.Services
             {
                 throw new Exception("Usuario no encontrado.");
             }
-            var jobs = await _jobRepository.GetJobsByLocationAsync(existingUser.State, existingUser.City);
+            var jobs = await _jobRepository.GetJobsByLocationAsync(existingUser.Province, existingUser.City);
 
             var jobDtos = jobs.Select(j => new JobDTO
             {
 
                 Title = j.Title,
                 Description = j.Description,
-                State = j.State,
+                Province = j.Province,
                 City = j.City
             }).ToList();
             return jobDtos;
@@ -166,21 +166,21 @@ namespace Application.Services
 
                 Title = j.Title,
                 Description = j.Description,
-                State = j.State,
+                Province = j.Province,
                 City = j.City
             }).ToList();
             return jobDtos;
         }
-        public async Task<List<JobDTO>> GetJobsBySearchLocationAsync(string state, string city)
+        public async Task<List<JobDTO>> GetJobsBySearchLocationAsync(string Province, string city)
         {
-            var jobs = await _jobRepository.GetJobsByLocationAsync(state, city);
+            var jobs = await _jobRepository.GetJobsByLocationAsync(Province, city);
 
             var jobDtos = jobs.Select(j => new JobDTO
             {
 
                 Title = j.Title,
                 Description = j.Description,
-                State = j.State,
+                Province = j.Province,
                 City = j.City
             }).ToList();
 

@@ -47,7 +47,7 @@ public class AuthService(IUserRepository userRepository, ITokenService tokenServ
         {
             Email = request.Email,
             Password = hashedPassword,
-            State = request.State,
+            Province = request.Province,
             City = request.City,
             Role = RolesEnum.Client.ToString(),
             UserName = request.UserName,
@@ -92,7 +92,7 @@ public class AuthService(IUserRepository userRepository, ITokenService tokenServ
         return true;
     }
 
-    private static User CreateUserByRole(string email, string password, RolesEnum role, string userName, int phoneNumber)
+    private static User CreateUserByRole(string email, string password, RolesEnum role, string userName, string phoneNumber)
     {
         return role switch
         {

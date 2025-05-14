@@ -29,7 +29,7 @@ namespace Infrastructure.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "City", "Email", "Password", "PaymentId", "PhoneNumber", "Role", "State", "UserName" },
+                columns: new[] { "Id", "City", "Email", "Password", "PaymentId", "PhoneNumber", "Role", "Province", "UserName" },
                 values: new object[,]
                 {
                     { 6, "La Plata", "joako.tanlon@gmail.com", "$2a$11$EwrulhaYqrUbUR2YDaQEf.d0Ez5viPNNnzaN3E/fe9AZAa2zurDQm", null, 3.412123E+09f, "Client", "Buenos Aires", "Joaquin" },

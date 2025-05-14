@@ -11,7 +11,7 @@ namespace Application.Models.Responses
         public float AveragePrice { get; set; }
         public int AmountPostulations { get; set; }
         public JobStatusEnum Status {get; set;}
-        public string State {get; set;}
+        public string Province {get; set;}
         public string City {get; set;}
         public DateTime? DateTime { get; set; }
         public string Description{get; set;}
@@ -29,7 +29,7 @@ namespace Application.Models.Responses
                 AveragePrice = Job.AveragePrice,
                 AmountPostulations = Job.AmountPostulations,
                 Status = Job.Status,
-                State = Job.State,
+                Province = Job.Province,
                 City = Job.City,
                 DateTime = Job.DateTime,
                 Description = Job.Description,
