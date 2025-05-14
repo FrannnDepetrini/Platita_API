@@ -75,9 +75,10 @@ public class JobController : ControllerBase
             var job = await _jobService.Create(request, User.GetUserIntId());
             return Ok(job);
         }
-        catch (System.Exception)
+        catch (Exception ex)
         {
-            return BadRequest();
+            var innerMessage = ex.InnerException?.Message ?? ex.Message;
+            return BadRequest(new { error = innerMessage });
         }
     }
 
