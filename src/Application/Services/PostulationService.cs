@@ -87,6 +87,11 @@ namespace Application.Services
                 throw new Exception("Trabajo no encontrado");
             }
 
+            if(job.ClientId == userId)
+            {
+                throw new Exception("No puede postular a su propio trabajo");
+            }
+
             var postulation = new Postulation
             {
                 JobId = jobId,
