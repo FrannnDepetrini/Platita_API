@@ -31,9 +31,9 @@ namespace Infrastructure.Data.Repositories
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public Task<IEnumerable<Postulation>> GetByJobIdAsync(int jobId)
+        public async Task<IEnumerable<Postulation>> GetByJobIdAsync(int jobId)
         {
-            throw new NotImplementedException();
+            return await _context.Postulations.Include(p => p.Client).Include(p => p.Job).Where(p => p.JobId == jobId).ToListAsync();
         }
 
         public Task<IEnumerable<Postulation>> GetByUserIdAsync(int userId)

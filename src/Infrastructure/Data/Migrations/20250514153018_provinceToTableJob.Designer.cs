@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20250514153018_provinceToTableJob")]
+    partial class provinceToTableJob
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.15");
@@ -233,7 +236,7 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 4,
                             Email = "marmax0504@gmail.com",
-                            Password = "$2a$11$IjcnZKzfJrB5dzIYToKXAObA49iyeFDV2aU2EScD8Kf4k2gEUj/E6",
+                            Password = "$2a$11$RqjscQe2iJO0X6Jc/PLFSupjVS.t/LFjX/egxB1yHVvH/FUlQNqe6",
                             PhoneNumber = "3496502453",
                             UserName = "Maximo",
                             City = "Rosario",
@@ -243,7 +246,7 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 6,
                             Email = "joako.tanlon@gmail.com",
-                            Password = "$2a$11$xgOt7gFul8wj6gaK4ShKLeNR3eaFLvyRLcZ8VtgC.editgd1Y/FLO",
+                            Password = "$2a$11$ghM5dfEZ9mVLB1P/Mrw98OP2D/66ynalSKXliHQplGMIMfi7cT4k2",
                             PhoneNumber = "3412122907",
                             UserName = "Joaquin",
                             City = "La Plata",
@@ -253,7 +256,7 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 7,
                             Email = "marucomass@gmail.com",
-                            Password = "$2a$11$Q37ZejXpMUkN1DiFex8qkeUrHrIoSM4n2GKf9IG8C6LGqAyrSuELO",
+                            Password = "$2a$11$s.ypZhXO41KsgHTkDgfVlufLht1nnKAy6GpSemdywSH9fjwIz0aWi",
                             PhoneNumber = "3467637190",
                             UserName = "Mario",
                             City = "Rosario",

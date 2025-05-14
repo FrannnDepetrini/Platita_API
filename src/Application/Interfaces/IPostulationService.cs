@@ -9,12 +9,12 @@ namespace Application.Interfaces
 {
     public interface IPostulationService
     {
-        Task PostulateAsync(int userId, int jobId, float budget);
+        Task<PostulationDetailDTO> PostulateAsync(int userId, int jobId, float budget);
         Task UnpostulateAsync(int userId, int jobId);
         Task<PostulationDetailDTO?> GetByIdForPublisherAsync(int id);
         Task<MyPostulationDTO?> GetByIdForApplicantAsync(int id);
         Task<IEnumerable<PostulationDetailDTO>> GetMyPostulationsAsync(int userId);
-        Task<IEnumerable<PostulationDetailDTO>> GetPostulationsByJobIdAsync(int jobId);
+        Task<IEnumerable<PostulationDetailDTO>> GetPostulationsByJobIdAsync(int jobId, int publisherId);
         Task AcceptPostulationAsync(int postulationId);
         Task RejectPostulationAsync(int postulationId);
     }
