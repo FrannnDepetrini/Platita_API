@@ -3,19 +3,16 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Infrastructure.Data.Migrations
+namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250429022832_newMigration2")]
-    partial class newMigration2
+    partial class ApplicationContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.15");
@@ -48,7 +45,7 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasIndex("SupportId");
 
-                    b.ToTable("Complaint");
+                    b.ToTable("Complaints");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job", b =>
@@ -64,7 +61,7 @@ namespace Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("ClientId")
+                    b.Property<int>("ClientId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("DateTime")
@@ -114,12 +111,12 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Payment");
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("Domain.Entities.Postulation", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -135,13 +132,13 @@ namespace Infrastructure.Data.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.HasIndex("ClientId");
 
                     b.HasIndex("JobId");
 
-                    b.ToTable("Postulation");
+                    b.ToTable("Postulations");
                 });
 
             modelBuilder.Entity("Domain.Entities.Rating", b =>
@@ -175,7 +172,7 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasIndex("JobId");
 
-                    b.ToTable("Rating");
+                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -192,8 +189,9 @@ namespace Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("PhoneNumber")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Role")
                         .IsRequired()
@@ -218,19 +216,49 @@ namespace Infrastructure.Data.Migrations
                     b.HasBaseType("Domain.Entities.User");
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("PaymentId")
+                    b.Property<int?>("PaymentId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Province")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasIndex("PaymentId");
 
                     b.HasDiscriminator().HasValue("Client");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 4,
+                            Email = "marmax0504@gmail.com",
+                            Password = "$2a$11$AfifYNrElRqPYHAmNbHhme2qFVlzsrXrFtZdeMc2t50gRQAflwUYu",
+                            PhoneNumber = "3496502453",
+                            UserName = "Maximo",
+                            City = "Rosario",
+                            Province = "Santa Fe"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Email = "joako.tanlon@gmail.com",
+                            Password = "$2a$11$zunzJ8I71W0MEN1y3FtTke3Bp07.Lc1zcnpdhoz4H7tWmZikgKzA.",
+                            PhoneNumber = "3412122907",
+                            UserName = "Joaquin",
+                            City = "La Plata",
+                            Province = "Buenos Aires"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Email = "marucomass@gmail.com",
+                            Password = "$2a$11$FlzvlRREvQ32B43kDASMYen9.m33Gb8GMbGXaCqfs2k3YBHuGyB.2",
+                            PhoneNumber = "3467637190",
+                            UserName = "Mario",
+                            City = "Rosario",
+                            Province = "Santa Fe"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Moderator", b =>
@@ -252,6 +280,17 @@ namespace Infrastructure.Data.Migrations
                     b.HasBaseType("Domain.Entities.User");
 
                     b.HasDiscriminator().HasValue("SysAdmin");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 200,
+                            Email = "admin@test.com",
+                            Password = "1234",
+                            PhoneNumber = "123456789",
+                            Role = "Admin",
+                            UserName = "adminTest"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Complaint", b =>
@@ -278,7 +317,8 @@ namespace Infrastructure.Data.Migrations
                     b.HasOne("Domain.Entities.Client", "Client")
                         .WithMany("Jobs")
                         .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Client");
                 });
@@ -322,9 +362,7 @@ namespace Infrastructure.Data.Migrations
                 {
                     b.HasOne("Domain.Entities.Payment", "Payment")
                         .WithMany()
-                        .HasForeignKey("PaymentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PaymentId");
 
                     b.Navigation("Payment");
                 });

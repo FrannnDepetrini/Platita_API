@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Infrastructure.Data.Migrations
+namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250507230358_NuevoCliente")]
-    partial class NuevoCliente
+    [Migration("20250514215517_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -119,7 +119,7 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Domain.Entities.Postulation", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -135,7 +135,7 @@ namespace Infrastructure.Data.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.HasIndex("ClientId");
 
@@ -192,8 +192,9 @@ namespace Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<float>("PhoneNumber")
-                        .HasColumnType("REAL");
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Role")
                         .IsRequired()
@@ -235,8 +236,8 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 4,
                             Email = "marmax0504@gmail.com",
-                            Password = "$2a$11$I4kaU587/nd8O9pQPItBx.WynU/uQCnbAYoFW5c3udxmkntBBaOIm",
-                            PhoneNumber = 3.4965025E+09f,
+                            Password = "$2a$11$AfifYNrElRqPYHAmNbHhme2qFVlzsrXrFtZdeMc2t50gRQAflwUYu",
+                            PhoneNumber = "3496502453",
                             UserName = "Maximo",
                             City = "Rosario",
                             Province = "Santa Fe"
@@ -245,8 +246,8 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 6,
                             Email = "joako.tanlon@gmail.com",
-                            Password = "$2a$11$EwrulhaYqrUbUR2YDaQEf.d0Ez5viPNNnzaN3E/fe9AZAa2zurDQm",
-                            PhoneNumber = 3.412123E+09f,
+                            Password = "$2a$11$zunzJ8I71W0MEN1y3FtTke3Bp07.Lc1zcnpdhoz4H7tWmZikgKzA.",
+                            PhoneNumber = "3412122907",
                             UserName = "Joaquin",
                             City = "La Plata",
                             Province = "Buenos Aires"
@@ -255,8 +256,8 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 7,
                             Email = "marucomass@gmail.com",
-                            Password = "$2a$11$5yeRvqH2bkOcaar4OnPB2Op4Q2.8v43JdIQdswiQeULf3Io0OFAQe",
-                            PhoneNumber = 3.4676372E+09f,
+                            Password = "$2a$11$FlzvlRREvQ32B43kDASMYen9.m33Gb8GMbGXaCqfs2k3YBHuGyB.2",
+                            PhoneNumber = "3467637190",
                             UserName = "Mario",
                             City = "Rosario",
                             Province = "Santa Fe"
@@ -282,6 +283,17 @@ namespace Infrastructure.Data.Migrations
                     b.HasBaseType("Domain.Entities.User");
 
                     b.HasDiscriminator().HasValue("SysAdmin");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 200,
+                            Email = "admin@test.com",
+                            Password = "1234",
+                            PhoneNumber = "123456789",
+                            Role = "Admin",
+                            UserName = "adminTest"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Complaint", b =>
