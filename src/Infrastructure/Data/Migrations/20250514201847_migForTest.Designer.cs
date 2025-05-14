@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20250514201847_migForTest")]
+    partial class migForTest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.15");
@@ -233,7 +236,7 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 4,
                             Email = "marmax0504@gmail.com",
-                            Password = "$2a$11$65twPJDPZu0Eb6JoNq0uBewZMbDt5mmXmYIkCAkktWckMoyC.SLx6",
+                            Password = "$2a$11$BFPt5SNvHFZ0wBZGPnNMiOuMIwHc6.VxbQxPuD7FviHGdzJDbOSzi",
                             PhoneNumber = "3496502453",
                             UserName = "Maximo",
                             City = "Rosario",
@@ -243,7 +246,7 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 6,
                             Email = "joako.tanlon@gmail.com",
-                            Password = "$2a$11$ICCwOL6k9hbaw5KnyGo4zuIgnISJGKK7.iDq9n2XxDR.Lg0B3DGw.",
+                            Password = "$2a$11$cVgLehOI7d6D0OCcnmJbdOVyTW5WQ6fqSjbQIB1MHCgtCaP8DShmW",
                             PhoneNumber = "3412122907",
                             UserName = "Joaquin",
                             City = "La Plata",
@@ -253,7 +256,7 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 7,
                             Email = "marucomass@gmail.com",
-                            Password = "$2a$11$a85RWLX.GX3M7ogGFZJmA.kugLFhwKPeXAbsnyb1UB5OMIk.5t0d6",
+                            Password = "$2a$11$4JSoXbgpczTHrDKKwP9RA.QBhxmetDR2ONg84mjkb1Ms49/DSpNFS",
                             PhoneNumber = "3467637190",
                             UserName = "Mario",
                             City = "Rosario",
@@ -284,7 +287,7 @@ namespace Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 200,
+                            Id = 1,
                             Email = "admin@test.com",
                             Password = "1234",
                             PhoneNumber = "123456789",

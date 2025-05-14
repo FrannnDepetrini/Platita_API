@@ -122,40 +122,50 @@ namespace Infrastructure.Data
                 PhoneNumber = "3467637190",
             }
                 );
-        //modelBuilder.Entity<Job>().HasData(new Job
-        //{
-        //    Id = 1,
-        //    Title = "Busco electricista",
-        //    EmployerName = "Juan",
-        //    Available = true,
-        //    Location = "Rosario",
-        //    Description = "busco electricista para que me cambie una lamparita",
-        //    Category = CategoryEnum.Electricity,
-        //    DateTime = DateTime.Now
-        //}, new Job
-        //{
-        //    Id = 2,
-        //    Title = "Busco plomero",
-        //    EmployerName = "Maria",
-        //    Available = true,
-        //    Location = "Rosario",
-        //    Description = "busco plomero para arreglar mi bano",
-        //    Category = CategoryEnum.Plumbing,
-        //    DateTime = DateTime.Now
-        //}, new Job
-        //{
-        //    Id = 3,
-        //    Title = "Busco Jardinero",
-        //    EmployerName = "Marta",
-        //    Available = true,
-        //    Location = "Buenos Aires",
-        //    Description = "necesito cortar el pasto",
-        //    Category = CategoryEnum.Gardening,
-        //    DateTime = DateTime.Now
-        //}
 
-        //);
-    }
+            modelBuilder.Entity<SysAdmin>().HasData(new SysAdmin
+            {
+                Id = 200,
+                UserName = "adminTest",
+                Email = "admin@test.com",
+                Password = "1234",
+                PhoneNumber = "123456789",
+                Role = "Admin"
+            });
+            //modelBuilder.Entity<Job>().HasData(new Job
+            //{
+            //    Id = 1,
+            //    Title = "Busco electricista",
+            //    EmployerName = "Juan",
+            //    Available = true,
+            //    Location = "Rosario",
+            //    Description = "busco electricista para que me cambie una lamparita",
+            //    Category = CategoryEnum.Electricity,
+            //    DateTime = DateTime.Now
+            //}, new Job
+            //{
+            //    Id = 2,
+            //    Title = "Busco plomero",
+            //    EmployerName = "Maria",
+            //    Available = true,
+            //    Location = "Rosario",
+            //    Description = "busco plomero para arreglar mi bano",
+            //    Category = CategoryEnum.Plumbing,
+            //    DateTime = DateTime.Now
+            //}, new Job
+            //{
+            //    Id = 3,
+            //    Title = "Busco Jardinero",
+            //    EmployerName = "Marta",
+            //    Available = true,
+            //    Location = "Buenos Aires",
+            //    Description = "necesito cortar el pasto",
+            //    Category = CategoryEnum.Gardening,
+            //    DateTime = DateTime.Now
+            //}
+
+            //);
+        }
 
     }
 }
