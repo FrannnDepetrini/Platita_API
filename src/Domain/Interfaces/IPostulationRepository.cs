@@ -13,6 +13,10 @@ namespace Domain.Interfaces
         Task<Postulation?> GetByIdForApplicantAsync(int id);
         Task<IEnumerable<Postulation>> GetByUserIdAsync(int userId);
         Task<IEnumerable<Postulation>> GetByJobIdAsync(int jobId);
-        
+
+        Task<Postulation> GetPostulationByJobAndPostulantId(int jobId, int postulantId);
+
+        Task SaveChangesAsync();
+
     }
 }
