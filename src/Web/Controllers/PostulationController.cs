@@ -61,5 +61,21 @@ namespace Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPut("[action]")]
+        public async Task<IActionResult> ApproveApplication(int jobId, int postulantId)
+        {
+            try
+            {
+                int userId = User.GetUserIntId();
+                var result = await _postulationService.ChangeStatusPostulation(jobId, postulantId);
+
+                return Ok(result);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

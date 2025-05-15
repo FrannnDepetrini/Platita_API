@@ -33,7 +33,11 @@ namespace Infrastructure.Data.Repositories
 
         public async Task<IEnumerable<Postulation>> GetByJobIdAsync(int jobId)
         {
-            return await _context.Postulations.Include(p => p.Client).Include(p => p.Job).Where(p => p.JobId == jobId).ToListAsync();
+            return await _context.Postulations
+                .Include(p => p.Client)
+                .Include(p => p.Job)
+                .Where(p => p.JobId == jobId)
+                .ToListAsync();
         }
 
         public Task<IEnumerable<Postulation>> GetByUserIdAsync(int userId)
@@ -41,5 +45,17 @@ namespace Infrastructure.Data.Repositories
             throw new NotImplementedException();
         }
 
+        public async Task<Postulation> GetPostulationByJobAndPostulantId(int jobId, int postulantId) 
+        {
+            return await _context.Postulations
+                .Include(p => p.Client)
+                .Include(p => p.Job)
+                .FirstOrDefaultAsync(p => p.JobId == jobId && p.Id == postulantId);
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }

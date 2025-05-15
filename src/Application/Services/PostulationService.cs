@@ -104,6 +104,44 @@ namespace Application.Services
 
             return PostulationDetailDTO.Create(postulation);
         }
+        
+        public async Task<PostulationDTO> ChangeStatusPostulation(int jobId, int postulantId)
+        {
+            var selectedPostulant = await _postulationRepository.GetPostulationByJobAndPostulantId(jobId, postulantId);
+
+            if (selectedPostulant == null)
+            {
+                throw new Exception("Postulante no encontrado");
+            }
+
+            var allPostulations = await _postulationRepository.GetByJobIdAsync(jobId);
+
+            foreach (var postulation in allPostulations)
+            {
+                if (postulation.Id == selectedPostulant.Id)
+                {
+                    postulation.Status = PostulationStatusEnum.Success;
+                }
+                else
+                {
+                    postulation.Status = PostulationStatusEnum.Rejected;
+                }
+            }
+
+            await _postulationRepository.SaveChangesAsync();
+
+            return new PostulationDTO
+            {
+                Id = selectedPostulant.Id,
+                UserName = selectedPostulant.Client.UserName,
+                Email = selectedPostulant.Client.Email,
+                Province = selectedPostulant.Client.Province,
+                City = selectedPostulant.Client.City,
+                Phone = selectedPostulant.Client.PhoneNumber,
+                Status = selectedPostulant.Status.ToString()
+            };
+
+        }
 
         public async Task RejectPostulationAsync(int postulationId)
         {
