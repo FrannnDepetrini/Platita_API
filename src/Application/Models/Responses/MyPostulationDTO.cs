@@ -12,9 +12,10 @@ public class MyPostulationDTO
 {
     public int Id { get; set; }
     public float Budget { get; set; }
-    public JobDTO Job { get; set; }
-    public Client Client { get; set; }
+    //public Client Client { get; set; }
+    //aca tendria que ser el nombre del mismo usuario
     public string Status { get; set; }
+    public JobDTO Job { get; set; }
 
 
     public static MyPostulationDTO? Create(Postulation postulation)
@@ -28,8 +29,9 @@ public class MyPostulationDTO
         {
             Id = postulation.Id,
             Budget = postulation.Budget,
-            Job = JobDTO.Create(postulation.Job),
-            Status = postulation.Status.ToString()
+            Status = postulation.Status.ToString(),
+            //Client = postulation.Client,
+            Job = JobDTO.Create(postulation.Job)
         };
     }
 }

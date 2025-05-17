@@ -16,10 +16,12 @@ namespace Web.Controllers
     {
 
         private readonly IPostulationService _postulationService;
+        private readonly IUserService _userService;
 
-        public PostulationController(IPostulationService postulationService)
+        public PostulationController(IPostulationService postulationService,IUserService userService )
         {
             _postulationService = postulationService;
+            _userService = userService;
         }
 
         [HttpGet("[action]")]
@@ -107,6 +109,21 @@ namespace Web.Controllers
             catch (UnauthorizedAccessException ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("[action]")]
+        public async Task<ActionResult> GetMyPostulations()
+        {
+            try
+            {
+                var userId = User.GetUserIntId();
+                var MyPostulations = await _postulationService.GetMyPostulations(userId);
+                return Ok(MyPostulations);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.Models.Responses;
+using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -53,10 +54,20 @@ namespace Infrastructure.Data.Repositories
                 .FirstOrDefaultAsync(p => p.JobId == jobId && p.Id == postulantId);
         }
 
+
         public async Task<bool> CheckDuplicatePostulation(int clientId, int jobId)
         {
             return await _context.Postulations
             .AnyAsync(a => a.ClientId == clientId && a.JobId == jobId);
+        }
+
+        public async Task<IEnumerable<Postulation>> GetAllMyPostulations(int userId)
+        {
+            return await _context.Postulations
+                .Where(p=>p.ClientId == userId )
+                .Include(p=>p.Job)
+                .ToListAsync();
+
         }
 
         public async Task SaveChangesAsync()

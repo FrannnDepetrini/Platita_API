@@ -13,12 +13,10 @@ namespace Application.Interfaces
         Task UnpostulateAsync(int userId, int jobId);
         Task<PostulationDetailDTO?> GetByIdForPublisherAsync(int id);
         Task<MyPostulationDTO?> GetByIdForApplicantAsync(int id);
-        Task<IEnumerable<PostulationDetailDTO>> GetMyPostulationsAsync(int userId);
         Task<IEnumerable<PostulationDetailDTO>> GetPostulationsByJobIdAsync(int jobId, int publisherId);
         Task AcceptPostulationAsync(int postulationId);
         Task<bool> DeletePostulationFisic (int postulantId, int jobId);
         Task<bool> DeletePostulationLogic(int postulantId, int jobId);
-
         Task<PostulationDTO> ChangeStatusPostulation(int jobId, int postulantId, int userId);
     }
 }
