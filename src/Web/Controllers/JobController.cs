@@ -25,13 +25,30 @@ public class JobController : ControllerBase
         _jobService = jobService;
     }
 
-    [HttpDelete("delete/{id}")]
-    public async Task<IActionResult> Delete([FromRoute] int id)
+
+    [HttpGet("by-location")]
+    public async Task<ActionResult<List<JobDTO>>> GetJobsByLocation()
+    {
+        var userId = User.GetUserIntId();
+        var jobs = await _jobService.GetJobsByClientLocationAsync(userId);
+        return Ok(jobs);
+    }
+
+    [HttpGet("[action]")]
+    public async Task<ActionResult<List<JobDTO>>> GetJobForSearch(string Province, string city)
+    {
+        var jobs = await _jobService.GetJobsBySearchLocationAsync(Province, city);
+        return Ok(jobs);
+    }
+
+    [HttpGet("[action]")]
+    public async Task<ActionResult<IEnumerable<JobDTO>>> GetJobByCategory([FromQuery] JobFilteredByCategoryRequest request)
     {
         try
         {
-            await _jobService.Delete(id, User.GetUserIntId());
-            return Ok();
+            var jobs = await _jobService.GetJobsByCategory(request);
+            return Ok(jobs);
+
         }
         catch (System.Exception)
         {
@@ -39,32 +56,16 @@ public class JobController : ControllerBase
         }
     }
 
-    [HttpDelete("deleteLogic/{id}")]
-    public async Task<IActionResult> DeleteLogic([FromRoute] int id)
+    [HttpGet("my-jobs")]
+    public async Task<ActionResult<List<JobDTO>>> GetMyJobs()
     {
-        try
+        var userId = User.GetUserIntId();
+        var jobs = await _jobService.GetJobsByClientAsync(userId);
+        if (jobs == null || !jobs.Any())
         {
-            await _jobService.DeleteLogic(id, User.GetUserIntId());
-            return Ok();
+            return NotFound("No se encontraron trabajos para este cliente.");
         }
-        catch (System.Exception)
-        {
-            return NotFound();
-        }
-    }
-
-    [HttpPut("update/{id}")]
-    public async Task<ActionResult<JobDTO>> Update([FromBody] JobUpdateRequest request, [FromRoute] int id)
-    {
-        try
-        {
-            await _jobService.Update(request, id, User.GetUserIntId());
-            return Ok();
-        }
-        catch (System.Exception)
-        {
-            return NotFound();
-        }
+        return Ok(jobs);
     }
 
     [HttpPost("create")]
@@ -82,41 +83,41 @@ public class JobController : ControllerBase
         }
     }
 
-    [HttpGet("by-location")]
-    public async Task<ActionResult<List<JobDTO>>> GetJobsByLocation()
-    {
-        var userId = User.GetUserIntId();
-        var jobs = await _jobService.GetJobsByClientLocationAsync(userId);
-        return Ok(jobs);
-    }
-
-    [HttpPost("[action]")]
-    public async Task<ActionResult<List<JobDTO>>> GetJobForSearch(string Province, string city)
-    {
-        var jobs = await _jobService.GetJobsBySearchLocationAsync(Province, city);
-        return Ok(jobs);
-    }
-
-    [HttpGet("my-jobs")]
-    public async Task<ActionResult<List<JobDTO>>> GetMyJobs()
-    {
-        var userId = User.GetUserIntId();
-        var jobs = await _jobService.GetJobsByClientAsync(userId);
-        if (jobs == null || !jobs.Any())
-        {
-            return NotFound("No se encontraron trabajos para este cliente.");
-        }
-        return Ok(jobs);
-    }
-
-    [HttpPost("FilteredForCategory")]
-    public async Task<ActionResult<IEnumerable<JobDTO>>> GetJobByCategory([FromBody] JobFilteredByCategoryRequest request)
+    [HttpPut("update/{id}")]
+    public async Task<ActionResult<JobDTO>> Update([FromBody] JobUpdateRequest request, [FromRoute] int id)
     {
         try
         {
-            var jobs = await _jobService.GetJobsByCategory(request);
-            return Ok(jobs);
+            await _jobService.Update(request, id, User.GetUserIntId());
+            return Ok();
+        }
+        catch (System.Exception)
+        {
+            return NotFound();
+        }
+    }
 
+    [HttpDelete("delete/{id}")]
+    public async Task<IActionResult> Delete([FromRoute] int id)
+    {
+        try
+        {
+            await _jobService.Delete(id, User.GetUserIntId());
+            return Ok();
+        }
+        catch (System.Exception)
+        {
+            return NotFound();
+        }
+    }
+
+    [HttpPatch("deleteLogic/{id}")]
+    public async Task<IActionResult> DeleteLogic([FromRoute] int id)
+    {
+        try
+        {
+            await _jobService.DeleteLogic(id, User.GetUserIntId());
+            return Ok();
         }
         catch (System.Exception)
         {

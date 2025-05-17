@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250514153817_RenameStateToProvince")]
-    partial class RenameStateToProvince
+    [Migration("20250517223056_NewSeedsClient")]
+    partial class NewSeedsClient
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,16 +67,18 @@ namespace Infrastructure.Data.Migrations
                     b.Property<int>("ClientId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime?>("DateTime")
+                    b.Property<DateTime?>("DayPublicationEnd")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DayPublicationStart")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Picture")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("PaymentId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("PostulationSelected")
                         .HasColumnType("INTEGER");
@@ -95,6 +97,8 @@ namespace Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
+
+                    b.HasIndex("PaymentId");
 
                     b.ToTable("Jobs");
                 });
@@ -236,30 +240,60 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 4,
                             Email = "marmax0504@gmail.com",
-                            Password = "$2a$11$IjcnZKzfJrB5dzIYToKXAObA49iyeFDV2aU2EScD8Kf4k2gEUj/E6",
+                            Password = "$2a$11$7dh6BoUfkk7T5ODGeD6YoepecYLDq1.JVfS/MKNIv8ScDN3m0JqbS",
                             PhoneNumber = "3496502453",
-                            UserName = "Maximo",
+                            UserName = "Maximo Martin",
                             City = "Rosario",
                             Province = "Santa Fe"
                         },
                         new
                         {
-                            Id = 6,
+                            Id = 5,
                             Email = "joako.tanlon@gmail.com",
-                            Password = "$2a$11$xgOt7gFul8wj6gaK4ShKLeNR3eaFLvyRLcZ8VtgC.editgd1Y/FLO",
+                            Password = "$2a$11$WlniJYkWorZLE9abEmR42uU56bh7R7t7ySVqh1p.hce.XS2MpE/1S",
                             PhoneNumber = "3412122907",
-                            UserName = "Joaquin",
+                            UserName = "Joaquin Tanlongo",
                             City = "La Plata",
                             Province = "Buenos Aires"
                         },
                         new
                         {
-                            Id = 7,
+                            Id = 6,
                             Email = "marucomass@gmail.com",
-                            Password = "$2a$11$Q37ZejXpMUkN1DiFex8qkeUrHrIoSM4n2GKf9IG8C6LGqAyrSuELO",
+                            Password = "$2a$11$5qAQAVoIAQtIj0PGrDloY.X2cdoVnbJf3e8UJ/usaoNC5F4gZWbyu",
                             PhoneNumber = "3467637190",
-                            UserName = "Mario",
+                            UserName = "Mario Massonnat",
                             City = "Rosario",
+                            Province = "Santa Fe"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Email = "frandepe7@gmail.com",
+                            Password = "$2a$11$Ez8SWNSOiygBI/Uc4yVqZ.wROLY7omwgtQcteCnMBC05Fg4ih16P2",
+                            PhoneNumber = "3472582334",
+                            UserName = "Francisco Depetrini",
+                            City = "Marcos Juarez",
+                            Province = "Córdoba"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Email = "palenafrancisco@gmail.com",
+                            Password = "$2a$11$qd2LGtVE.h2gQplpHVAsPO5VkA6LuGGosoXTGH1m6SNRslBb6I9Fq",
+                            PhoneNumber = "3465664518",
+                            UserName = "Francisco Palena",
+                            City = "Firmat",
+                            Province = "Santa Fe"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Email = "pedrogasparini99@gmail.com",
+                            Password = "$2a$11$aYJanBwl7ClWRK6tSDv1veatNwdUJoSxE6thdO71g2.OX2mgYdplC",
+                            PhoneNumber = "3464445164",
+                            UserName = "Pedro Gasparini",
+                            City = "Bigand",
                             Province = "Santa Fe"
                         });
                 });
@@ -312,7 +346,15 @@ namespace Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Entities.Payment", "Payment")
+                        .WithMany()
+                        .HasForeignKey("PaymentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Client");
+
+                    b.Navigation("Payment");
                 });
 
             modelBuilder.Entity("Domain.Entities.Postulation", b =>
@@ -352,11 +394,11 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Domain.Entities.Client", b =>
                 {
-                    b.HasOne("Domain.Entities.Payment", "Payment")
+                    b.HasOne("Domain.Entities.Payment", "PreferredPayment")
                         .WithMany()
                         .HasForeignKey("PaymentId");
 
-                    b.Navigation("Payment");
+                    b.Navigation("PreferredPayment");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job", b =>

@@ -15,8 +15,7 @@ namespace Application.Models.Requests
         public string City { get; set; }
         public string Description { get; set; }
         public string Category {get; set;}
-        public DateTime? DateTime { get; set; }
-        public string Picture { get; set; }
+        public DateTime? DayPublicationEnd { get; set; }
     }
 }
 

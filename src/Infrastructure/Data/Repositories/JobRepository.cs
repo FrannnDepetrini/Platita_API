@@ -14,7 +14,7 @@ namespace Infrastructure.Data.Repositories
 {
     public class JobRepository : BaseRepository<Job>, IJobRepository
     {
-        private readonly ApplicationContext _context;
+        private new readonly ApplicationContext _context;
 
         public JobRepository(ApplicationContext context) : base(context)
         {
@@ -32,8 +32,10 @@ namespace Infrastructure.Data.Repositories
         public async Task<IEnumerable<Job>> GetJobsByCategory(CategoryEnum category)
         {
             return await _context.Set<Job>()
-                                .Where(j => j.Category == category)
-                                .ToListAsync();
+            .Include(j => j.Client)
+            .Include(j => j.Postulations)
+            .Where(j => j.Category == category)
+            .ToListAsync();
         }
         public async Task<List<Job>> GetJobsByLocationAsync(string Province, string city)
         {
@@ -51,6 +53,18 @@ namespace Infrastructure.Data.Repositories
             .Include(j => j.Postulations)
             .Where(j => j.ClientId == userId)
             .ToListAsync();
+        }
+
+        public async Task<List<Job>> GetAllExpiratedJobs(CancellationToken cancellationToken)
+        {
+            return await _context.Jobs
+                .Where(j => j.Status == JobStatusEnum.Available && j.DayPublicationEnd < DateTime.Now)
+                .ToListAsync(cancellationToken);
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }

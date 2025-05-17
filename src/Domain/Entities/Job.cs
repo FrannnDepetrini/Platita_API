@@ -21,21 +21,16 @@ namespace Domain.Entities
         public string Title { get; set; }
         public float AveragePrice => Postulations.Count == 0 ? 0 : Postulations.Sum(x => x.Budget) / Postulations.Count;
         public int AmountPostulations => Postulations.Count;
-        public DateTime? DateTime { get; set; }
+        public DateTime? DayPublicationStart { get; set; } = DateTime.Now;
+        public DateTime? DayPublicationEnd { get; set; } = DateTime.Now.AddDays(7);
         public JobStatusEnum Status { get; set; }
         public string Description { get; set; }
         public CategoryEnum Category { get; set; }
-        public string Picture { get; set; }
         public string Province { get; set; }
         public string City { get; set; }
-      
-
-
+        public Payment Payment { get; set; }
+        public int PaymentId {  get; set; } 
     }
-
-
-
-    
 }
 
 

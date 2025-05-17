@@ -14,18 +14,19 @@ namespace Application.Interfaces
 {
     public interface IJobService
 {
-    //Task<JobsDTO> GetById(int id);
-    Task<JobDTO> Create(JobRequest request, int userId);
-    Task<JobDTO> Update(JobUpdateRequest request, int id, int userId);
-    Task Delete(int id, int userId);
-    Task DeleteLogic(int id, int userId);
-    //Task GetJobsByClientLocationAsync(int userId);
-    Task<List<JobDTO>> GetJobsByClientLocationAsync(int userId);
-        //Task JobByLocationRequest(string city, string Province);
-    Task<List<JobDTO>> GetJobsBySearchLocationAsync(string Province, string city);
+        //Task<JobsDTO> GetById(int id);
+        
+        Task<JobDTO> Create(JobRequest request, int userId);
+        Task<JobDTO> Update(JobUpdateRequest request, int id, int userId);
+        Task Delete(int id, int userId);
+        Task DeleteLogic(int id, int userId);
+        //Task GetJobsByClientLocationAsync(int userId);
+        Task<List<JobDTO>> GetJobsByClientLocationAsync(int userId);
+            //Task JobByLocationRequest(string city, string Province);
+        Task<List<JobDTO>> GetJobsBySearchLocationAsync(string Province, string city);
     
-    Task<List<JobDTO>> GetJobsByClientAsync(int userId);
-    Task<IEnumerable<JobDTO>> GetJobsByCategory(JobFilteredByCategoryRequest request);
+        Task<List<JobDTO>> GetJobsByClientAsync(int userId);
+        Task<IEnumerable<JobDTO>> GetJobsByCategory(JobFilteredByCategoryRequest request);
 
     }
 

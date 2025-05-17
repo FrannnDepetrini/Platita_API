@@ -11,7 +11,7 @@ namespace Infrastructure.Data.Repositories
     
     public class ClientRepository : BaseRepository<Client>, IClientRepository
     {
-        private readonly ApplicationContext _context;
+        private new readonly ApplicationContext _context;
 
         public ClientRepository(ApplicationContext context) : base(context)
         {

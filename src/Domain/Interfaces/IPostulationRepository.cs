@@ -16,6 +16,7 @@ namespace Domain.Interfaces
 
         Task<Postulation> GetPostulationByJobAndPostulantId(int jobId, int postulantId);
 
+        Task<bool> CheckDuplicatePostulation(int clientId, int jobId);
         Task SaveChangesAsync();
         Task<IEnumerable<Postulation>> GetAllMyPostulations(int userId);
 

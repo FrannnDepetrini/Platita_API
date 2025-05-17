@@ -21,6 +21,7 @@ namespace Application.Services
             throw new NotImplementedException();
         }
 
+
         public async Task<PostulationDetailDTO?> GetByIdForPublisherAsync(int id)
         {
             var postulation = await _postulationRepository.GetByIdForPublisherAsync(id);
@@ -47,14 +48,13 @@ namespace Application.Services
             return myPostulationDTO;
         }
 
-
         public async Task<IEnumerable<PostulationDetailDTO>> GetPostulationsByJobIdAsync(int jobId, int publisherId)
         {
             var postulation = await _postulationRepository.GetByJobIdAsync(jobId);
-            
+
             if (postulation is null)
             {
-                throw new Exception("Postulation not found");
+                throw new Exception("Job not found");
             }
 
             var firstPostulation = postulation.FirstOrDefault();
@@ -83,9 +83,16 @@ namespace Application.Services
                 throw new Exception("Trabajo no encontrado");
             }
 
-            if(job.ClientId == userId)
+            if (job.ClientId == userId)
             {
                 throw new Exception("No puede postular a su propio trabajo");
+            }
+
+            var isDuplicatePostulation = await _postulationRepository.CheckDuplicatePostulation(userId, jobId);
+
+            if (isDuplicatePostulation)
+            {
+                throw new Exception("Ya te postulaste a este trabajo");
             }
 
             var postulation = new Postulation
@@ -100,10 +107,17 @@ namespace Application.Services
 
             return PostulationDetailDTO.Create(postulation);
         }
-        
-        public async Task<PostulationDTO> ChangeStatusPostulation(int jobId, int postulantId)
+
+        public async Task<PostulationDTO> ChangeStatusPostulation(int jobId, int postulantId, int userId)
         {
             var selectedPostulant = await _postulationRepository.GetPostulationByJobAndPostulantId(jobId, postulantId);
+
+            if (selectedPostulant.Job.ClientId != userId)
+            {
+                throw new Exception("No autorizado");
+            }
+
+
 
             if (selectedPostulant == null)
             {
@@ -123,6 +137,7 @@ namespace Application.Services
                     postulation.Status = PostulationStatusEnum.Rejected;
                 }
             }
+            selectedPostulant.Job.Status = JobStatusEnum.Taken;
 
             await _postulationRepository.SaveChangesAsync();
 
@@ -139,11 +154,19 @@ namespace Application.Services
 
         }
 
-        public async Task UnpostulateAsync(int userId, int jobId)
+        public async Task<bool> DeletePostulationFisic(int jobId, int postulationId)
         {
-            throw new NotImplementedException();
-        }
+            var postJob = await _postulationRepository.GetPostulationByJobAndPostulantId(jobId, postulationId);
 
+            if (postJob == null)
+            {
+                throw new Exception("Not found");
+            }
+
+            await _postulationRepository.Delete(postJob);
+            await _postulationRepository.SaveChangesAsync();
+            return true;
+        }
 
         public async Task<bool> DeletePostulationLogic(int jobId, int postulationId)
         {
@@ -169,18 +192,42 @@ namespace Application.Services
             return true;
         }
 
-        public async Task<bool> DeletePostulationFisic(int jobId, int postulationId)
+        public async Task<PostulationDetailDTO?> GetByIdForPublisherAsync(int id)
         {
-            var postJob = await _postulationRepository.GetPostulationByJobAndPostulantId(jobId, postulationId);
-
-            if (postJob == null)
+            var postulation = await _postulationRepository.GetByIdForPublisherAsync(id);
+            if(postulation is null)
             {
-                throw new Exception("Not found");
+                throw new Exception("Postulation not found");
             }
 
-            await _postulationRepository.Delete(postJob);
-            await _postulationRepository.SaveChangesAsync();
-            return true;
+            var postulationDetailDTO = PostulationDetailDTO.Create(postulation);
+
+            return postulationDetailDTO;
+        }     
+        
+        public async Task<MyPostulationDTO?> GetByIdForApplicantAsync(int id)
+        {
+            var postulation = await _postulationRepository.GetByIdForApplicantAsync(id);
+            if(postulation is null)
+            {
+                throw new Exception("Postulation not found");
+            }
+
+            var myPostulationDTO = MyPostulationDTO.Create(postulation);
+
+            return myPostulationDTO;
+        }
+
+
+
+        public async Task<IEnumerable<PostulationDetailDTO>> GetMyPostulationsAsync(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task UnpostulateAsync(int userId, int jobId)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<MyPostulationDTO>> GetMyPostulations(int userId)
