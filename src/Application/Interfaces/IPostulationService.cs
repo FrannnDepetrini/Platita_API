@@ -17,6 +17,7 @@ namespace Application.Interfaces
         Task<IEnumerable<PostulationDetailDTO>> GetPostulationsByJobIdAsync(int jobId, int publisherId);
         Task AcceptPostulationAsync(int postulationId);
         Task<bool> DeletePostulationFisic (int postulantId, int jobId);
+        Task<bool> DeletePostulationLogic(int postulantId, int jobId);
 
         Task<PostulationDTO> ChangeStatusPostulation(int jobId, int postulantId);
     }

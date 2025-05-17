@@ -143,10 +143,34 @@ namespace Application.Services
 
         }
 
-
         public async Task UnpostulateAsync(int userId, int jobId)
         {
             throw new NotImplementedException();
+        }
+
+
+        public async Task<bool> DeletePostulationLogic(int jobId, int postulationId)
+        {
+            var postJob = await _postulationRepository.GetPostulationByJobAndPostulantId(jobId, postulationId);
+
+            if (postJob == null)
+            {
+                throw new Exception("Not found");
+            }
+
+            var allPostulations = await _postulationRepository.GetByJobIdAsync(jobId);
+
+            foreach (var postulation in allPostulations)
+            {
+                if (postulation.Id == postJob.Id)
+                {
+                    postulation.Status = PostulationStatusEnum.Rejected;
+                }
+
+            }
+
+            await _postulationRepository.SaveChangesAsync();
+            return true;
         }
 
         public async Task<bool> DeletePostulationFisic(int jobId, int postulationId)
