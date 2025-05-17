@@ -122,6 +122,7 @@ namespace Infrastructure.Data
                 PhoneNumber = "3467637190",
             }
                 );
+
         //modelBuilder.Entity<Job>().HasData(new Job
         //{
         //    Id = 1,

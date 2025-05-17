@@ -77,5 +77,35 @@ namespace Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpDelete("[action]")]
+        public async Task<ActionResult> DeletePostulationFisic(int postulationId, int jobId)
+        {
+            try
+            {
+                var postulation = await _postulationService.DeletePostulationFisic(postulationId, jobId);
+                return Ok();
+
+
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("[action]")]
+        public async Task<ActionResult> DeletePostulationLogic(int postulationId, int jobId)
+        {
+            try
+            {
+                var postulation = await _postulationService.DeletePostulationLogic(postulationId, jobId);
+                return Ok();
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
