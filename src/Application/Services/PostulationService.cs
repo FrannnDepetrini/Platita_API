@@ -47,10 +47,6 @@ namespace Application.Services
             return myPostulationDTO;
         }
 
-        public async Task<IEnumerable<PostulationDetailDTO>> GetMyPostulationsAsync(int userId)
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task<IEnumerable<PostulationDetailDTO>> GetPostulationsByJobIdAsync(int jobId, int publisherId)
         {
@@ -186,5 +182,34 @@ namespace Application.Services
             await _postulationRepository.SaveChangesAsync();
             return true;
         }
+
+        public async Task<IEnumerable<MyPostulationDTO>> GetMyPostulations(int userId)
+        {
+            var posts = await _postulationRepository.GetAllMyPostulations(userId);
+            Console.WriteLine(posts.GetType());
+
+            var result = posts.Select(p => new MyPostulationDTO
+            {
+                Budget = p.Budget,
+                Status = p.Status.ToString(),
+                Job = new JobDTO
+                {
+                    Id = p.Job.Id,
+                    Title = p.Job.Title,
+                    AveragePrice = p.Job.AveragePrice,
+                    AmountPostulations = p.Job.AmountPostulations,
+                    Status = p.Job.Status,
+                    Province = p.Job.Province,
+                    City = p.Job.City,
+                    DateTime = p.Job.DateTime,
+                    Description = p.Job.Description,
+                    Category = p.Job.Category,
+                    Picture = p.Job.Picture
+                }
+            }).ToList();
+
+            return result;
+        }
+
     }
 }
