@@ -17,6 +17,7 @@ namespace Domain.Interfaces
         Task<Postulation> GetPostulationByJobAndPostulantId(int jobId, int postulantId);
 
         Task SaveChangesAsync();
+        Task<IEnumerable<Postulation>> GetAllMyPostulations(int userId);
 
     }
 }
