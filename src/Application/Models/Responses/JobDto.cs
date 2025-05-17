@@ -10,13 +10,13 @@ namespace Application.Models.Responses
         public string Title {get; set;}
         public float AveragePrice { get; set; }
         public int AmountPostulations { get; set; }
-        public JobStatusEnum Status {get; set;}
+        public string Status {get; set;}
         public string Province {get; set;}
         public string City {get; set;}
-        public DateTime? DateTime { get; set; }
+        public DateTime? DayPublicationStart { get; set; }
+        public DateTime? DayPublicationEnd { get; set; }
         public string Description{get; set;}
-        public CategoryEnum Category { get; set; }
-        public string Picture { get; set; }
+        public string Category { get; set; }
 
 
         public static JobDTO Create(Job Job)
@@ -28,13 +28,13 @@ namespace Application.Models.Responses
                 Title = Job.Title,
                 AveragePrice = Job.AveragePrice,
                 AmountPostulations = Job.AmountPostulations,
-                Status = Job.Status,
+                Status = Job.Status.ToString(),
                 Province = Job.Province,
                 City = Job.City,
-                DateTime = Job.DateTime,
+                DayPublicationStart = Job.DayPublicationStart,
+                DayPublicationEnd = Job.DayPublicationEnd,
                 Description = Job.Description,
-                Category = Job.Category,
-                Picture = Job.Picture
+                Category = Job.Category.ToString()
             };
 
         }

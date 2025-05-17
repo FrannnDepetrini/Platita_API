@@ -11,7 +11,7 @@ namespace Infrastructure.Data.Repositories
 {
     public class UserRepository : BaseRepository<User>, IUserRepository
     {
-        private readonly ApplicationContext _context;
+        private new readonly ApplicationContext _context;
 
         public UserRepository(ApplicationContext context) : base(context)
         {

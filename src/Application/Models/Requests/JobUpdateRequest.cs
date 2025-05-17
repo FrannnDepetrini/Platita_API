@@ -12,7 +12,7 @@ namespace Application.Models.Requests
     {
         public string Title { get; set; }
         //public float AveragePrice { get; set; }
-        public DateTime DateTime { get; set; } = DateTime.Today;
+        public DateTime DayPublicationEnd { get; set; } = DateTime.Now.AddDays(7);
 
         public string Category {get; set;}
 
@@ -20,6 +20,5 @@ namespace Application.Models.Requests
         public string City { get; set; }
         public string Description { get; set; }
 
-        public string Picture { get; set; }
     }
 }

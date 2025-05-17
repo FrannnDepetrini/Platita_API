@@ -19,6 +19,6 @@ namespace Application.Interfaces
         Task<bool> DeletePostulationFisic (int postulantId, int jobId);
         Task<bool> DeletePostulationLogic(int postulantId, int jobId);
 
-        Task<PostulationDTO> ChangeStatusPostulation(int jobId, int postulantId);
+        Task<PostulationDTO> ChangeStatusPostulation(int jobId, int postulantId, int userId);
     }
 }

@@ -44,7 +44,7 @@ namespace Web.Controllers
 
         [HttpPost("[action]")]
 
-        public async Task<IActionResult> CreateAsync(PostulationRequest request)
+        public async Task<IActionResult> ApplicateJob(PostulationRequest request)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace Web.Controllers
             try
             {
                 int userId = User.GetUserIntId();
-                var result = await _postulationService.ChangeStatusPostulation(jobId, postulantId);
+                var result = await _postulationService.ChangeStatusPostulation(jobId, postulantId, userId);
 
                 return Ok(result);
             }
@@ -78,12 +78,14 @@ namespace Web.Controllers
             }
         }
 
+        
+
         [HttpDelete("[action]")]
-        public async Task<ActionResult> DeletePostulationFisic(int postulationId, int jobId)
+        public async Task<ActionResult> DeletePostulationFisic(int jobId, int postulationId)
         {
             try
             {
-                var postulation = await _postulationService.DeletePostulationFisic(postulationId, jobId);
+                var postulation = await _postulationService.DeletePostulationFisic(jobId, postulationId);
                 return Ok();
 
 
@@ -94,12 +96,12 @@ namespace Web.Controllers
             }
         }
 
-        [HttpPut("[action]")]
-        public async Task<ActionResult> DeletePostulationLogic(int postulationId, int jobId)
+        [HttpPatch("[action]")]
+        public async Task<ActionResult> DeletePostulationLogic(int jobId, int postulationId)
         {
             try
             {
-                var postulation = await _postulationService.DeletePostulationLogic(postulationId, jobId);
+                var postulation = await _postulationService.DeletePostulationLogic(jobId, postulationId);
                 return Ok();
             }
             catch (UnauthorizedAccessException ex)

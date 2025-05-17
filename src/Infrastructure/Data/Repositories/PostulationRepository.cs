@@ -11,7 +11,7 @@ namespace Infrastructure.Data.Repositories
 {
     public class PostulationRepository : BaseRepository<Postulation>, IPostulationRepository
     {
-        private readonly ApplicationContext _context;
+        private new readonly ApplicationContext _context;
         public PostulationRepository(ApplicationContext context) : base(context)
         {
             _context = context;
@@ -51,6 +51,12 @@ namespace Infrastructure.Data.Repositories
                 .Include(p => p.Client)
                 .Include(p => p.Job)
                 .FirstOrDefaultAsync(p => p.JobId == jobId && p.Id == postulantId);
+        }
+
+        public async Task<bool> CheckDuplicatePostulation(int clientId, int jobId)
+        {
+            return await _context.Postulations
+            .AnyAsync(a => a.ClientId == clientId && a.JobId == jobId);
         }
 
         public async Task SaveChangesAsync()
