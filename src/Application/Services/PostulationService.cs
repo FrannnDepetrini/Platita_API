@@ -143,14 +143,24 @@ namespace Application.Services
 
         }
 
-        public async Task RejectPostulationAsync(int postulationId)
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task UnpostulateAsync(int userId, int jobId)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<bool> DeletePostulationFisic(int jobId, int postulationId)
+        {
+            var postJob = await _postulationRepository.GetPostulationByJobAndPostulantId(jobId, postulationId);
+
+            if (postJob == null)
+            {
+                throw new Exception("Not found");
+            }
+
+            await _postulationRepository.Delete(postJob);
+            await _postulationRepository.SaveChangesAsync();
+            return true;
         }
     }
 }
