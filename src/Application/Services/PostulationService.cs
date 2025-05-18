@@ -22,32 +22,7 @@ namespace Application.Services
         }
 
 
-        public async Task<PostulationDetailDTO?> GetByIdForPublisherAsync(int id)
-        {
-            var postulation = await _postulationRepository.GetByIdForPublisherAsync(id);
-            if(postulation is null)
-            {
-                throw new Exception("Postulation not found");
-            }
-
-            var postulationDetailDTO = PostulationDetailDTO.Create(postulation);
-
-            return postulationDetailDTO;
-        }     
-        
-        public async Task<MyPostulationDTO?> GetByIdForApplicantAsync(int id)
-        {
-            var postulation = await _postulationRepository.GetByIdForApplicantAsync(id);
-            if(postulation is null)
-            {
-                throw new Exception("Postulation not found");
-            }
-
-            var myPostulationDTO = MyPostulationDTO.Create(postulation);
-
-            return myPostulationDTO;
-        }
-
+       
         public async Task<IEnumerable<PostulationDetailDTO>> GetPostulationsByJobIdAsync(int jobId, int publisherId)
         {
             var postulation = await _postulationRepository.GetByJobIdAsync(jobId);
@@ -237,6 +212,7 @@ namespace Application.Services
 
             var result = posts.Select(p => new MyPostulationDTO
             {
+                Id = p.Id,
                 Budget = p.Budget,
                 Status = p.Status.ToString(),
                 Job = new JobDTO
@@ -245,13 +221,13 @@ namespace Application.Services
                     Title = p.Job.Title,
                     AveragePrice = p.Job.AveragePrice,
                     AmountPostulations = p.Job.AmountPostulations,
-                    Status = p.Job.Status,
+                    Status = p.Job.Status.ToString(),
                     Province = p.Job.Province,
                     City = p.Job.City,
-                    DateTime = p.Job.DateTime,
+                    DayPublicationStart = p.Job.DayPublicationStart,
+                    DayPublicationEnd = p.Job.DayPublicationEnd,
                     Description = p.Job.Description,
-                    Category = p.Job.Category,
-                    Picture = p.Job.Picture
+                    Category = p.Job.Category.ToString()
                 }
             }).ToList();
 

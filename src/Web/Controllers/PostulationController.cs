@@ -44,6 +44,21 @@ namespace Web.Controllers
             }
         }
 
+        [HttpGet("[action]")]
+        public async Task<ActionResult> GetMyPostulations()
+        {
+            try
+            {
+                var userId = User.GetUserIntId();
+                var MyPostulations = await _postulationService.GetMyPostulations(userId);
+                return Ok(MyPostulations);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpPost("[action]")]
 
         public async Task<IActionResult> ApplicateJob(PostulationRequest request)
@@ -112,19 +127,6 @@ namespace Web.Controllers
             }
         }
 
-        [HttpGet("[action]")]
-        public async Task<ActionResult> GetMyPostulations()
-        {
-            try
-            {
-                var userId = User.GetUserIntId();
-                var MyPostulations = await _postulationService.GetMyPostulations(userId);
-                return Ok(MyPostulations);
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
+        
     }
 }
