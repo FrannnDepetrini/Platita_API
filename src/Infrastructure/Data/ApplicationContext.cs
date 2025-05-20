@@ -32,6 +32,7 @@ namespace Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            //modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
             //  acá le digo a la tabla User que va a tener una columna que sirve para discriminar el tipo de User
             modelBuilder.Entity<User>()
                 .HasDiscriminator<string>("Role")
@@ -316,7 +317,7 @@ namespace Infrastructure.Data
                 {
                     Id = 3,
                     ClientId = 4, // Maximo
-                    JobId = 2,
+                    JobId = 3,
                     Budget = 20000,
                     Status = PostulationStatusEnum.Pending
                 },
