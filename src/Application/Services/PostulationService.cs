@@ -208,7 +208,7 @@ namespace Application.Services
         public async Task<IEnumerable<MyPostulationDTO>> GetMyPostulations(int userId)
         {
             var posts = await _postulationRepository.GetAllMyPostulations(userId);
-            Console.WriteLine(posts.GetType());
+            
 
             var result = posts.Select(p => new MyPostulationDTO
             {
@@ -218,6 +218,7 @@ namespace Application.Services
                 Job = new JobDTO
                 {
                     Id = p.Job.Id,
+                    UserName = p.Job.Client.UserName,
                     Title = p.Job.Title,
                     AveragePrice = p.Job.AveragePrice,
                     AmountPostulations = p.Job.AmountPostulations,
