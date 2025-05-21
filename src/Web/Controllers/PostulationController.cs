@@ -66,7 +66,7 @@ namespace Web.Controllers
             try
             {
                 int userId = User.GetUserIntId();
-                var result = await _postulationService.PostulateAsync(userId, request.JobId, request.Budget);
+                var result = await _postulationService.PostulateAsync(userId, request.JobId, request.Budget, request.jobDay);
                 return Ok(result);
             }
             catch (UnauthorizedAccessException ex)
@@ -127,6 +127,19 @@ namespace Web.Controllers
             }
         }
 
+        [HttpPut("[action]")]
+        public async Task<ActionResult> CancelWhenSuccessPostulation(int jobId, int postulationId)
+        {
+            try
+            {
+                 await _postulationService.CancelPostulation(jobId, postulationId, User.GetUserIntId());
+                return Ok();
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         
     }
 }

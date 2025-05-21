@@ -16,7 +16,7 @@ namespace Application.Services
     {
         private readonly IPostulationRepository _postulationRepository = postulationRepository;
         private readonly IJobRepository _jobRepository = jobRepository;
-
+       // private readonly IJobService _jobService = jobService;
         public Task AcceptPostulationAsync(int postulationId)
         {
             throw new NotImplementedException();
@@ -51,7 +51,7 @@ namespace Application.Services
 
         }
 
-        public async Task<PostulationDetailDTO> PostulateAsync(int userId, int jobId, float budget)
+        public async Task<PostulationDetailDTO> PostulateAsync(int userId, int jobId, float budget, DateTime jobDay)
         {
             var job = await _jobRepository.GetById(jobId);
             if (job == null)
@@ -76,7 +76,9 @@ namespace Application.Services
                 JobId = jobId,
                 ClientId = userId,
                 Budget = budget,
+                JobDay = jobDay,
                 Status = PostulationStatusEnum.Pending
+                
             };
 
             await _postulationRepository.Create(postulation);
@@ -237,6 +239,7 @@ namespace Application.Services
                 Id = p.Id,
                 Budget = p.Budget,
                 Status = p.Status.ToString(),
+                JobDay = p.JobDay,
                 Job = new JobDTO
                 {
                     Id = p.Job.Id,
@@ -257,5 +260,39 @@ namespace Application.Services
             return result;
         }
 
+        public async Task CancelPostulation(int jobId, int postulationId, int userId)
+        {
+            
+            var postulation = await _postulationRepository.GetById(postulationId);
+
+            var job = await _jobRepository.GetById(jobId);
+
+            if(job.Postulations.FirstOrDefault(p => p.Id == postulation.Id) == null) 
+            { 
+                throw new Exception("This postulation not found"); 
+            }
+
+            if (postulation.Status == PostulationStatusEnum.Success)
+            {
+                postulation.Status = PostulationStatusEnum.Cancelled;
+                if ((DateTime.Now - postulation.JobDay).TotalHours <= 48)
+                {
+                    //resena mala para el postulante
+                }
+                
+
+                foreach(var post in job.Postulations.ToList())
+                {
+                    if(post.Status == PostulationStatusEnum.Rejected) 
+                    { 
+                        await DeletePostulationFisica(post); 
+                    }
+                }
+
+                //await _jobService.DeleteLogic(job.Id, userId);
+                job.Status = JobStatusEnum.Deleted;
+                 await _jobRepository.SaveChangesAsync();
+            }
+        }
     }
 }

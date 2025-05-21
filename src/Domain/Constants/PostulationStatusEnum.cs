@@ -11,6 +11,7 @@ namespace Domain.Constants
         Success,
         Pending,
         Rejected,
-        Done
+        Done,
+        Cancelled
     }
 }

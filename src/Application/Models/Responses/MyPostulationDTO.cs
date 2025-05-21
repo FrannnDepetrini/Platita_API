@@ -17,7 +17,7 @@ public class MyPostulationDTO
     public string Status { get; set; }
     public JobDTO Job { get; set; }
 
-
+    public DateTime JobDay { get; set; }
     public static MyPostulationDTO? Create(Postulation postulation)
     {
         if (postulation == null)
@@ -31,6 +31,7 @@ public class MyPostulationDTO
             Budget = postulation.Budget,
             Status = postulation.Status.ToString(),
             //Client = postulation.Client,
+            JobDay = postulation.JobDay,
             Job = JobDTO.Create(postulation.Job)
         };
     }

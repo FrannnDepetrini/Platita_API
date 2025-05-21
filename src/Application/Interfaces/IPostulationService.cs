@@ -10,7 +10,7 @@ namespace Application.Interfaces
 {
     public interface IPostulationService
     {
-        Task<PostulationDetailDTO> PostulateAsync(int userId, int jobId, float budget);
+        Task<PostulationDetailDTO> PostulateAsync(int userId, int jobId, float budget, DateTime jobDay);
         Task UnpostulateAsync(int userId, int jobId);
         Task<PostulationDetailDTO?> GetByIdForPublisherAsync(int id);
         Task<MyPostulationDTO?> GetByIdForApplicantAsync(int id);
@@ -21,5 +21,6 @@ namespace Application.Interfaces
         Task<bool> DeletePostulationLogic(int postulantId, int jobId);
         Task<PostulationDTO> ChangeStatusPostulation(int jobId, int postulantId, int userId);
         Task<IEnumerable<MyPostulationDTO>> GetMyPostulations(int userId);
+        Task CancelPostulation(int jobId, int postulationId, int userId);
     }
 }
