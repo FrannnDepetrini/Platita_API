@@ -124,6 +124,20 @@ public class JobController : ControllerBase
             return NotFound();
         }
     }
+
+    [HttpPut("JobDone/{id}")]
+    public async Task<IActionResult> JobFinished(int idJob)
+    {
+        try
+        {
+            await _jobService.JobFinished(idJob, User.GetUserIntId());
+            return Ok();
+        }
+        catch
+        {
+            return NotFound();
+        }
+    }
 }
 
 

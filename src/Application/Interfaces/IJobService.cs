@@ -28,6 +28,7 @@ namespace Application.Interfaces
         Task<List<JobDTO>> GetJobsByClientAsync(int userId);
         Task<IEnumerable<JobDTO>> GetJobsByCategory(JobFilteredByCategoryRequest request);
 
+        Task JobFinished(int idJob, int userId);
     }
 
 }

@@ -6,6 +6,7 @@ using Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -101,16 +102,30 @@ namespace Application.Services
 
             var allPostulations = await _postulationRepository.GetByJobIdAsync(jobId);
 
-            foreach (var postulation in allPostulations)
+            
+
+            if (allPostulations.FirstOrDefault(p => p.Status == PostulationStatusEnum.Success) != null)
             {
+                throw new Exception("You already have one postulant");
+            }
+
+            if (selectedPostulant.Status == PostulationStatusEnum.Rejected)
+            {
+                throw new Exception("This postulant is already rejected");
+            }
+
+
+            foreach (var postulation in allPostulations)
+            {   
                 if (postulation.Id == selectedPostulant.Id)
                 {
                     postulation.Status = PostulationStatusEnum.Success;
+                    
                 }
                 else
                 {
                     postulation.Status = PostulationStatusEnum.Rejected;
-                }
+                }                
             }
             selectedPostulant.Job.Status = JobStatusEnum.Taken;
 
@@ -129,6 +144,13 @@ namespace Application.Services
 
         }
 
+        public async Task<bool> DeletePostulationFisica(Postulation postJob)
+        {
+
+            await _postulationRepository.Delete(postJob);
+           
+            return true;
+        }
         public async Task<bool> DeletePostulationFisic(int jobId, int postulationId)
         {
             var postJob = await _postulationRepository.GetPostulationByJobAndPostulantId(jobId, postulationId);
