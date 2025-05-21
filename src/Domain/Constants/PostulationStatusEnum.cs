@@ -10,6 +10,7 @@ namespace Domain.Constants
     {
         Success,
         Pending,
-        Rejected
+        Rejected,
+        Done
     }
 }
