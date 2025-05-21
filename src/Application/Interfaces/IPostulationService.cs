@@ -21,6 +21,6 @@ namespace Application.Interfaces
         Task<bool> DeletePostulationLogic(int postulantId, int jobId);
         Task<PostulationDTO> ChangeStatusPostulation(int jobId, int postulantId, int userId);
         Task<IEnumerable<MyPostulationDTO>> GetMyPostulations(int userId);
-        Task CancelPostulation(int jobId, int postulationId, int userId);
+        Task CancelPostulation(int jobId, int postulationId);
     }
 }

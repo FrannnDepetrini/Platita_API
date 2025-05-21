@@ -260,7 +260,7 @@ namespace Application.Services
             return result;
         }
 
-        public async Task CancelPostulation(int jobId, int postulationId, int userId)
+        public async Task CancelPostulation(int jobId, int postulationId)
         {
             
             var postulation = await _postulationRepository.GetById(postulationId);

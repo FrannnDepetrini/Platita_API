@@ -132,7 +132,7 @@ namespace Web.Controllers
         {
             try
             {
-                 await _postulationService.CancelPostulation(jobId, postulationId, User.GetUserIntId());
+                 await _postulationService.CancelPostulation(jobId, postulationId);
                 return Ok();
             }
             catch (UnauthorizedAccessException ex)
