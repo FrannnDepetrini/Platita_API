@@ -66,7 +66,7 @@ namespace Infrastructure.Data.Repositories
             return await _context.Postulations
                 .Where(p=>p.ClientId == userId )
                 .Include(p=>p.Job)
-                .Include(p=> p.Client)
+                .ThenInclude(p=> p.Client)
                 .ToListAsync();
 
         }

@@ -11,10 +11,10 @@ namespace Application.Models.Responses
     {
         public int Id { get; set; }
         public float Budget { get; set; }
-        public ClientForJobDTO Client { get; set; }
+        public DateTime JobDay { get; set; }
         public string Status { get; set; }
-
-
+        public ClientForJobDTO Client { get; set; }
+        
         internal static PostulationDetailDTO? Create(Postulation postulation)
         {
             if (postulation == null)
@@ -26,8 +26,9 @@ namespace Application.Models.Responses
             {
                 Id = postulation.Id,
                 Budget = postulation.Budget,
-                Client = ClientForJobDTO.Create(postulation.Client)!,
-                Status = postulation.Status.ToString()
+                JobDay = postulation.JobDay,
+                Status = postulation.Status.ToString(),
+                Client = ClientForJobDTO.Create(postulation.Client)!
             };
         }
 

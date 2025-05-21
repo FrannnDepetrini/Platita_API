@@ -19,6 +19,8 @@ namespace Domain.Entities
         public float Budget { get; set; }
         public Job Job { get; set; }
         public Client Client { get; set; }
+
+        public DateTime JobDay { get; set; }
         public PostulationStatusEnum Status { get; set; }
 
     }

@@ -303,6 +303,7 @@ namespace Infrastructure.Data
                     ClientId = 6, // Mario
                     JobId = 1,
                     Budget = 15000,
+                    JobDay = new DateTime(2025,5, 23),
                     Status = PostulationStatusEnum.Pending
                 },
                 new Postulation
@@ -311,6 +312,7 @@ namespace Infrastructure.Data
                     ClientId = 7, // Depe
                     JobId = 1,
                     Budget = 14000,
+                    JobDay = new DateTime(2025, 5, 22),
                     Status = PostulationStatusEnum.Success
                 },
                 new Postulation
@@ -319,6 +321,7 @@ namespace Infrastructure.Data
                     ClientId = 4, // Maximo
                     JobId = 3,
                     Budget = 20000,
+                    JobDay = new DateTime(2025, 5, 16),
                     Status = PostulationStatusEnum.Pending
                 },
                 new Postulation
@@ -327,6 +330,7 @@ namespace Infrastructure.Data
                     ClientId = 8, // Pale
                     JobId = 3,
                     Budget = 18000,
+                    JobDay = new DateTime(2025, 5, 17),
                     Status = PostulationStatusEnum.Rejected
                 },
                 new Postulation
@@ -335,6 +339,7 @@ namespace Infrastructure.Data
                     ClientId = 9, // Pedro
                     JobId = 4,
                     Budget = 22000,
+                    JobDay = new DateTime(2025, 5, 21),
                     Status = PostulationStatusEnum.Success
                 }
             );
