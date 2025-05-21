@@ -131,6 +131,8 @@ namespace Application.Services
             }
             selectedPostulant.Job.Status = JobStatusEnum.Taken;
 
+            selectedPostulant.Job.PostulationSelected = selectedPostulant.Id; 
+
             await _postulationRepository.SaveChangesAsync();
 
             return new PostulationDTO
