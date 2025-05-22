@@ -89,6 +89,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IUserService, UserService> ();
+builder.Services.AddScoped<IRatingService, RatingService>();
 builder.Services.AddScoped<IPostulationService, PostulationService>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IJobExpirationService, JobExpirationService>();
@@ -101,6 +102,7 @@ builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpS
 builder.Services.AddScoped<IJobRepository, JobRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
+builder.Services.AddScoped<IRatingRepository, RatingRepository> ();
 builder.Services.AddScoped<IPostulationRepository, PostulationRepository>();
 #endregion
 
