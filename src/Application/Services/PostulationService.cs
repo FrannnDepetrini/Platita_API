@@ -131,7 +131,7 @@ namespace Application.Services
             }
             selectedPostulant.Job.Status = JobStatusEnum.Taken;
 
-            selectedPostulant.Job.PostulationSelected = selectedPostulant.Id; 
+            selectedPostulant.Job.PostulationSelectedId = selectedPostulant.Id; 
 
             await _postulationRepository.SaveChangesAsync();
 

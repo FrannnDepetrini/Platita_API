@@ -78,7 +78,7 @@ namespace Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("PostulationSelected")
+                    b.Property<int>("PostulationSelectedId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Province")

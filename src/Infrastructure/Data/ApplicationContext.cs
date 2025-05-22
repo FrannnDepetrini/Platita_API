@@ -69,6 +69,12 @@ namespace Infrastructure.Data
                 .WithMany()
                 .HasForeignKey(c => c.PaymentId);
 
+            modelBuilder.Entity<Job>()
+                .HasOne(c => c.PostulationSelected)
+                .WithMany()
+                .HasForeignKey(c => c.PostulationSelectedId)
+                .OnDelete(DeleteBehavior.SetNull);
+
             modelBuilder.Entity<Complaint>()
                 .HasOne(c => c.Client)
                 .WithMany()
@@ -184,6 +190,7 @@ namespace Infrastructure.Data
                 {
                     Id = 1,
                     ClientId = 4, // Maximo
+                    PostulationSelectedId = 2,
                     Title = "Pintar departamento",
                     Status = JobStatusEnum.Available,
                     Description = "Necesito pintar un monoambiente en el centro",
@@ -197,7 +204,7 @@ namespace Infrastructure.Data
                 new Job
                 {
                     Id = 2,
-                    ClientId = 4, // Maximo
+                    ClientId = 4, // Maximo,
                     Title = "Instalación de luces LED",
                     Status = JobStatusEnum.Available,
                     Description = "Instalación de 10 luces LED en cocina y living",
@@ -212,6 +219,7 @@ namespace Infrastructure.Data
                 {
                     Id = 3,
                     ClientId = 5, // Joaquin
+                    PostulationSelectedId = 3,
                     Title = "Corte de pasto y desmalezado",
                     Status = JobStatusEnum.Available,
                     Description = "Patio de 100m2 con pasto alto, se necesita corte y limpieza",
@@ -226,6 +234,7 @@ namespace Infrastructure.Data
                 {
                     Id = 4,
                     ClientId = 6, // Mario
+                    PostulationSelectedId = 5,
                     Title = "Reparar cañería del baño",
                     Status = JobStatusEnum.Available,
                     Description = "Hay una pérdida debajo del lavabo",
@@ -292,7 +301,7 @@ namespace Infrastructure.Data
                     DayPublicationEnd = new DateTime(2025, 5, 24),
                     PaymentId = 1
                 }
-            );
+            ) ; 
 
 
             //// POSTULATIONS (IDs: 1 al 5)
@@ -322,7 +331,7 @@ namespace Infrastructure.Data
                     JobId = 3,
                     Budget = 20000,
                     JobDay = new DateTime(2025, 5, 16),
-                    Status = PostulationStatusEnum.Pending
+                    Status = PostulationStatusEnum.Success
                 },
                 new Postulation
                 {
@@ -343,6 +352,62 @@ namespace Infrastructure.Data
                     Status = PostulationStatusEnum.Success
                 }
             );
+
+            /*public int Id { get; set; }
+               public int RatedByUserId { get; set; }
+               public int RatedUserId { get; set; }
+               public int Score { get; set; }
+               public string Description { get; set; }
+
+               public int JobId { get; set; }
+
+               public Job Job { get; set; }*/
+
+            modelBuilder.Entity<Rating>().HasData(
+                    new Rating
+                    {
+                        Id = 1,
+                        RatedByUserId = 7,
+                        RatedUserId = 4,
+                        Score = 4,
+                        Description = "muy amable y hasta me ofrecio facturas.",
+                        JobId = 1
+                    },
+                    new Rating
+                    {
+                        Id = 2,
+                        RatedByUserId = 4,
+                        RatedUserId = 7,
+                        Score = 5,
+                        Description = "tipazo, muy prolijo!",
+                        JobId = 1
+                    },
+                    new Rating
+                    {
+                        Id = 3,
+                        RatedByUserId = 4,
+                        RatedUserId = 5,
+                        Score = 1,
+                        Description = "estaba de mal humor y me trato bastante mal",
+                        JobId = 3
+                    }, new Rating
+                    {
+                        Id = 4,
+                        RatedByUserId = 5,
+                        RatedUserId = 4,
+                        Score = 1,
+                        Description = "me dejo el patio hecho un desastre",
+                        JobId = 3
+                    }, new Rating
+                    {
+                        Id = 5,
+                        RatedByUserId = 9,
+                        RatedUserId = 6,
+                        Score = 3,
+                        Description = "el baño estaba un poco sucio. buen trato!",
+                        JobId = 4
+                    }
+               );
         }
     }
 }

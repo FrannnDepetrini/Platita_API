@@ -17,7 +17,8 @@ namespace Domain.Entities
         public int ClientId {get; set;}
         public Client Client { get; set; } = default!;
         public List<Postulation> Postulations { get; set; } = new();
-        public int PostulationSelected {get; set;} 
+        public int? PostulationSelectedId { get; set; }
+        public Postulation? PostulationSelected { get; set; }
         public string Title { get; set; }
         public float AveragePrice => Postulations.Count == 0 ? 0 : Postulations.Sum(x => x.Budget) / Postulations.Count;
         public int AmountPostulations => Postulations.Count;

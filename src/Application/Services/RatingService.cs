@@ -35,35 +35,16 @@ namespace Application.Services
         {
             var job = await _jobRepository.GetById(request.JobId);
 
-
-            if (clientId == job.ClientId)
-            {
-                var postulant = await _postulationRepository.GetByIdForPublisherAsync(job.PostulationSelected);
-
                 var newRating = new Rating
                 {
                     RatedByUserId = clientId,
-                    RatedUserId = postulant.ClientId,
+                    RatedUserId = job.ClientId == clientId ? job.PostulationSelected.ClientId : job.ClientId,
                     Score = request.Score,
                     Description = request.Description,
                     JobId = request.JobId,
                 };
 
                 await _ratingRepository.Create(newRating);
-            }
-            else
-            {
-                var newRating = new Rating
-                {
-                    RatedByUserId = clientId,
-                    RatedUserId = job.ClientId,
-                    Score = request.Score,
-                    Description = request.Description,
-                    JobId = request.JobId,
-                };
-
-                await _ratingRepository.Create(newRating);
-            }
 
         }
         /*public int RatedByUserId { get; set; } //hace la reseña. token

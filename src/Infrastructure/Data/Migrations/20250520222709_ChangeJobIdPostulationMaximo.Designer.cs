@@ -80,7 +80,7 @@ namespace Infrastructure.Data.Migrations
                     b.Property<int>("PaymentId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("PostulationSelected")
+                    b.Property<int>("PostulationSelectedId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Province")
@@ -113,7 +113,7 @@ namespace Infrastructure.Data.Migrations
                             DayPublicationStart = new DateTime(2025, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Necesito pintar un monoambiente en el centro",
                             PaymentId = 1,
-                            PostulationSelected = 0,
+                            PostulationSelectedId = 0,
                             Province = "Santa Fe",
                             Status = 0,
                             Title = "Pintar departamento"
@@ -128,7 +128,7 @@ namespace Infrastructure.Data.Migrations
                             DayPublicationStart = new DateTime(2025, 5, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Instalación de 10 luces LED en cocina y living",
                             PaymentId = 1,
-                            PostulationSelected = 0,
+                            PostulationSelectedId = 0,
                             Province = "Santa Fe",
                             Status = 0,
                             Title = "Instalación de luces LED"
@@ -143,7 +143,7 @@ namespace Infrastructure.Data.Migrations
                             DayPublicationStart = new DateTime(2025, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Patio de 100m2 con pasto alto, se necesita corte y limpieza",
                             PaymentId = 1,
-                            PostulationSelected = 0,
+                            PostulationSelectedId = 0,
                             Province = "Buenos Aires",
                             Status = 0,
                             Title = "Corte de pasto y desmalezado"
@@ -158,7 +158,7 @@ namespace Infrastructure.Data.Migrations
                             DayPublicationStart = new DateTime(2025, 5, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Hay una pérdida debajo del lavabo",
                             PaymentId = 1,
-                            PostulationSelected = 0,
+                            PostulationSelectedId = 0,
                             Province = "Mendoza",
                             Status = 0,
                             Title = "Reparar cañería del baño"
@@ -173,7 +173,7 @@ namespace Infrastructure.Data.Migrations
                             DayPublicationStart = new DateTime(2025, 5, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Necesito ayuda para mudar muebles pesados",
                             PaymentId = 1,
-                            PostulationSelected = 0,
+                            PostulationSelectedId = 0,
                             Province = "Santa Fe",
                             Status = 0,
                             Title = "Mudanza de muebles"
@@ -188,7 +188,7 @@ namespace Infrastructure.Data.Migrations
                             DayPublicationStart = new DateTime(2025, 5, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Jardín de 50m2 con césped crecido",
                             PaymentId = 1,
-                            PostulationSelected = 0,
+                            PostulationSelectedId = 0,
                             Province = "Córdoba",
                             Status = 0,
                             Title = "Corte de césped y limpieza del jardín"
@@ -203,7 +203,7 @@ namespace Infrastructure.Data.Migrations
                             DayPublicationStart = new DateTime(2025, 4, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Limpieza profunda de casa de 3 ambientes",
                             PaymentId = 1,
-                            PostulationSelected = 0,
+                            PostulationSelectedId = 0,
                             Province = "Santa Fe",
                             Status = 0,
                             Title = "Limpieza de hogar"
@@ -218,7 +218,7 @@ namespace Infrastructure.Data.Migrations
                             DayPublicationStart = new DateTime(2025, 5, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Necesito un desarrollador fullstack para una app de gestión",
                             PaymentId = 1,
-                            PostulationSelected = 0,
+                            PostulationSelectedId = 0,
                             Province = "Santa Fe",
                             Status = 0,
                             Title = "Programar aplicación web"
