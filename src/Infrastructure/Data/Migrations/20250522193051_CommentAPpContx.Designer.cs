@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250507155011_Test-Email")]
-    partial class TestEmail
+    [Migration("20250522193051_CommentAPpContx")]
+    partial class CommentAPpContx
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,18 +67,20 @@ namespace Infrastructure.Data.Migrations
                     b.Property<int>("ClientId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime?>("DateTime")
+                    b.Property<DateTime?>("DayPublicationEnd")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DayPublicationStart")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Picture")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("PaymentId")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<int>("PostulationSelectedId")
+                    b.Property<int?>("PostulationSelectedId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Province")
@@ -95,6 +97,10 @@ namespace Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
+
+                    b.HasIndex("PaymentId");
+
+                    b.HasIndex("PostulationSelectedId");
 
                     b.ToTable("Jobs");
                 });
@@ -119,7 +125,7 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Domain.Entities.Postulation", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -129,13 +135,16 @@ namespace Infrastructure.Data.Migrations
                     b.Property<int>("ClientId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime>("JobDay")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("JobId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Status")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.HasIndex("ClientId");
 
@@ -192,8 +201,9 @@ namespace Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("PhoneNumber")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Role")
                         .IsRequired()
@@ -229,18 +239,6 @@ namespace Infrastructure.Data.Migrations
                     b.HasIndex("PaymentId");
 
                     b.HasDiscriminator().HasValue("Client");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 4,
-                            Email = "marmax0504@gmail.com",
-                            Password = "1234",
-                            PhoneNumber = 341,
-                            UserName = "Maximo",
-                            City = "Rosario",
-                            Province = "Santa Fe"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Moderator", b =>
@@ -291,7 +289,22 @@ namespace Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Entities.Payment", "Payment")
+                        .WithMany()
+                        .HasForeignKey("PaymentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Postulation", "PostulationSelected")
+                        .WithMany()
+                        .HasForeignKey("PostulationSelectedId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.Navigation("Client");
+
+                    b.Navigation("Payment");
+
+                    b.Navigation("PostulationSelected");
                 });
 
             modelBuilder.Entity("Domain.Entities.Postulation", b =>
@@ -331,11 +344,11 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Domain.Entities.Client", b =>
                 {
-                    b.HasOne("Domain.Entities.Payment", "Payment")
+                    b.HasOne("Domain.Entities.Payment", "PreferredPayment")
                         .WithMany()
                         .HasForeignKey("PaymentId");
 
-                    b.Navigation("Payment");
+                    b.Navigation("PreferredPayment");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job", b =>

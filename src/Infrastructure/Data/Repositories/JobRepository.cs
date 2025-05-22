@@ -26,6 +26,7 @@ namespace Infrastructure.Data.Repositories
             return await _context.Jobs
                 .Include(j => j.Client)
                 .Include(j => j.Postulations)
+                .Include(j => j.PostulationSelected)
                 .FirstOrDefaultAsync(j => j.Id == id);
         }
 

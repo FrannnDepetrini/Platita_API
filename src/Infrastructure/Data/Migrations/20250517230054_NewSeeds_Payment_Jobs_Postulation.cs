@@ -66,7 +66,7 @@ namespace Infrastructure.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Jobs",
-                columns: new[] { "Id", "Category", "City", "ClientId", "DayPublicationEnd", "DayPublicationStart", "Description", "PaymentId", "PostulationSelected", "Province", "Status", "Title" },
+                columns: new[] { "Id", "Category", "City", "ClientId", "DayPublicationEnd", "DayPublicationStart", "Description", "PaymentId", "PostulationSelectedId", "Province", "Status", "Title" },
                 values: new object[,]
                 {
                     { 1, 6, "Rosario", 4, new DateTime(2025, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2025, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Necesito pintar un monoambiente en el centro", 1, 0, "Santa Fe", 0, "Pintar departamento" },

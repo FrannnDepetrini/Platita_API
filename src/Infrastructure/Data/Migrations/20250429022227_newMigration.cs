@@ -163,10 +163,10 @@ namespace Infrastructure.Data.Migrations
                 defaultValue: 0);
 
             migrationBuilder.AddColumn<int>(
-                name: "PostulationSelected",
+                name: "PostulationSelectedId",
                 table: "Jobs",
                 type: "INTEGER",
-                nullable: false,
+                nullable: true,
                 defaultValue: 0);
 
             migrationBuilder.CreateTable(
@@ -364,7 +364,7 @@ namespace Infrastructure.Data.Migrations
                 table: "Jobs");
 
             migrationBuilder.DropColumn(
-                name: "PostulationSelected",
+                name: "PostulationSelectedId",
                 table: "Jobs");
 
             migrationBuilder.RenameColumn(
