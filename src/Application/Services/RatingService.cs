@@ -47,15 +47,24 @@ namespace Application.Services
                 await _ratingRepository.Create(newRating);
 
         }
-        /*public int RatedByUserId { get; set; } //hace la reseña. token
-        public int RatedUserId { get; set; } //recibe reseña. empleador -> job.client.id
-                                             //               empleado -> job.postulation.id
-        public int Score { get; set; }
-        public string Description { get; set; }
 
-        public int JobId { get; set; }
+        public async Task CreateBadRating(int clientId, CreateRatingRequest request)
+        {
+            var job = await _jobRepository.GetById(request.JobId);
 
-        public Job Job { get; set; }*/
+            var newRating = new Rating
+            {
+                RatedByUserId = null,
+                RatedUserId = clientId,
+                Score = request.Score,
+                Description = request.Description,
+                JobId = request.JobId,
+            };
+
+            await _ratingRepository.Create(newRating);
+
+        }
+        
 
     }
 }
