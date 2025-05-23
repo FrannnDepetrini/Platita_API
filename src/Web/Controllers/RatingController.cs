@@ -19,7 +19,7 @@ namespace Web.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetMyReceivedRatings(int clientId = 0)
+        public async Task<IActionResult> GetMyOrOtherReceivedRatings(int clientId = 0)
         {
             try
             {
