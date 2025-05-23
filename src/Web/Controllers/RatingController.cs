@@ -18,6 +18,34 @@ namespace Web.Controllers
             _ratingService = ratingService;
         }
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetMyOrOtherReceivedRatings(int clientId = 0)
+        {
+            try
+            {
+                var reviews = await _ratingService.GetMyReceivedRatings(clientId == 0 ? User.GetUserIntId() : clientId);
+                return Ok(reviews);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetMyReceivedRatingsScore()
+        {
+            try
+            {
+                var reviews = await _ratingService.GetMyReceivedRatingsScore(User.GetUserIntId());
+                return Ok(reviews);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost("[action]")]
         public async Task<IActionResult> CreateRating(CreateRatingRequest request)
         {
