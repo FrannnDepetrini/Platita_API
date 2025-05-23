@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Application.Models.Requests;
 using Application.Models.Responses;
 using Domain.Constants;
 using Domain.Entities;
@@ -12,10 +13,11 @@ using System.Threading.Tasks;
 
 namespace Application.Services
 {
-    public class PostulationService(IPostulationRepository postulationRepository, IJobRepository jobRepository) : IPostulationService
+    public class PostulationService(IPostulationRepository postulationRepository, IJobRepository jobRepository, IRatingService ratingService) : IPostulationService
     {
         private readonly IPostulationRepository _postulationRepository = postulationRepository;
         private readonly IJobRepository _jobRepository = jobRepository;
+        private readonly IRatingService _ratingService = ratingService;
        // private readonly IJobService _jobService = jobService;
         public Task AcceptPostulationAsync(int postulationId)
         {
@@ -262,7 +264,7 @@ namespace Application.Services
             return result;
         }
 
-        public async Task CancelPostulation(int jobId, int postulationId)
+        public async Task CancelPostulation(int jobId, int postulationId, int userId)
         {
             
             var postulation = await _postulationRepository.GetById(postulationId);
@@ -280,12 +282,19 @@ namespace Application.Services
                 if ((DateTime.Now - postulation.JobDay).TotalHours <= 48)
                 {
                     //resena mala para el postulante
+                    var request = new CreateRatingRequest
+                    {
+                        Score = 1,
+                        Description = "Cancelo a ultimo momento",
+                        JobId = job.Id
+                    };
+                    await _ratingService.CreateBadRating(userId, request);
                 }
                 
 
                 foreach(var post in job.Postulations.ToList())
                 {
-                    if(post.Status == PostulationStatusEnum.Rejected) 
+                    if(post.Status != PostulationStatusEnum.Cancelled) 
                     { 
                         await DeletePostulationFisica(post); 
                     }

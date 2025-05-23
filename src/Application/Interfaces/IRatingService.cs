@@ -12,5 +12,7 @@ namespace Application.Interfaces
         Task DeleteRatingFisic(int idRating);
 
         Task CreateRating(int clientId, CreateRatingRequest request);
+
+        Task CreateBadRating(int clientId, CreateRatingRequest request);
     }
 }
