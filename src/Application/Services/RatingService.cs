@@ -24,11 +24,16 @@ namespace Application.Services
             _postulationRepository = postulationRepository;
         }
 
-
-        public async Task DeleteRatingFisic(int idRating)
+        public async Task<List<Rating>> GetMyReceivedRatings(int clientId)
         {
-            var rating = await _ratingRepository.GetById(idRating);
-            await _ratingRepository.Delete(rating);
+            var ratings = await _ratingRepository.GetMyReceivedRatings(clientId);
+            return ratings;
+        }
+
+        public async Task<Dictionary<int, int>> GetMyReceivedRatingsScore(int clientId)
+        {
+            var ratings = await _ratingRepository.GetMyReceivedRatingsScore(clientId);
+            return ratings;
         }
 
         public async Task CreateRating(int clientId, CreateRatingRequest request)
@@ -64,7 +69,12 @@ namespace Application.Services
             await _ratingRepository.Create(newRating);
 
         }
-        
+
+        public async Task DeleteRatingFisic(int idRating)
+        {
+            var rating = await _ratingRepository.GetById(idRating);
+            await _ratingRepository.Delete(rating);
+        }
 
     }
 }

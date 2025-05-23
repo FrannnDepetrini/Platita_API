@@ -9,6 +9,7 @@ namespace Domain.Interfaces
 {
     public interface IRatingRepository : IBaseRepository<Rating> 
     {
-
+        Task<List<Rating>> GetMyReceivedRatings(int clientId);
+        Task<Dictionary<int, int>> GetMyReceivedRatingsScore(int clientId);
     }
 }
