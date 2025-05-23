@@ -300,9 +300,8 @@ namespace Application.Services
                     }
                 }
 
-                //await _jobService.DeleteLogic(job.Id, userId);
                 job.Status = JobStatusEnum.Deleted;
-                 await _jobRepository.SaveChangesAsync();
+                await _jobRepository.SaveChangesAsync();
             }
         }
     }

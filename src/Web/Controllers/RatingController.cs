@@ -19,11 +19,24 @@ namespace Web.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetMyOrOtherReceivedRatings(int clientId = 0)
+        public async Task<IActionResult> GetMyOrOtherReceivedRatingsForEmployer(int clientId = 0)
         {
             try
             {
-                var reviews = await _ratingService.GetMyReceivedRatings(clientId == 0 ? User.GetUserIntId() : clientId);
+                var reviews = await _ratingService.GetMyOrOtherReceivedRatingsForEmployer(clientId == 0 ? User.GetUserIntId() : clientId);
+                return Ok(reviews);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetMyOrOtherReceivedRatingsForEmployee(int clientId = 0)
+        {
+            try
+            {
+                var reviews = await _ratingService.GetMyOrOtherReceivedRatingsForEmployee(clientId == 0 ? User.GetUserIntId() : clientId);
                 return Ok(reviews);
             }
             catch (Exception ex)
@@ -33,11 +46,11 @@ namespace Web.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetMyReceivedRatingsScore()
+        public async Task<IActionResult> GetMyReceivedRatingsScore(int clientId = 0)
         {
             try
             {
-                var reviews = await _ratingService.GetMyReceivedRatingsScore(User.GetUserIntId());
+                var reviews = await _ratingService.GetMyReceivedRatingsScore(clientId == 0 ? User.GetUserIntId() : clientId);
                 return Ok(reviews);
             }
             catch (Exception ex)
