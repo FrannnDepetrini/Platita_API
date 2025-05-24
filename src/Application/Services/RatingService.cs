@@ -24,13 +24,24 @@ namespace Application.Services
             _postulationRepository = postulationRepository;
         }
 
-        public async Task<List<Rating>> GetMyReceivedRatings(int clientId)
+        public async Task<List<RatingDTO>> GetMyOrOtherReceivedRatingsForEmployer(int clientId)
         {
-            var ratings = await _ratingRepository.GetMyReceivedRatings(clientId);
-            return ratings;
+            var ratings = await _ratingRepository.GetMyOrOtherReceivedRatingsForEmployer(clientId);
+
+            var ratingsDto = ratings.Select(RatingDTO.Create).ToList();
+
+            return ratingsDto;
+        } 
+        public async Task<List<RatingDTO>> GetMyOrOtherReceivedRatingsForEmployee(int clientId)
+        {
+            var ratings = await _ratingRepository.GetMyOrOtherReceivedRatingsForEmployee(clientId);
+
+            var ratingsDto = ratings.Select(RatingDTO.Create).ToList();
+
+            return ratingsDto;
         }
 
-        public async Task<Dictionary<int, int>> GetMyReceivedRatingsScore(int clientId)
+        public async Task<List<object>> GetMyReceivedRatingsScore(int clientId)
         {
             var ratings = await _ratingRepository.GetMyReceivedRatingsScore(clientId);
             return ratings;
