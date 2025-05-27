@@ -97,6 +97,20 @@ public class JobController : ControllerBase
         }
     }
 
+    [HttpPut("JobDone/{id}")]
+    public async Task<IActionResult> JobFinished(int idJob)
+    {
+        try
+        {
+            await _jobService.JobFinished(idJob, User.GetUserIntId());
+            return Ok();
+        }
+        catch
+        {
+            return NotFound();
+        }
+    }
+
     [HttpDelete("delete/{id}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
@@ -105,13 +119,13 @@ public class JobController : ControllerBase
             await _jobService.Delete(id, User.GetUserIntId());
             return Ok();
         }
-        catch (System.Exception)
+        catch (Exception ex)
         {
-            return NotFound();
+            return BadRequest(ex.Message);
         }
     }
 
-    [HttpPatch("deleteLogic/{id}")]
+    [HttpPatch("[action]")]
     public async Task<IActionResult> DeleteLogic([FromRoute] int id)
     {
         try
@@ -125,17 +139,18 @@ public class JobController : ControllerBase
         }
     }
 
-    [HttpPut("JobDone/{id}")]
-    public async Task<IActionResult> JobFinished(int idJob)
+    
+    [HttpPatch("[action]")]
+    public async Task<IActionResult> ResetJobCancellation(int idJob)
     {
         try
         {
-            await _jobService.JobFinished(idJob, User.GetUserIntId());
+            await _jobService.ResetJobCancellation(idJob, User.GetUserIntId());
             return Ok();
         }
-        catch
+        catch (Exception ex)
         {
-            return NotFound();
+            return BadRequest(ex.Message);
         }
     }
 }

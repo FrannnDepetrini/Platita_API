@@ -29,6 +29,8 @@ namespace Application.Interfaces
         Task<IEnumerable<JobDTO>> GetJobsByCategory(JobFilteredByCategoryRequest request);
 
         Task JobFinished(int idJob, int userId);
+
+        Task ResetJobCancellation(int idJob, int userId);
     }
 
 }

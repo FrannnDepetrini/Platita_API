@@ -25,6 +25,7 @@ namespace Application.Services
             _postulationService = postulationService;
         }
 
+                                    // GET
         public async Task<List<JobDTO>> GetJobsByClientLocationAsync(int userId)
         {
             var existingUser = await _clientRepository.GetById(userId);
@@ -127,6 +128,7 @@ namespace Application.Services
             return jobDtos;
         }
 
+                                // POST
         public async Task<JobDTO> Create(JobRequest request, int userId)
         {
             if (!Enum.TryParse<CategoryEnum>(request.Category, ignoreCase: true, out var parsedCategory) ||
@@ -157,6 +159,7 @@ namespace Application.Services
             return jobDTO;
         }
 
+                                // UPDATE
         public async Task<JobDTO> Update(JobUpdateRequest request, int id, int userId)
         {
             var job = await _jobRepository.GetById(id);
@@ -198,6 +201,44 @@ namespace Application.Services
 
         }
 
+        public async Task JobFinished(int idJob, int userId)
+        {
+            var job = await _jobRepository.GetById(idJob);
+            if (job == null)
+            {
+                throw new Exception("Job not found");
+            }
+            if (job.Client.Id != userId)
+            {
+                throw new UnauthorizedAccessException("You dont have permission");
+            }
+            //var postulation = await _postulationService.GetPostulationsByJobIdAsync(job.Id, userId);
+            //if (postulation == null)
+            //{
+            //    throw new Exception("You dont have postulations");
+            //}
+            var postulations = job.Postulations.ToList();
+            if (postulations.Count() <= 0) throw new Exception("You dont have postulations");
+
+            foreach (var post in postulations)
+            {
+                if (post.Status == PostulationStatusEnum.Success)
+                {
+                    post.Status = PostulationStatusEnum.Done;
+                }
+                if (post.Status == PostulationStatusEnum.Rejected)
+                {
+                    await _postulationService.DeletePostulationFisica(post);
+                }
+            }
+
+            job.Status = JobStatusEnum.Done;
+
+            await _jobRepository.Update(job);
+
+        }
+
+                                // DELETE
         //baja fisica
         public async Task Delete(int id, int userId)
         {
@@ -213,9 +254,15 @@ namespace Application.Services
                 throw new UnauthorizedAccessException("You dont have permission");
             }
 
+            if (job.Status == JobStatusEnum.Taken || job.Status == JobStatusEnum.Done)
+            {
+                throw new Exception("You cant delete a job taken or done.");
+            }
+
             await _jobRepository.Delete(job);
         }
 
+                                // PATCH
         //baja logica
         public async Task DeleteLogic(int id, int userId)
         {
@@ -236,41 +283,31 @@ namespace Application.Services
             await _jobRepository.Update(job);
         }
 
-        public async Task JobFinished(int idJob, int userId)
+
+
+        public async Task ResetJobCancellation(int idJob, int userId)
         {
             var job = await _jobRepository.GetById(idJob);
             if (job == null)
             {
                 throw new Exception("Job not found");
             }
-            if (job.Client.Id != userId) 
+            if (job.Client.Id != userId)
             {
                 throw new UnauthorizedAccessException("You dont have permission");
             }
-            //var postulation = await _postulationService.GetPostulationsByJobIdAsync(job.Id, userId);
-            //if (postulation == null)
-            //{
-            //    throw new Exception("You dont have postulations");
-            //}
+
             var postulations = job.Postulations.ToList();
             if (postulations.Count() <= 0) throw new Exception("You dont have postulations");
-
-            foreach (var post in postulations) 
+            foreach (var post in postulations)
             {
-                if (post.Status == PostulationStatusEnum.Success)
-                {
-                    post.Status = PostulationStatusEnum.Done;
-                }
-                if(post.Status == PostulationStatusEnum.Rejected)
-                {
-                    await _postulationService.DeletePostulationFisica(post);
-                }
+                await _postulationService.DeletePostulationFisica(post);
             }
-                
-            job.Status = JobStatusEnum.Done;
+
+            job.DayPublicationStart = DateTime.Now;
+            job.Status = JobStatusEnum.Available;
 
             await _jobRepository.Update(job);
-
         }
     }
 }
