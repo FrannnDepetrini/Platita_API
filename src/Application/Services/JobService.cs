@@ -213,6 +213,11 @@ namespace Application.Services
                 throw new UnauthorizedAccessException("You dont have permission");
             }
 
+            if (job.Status == JobStatusEnum.Taken || job.Status == JobStatusEnum.Done)
+            {
+                throw new Exception("You cant delete a job taken or done.");
+            }
+
             await _jobRepository.Delete(job);
         }
 

@@ -105,9 +105,9 @@ public class JobController : ControllerBase
             await _jobService.Delete(id, User.GetUserIntId());
             return Ok();
         }
-        catch (System.Exception)
+        catch (Exception ex)
         {
-            return NotFound();
+            return BadRequest(ex.Message);
         }
     }
 
