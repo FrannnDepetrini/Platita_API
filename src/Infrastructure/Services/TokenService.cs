@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Domain.Entities;
+using Infrastructure.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -12,16 +13,19 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Services
 {
-    public class TokenService(IConfiguration configuration) : ITokenService
+    public class TokenService(IConfiguration configuration, ApplicationContext context) : ITokenService
     {
         private readonly IConfiguration _configuration = configuration;
+        private readonly ApplicationContext _context = context;
         public string GenerateToken(User user)
         {
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),       
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),               
-                new Claim(ClaimTypes.Role, user.Role)
+                new Claim(ClaimTypes.Role, user.Role),
+                new Claim(JwtRegisteredClaimNames.GivenName, user.UserName),
+                new Claim("hasJobs", _context.Jobs.Any(j => j.ClientId == user.Id).ToString()),
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
@@ -81,11 +85,15 @@ namespace Infrastructure.Services
             try
             {
                 var principal = tokenHandler.ValidateToken(token, validationParameters, out _);
+
+                var isReset = principal.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Name)?.Value;
+
+                if (isReset != "resetPassword") throw new Exception("This token is not for resetting password");
+
                 var email = principal.Claims.FirstOrDefault(c =>
                     c.Type == ClaimTypes.Email || c.Type == JwtRegisteredClaimNames.Email)?.Value;
 
-                if (email == null)
-                    throw new Exception("Email claim not found in token");
+                if (email == null) throw new Exception("Email claim not found in token");
 
                 return email;
             }
