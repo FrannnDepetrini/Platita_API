@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Domain.Entities;
 using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -62,7 +63,19 @@ namespace Infrastructure.Services
                 signingCredentials: creds
             );
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+            var oneTimeToken = new OneTimeToken
+            {
+                Token = tokenString,
+                UserId = user.Id,
+                Expiration = token.ValidTo,
+                IsUsed = false
+            };
+
+            _context.OneTimeTokens.Add(oneTimeToken);
+            _context.SaveChangesAsync();
+            
+            return tokenString;
         }
 
         public string GetEmailFromToken(string token)
@@ -84,6 +97,17 @@ namespace Infrastructure.Services
 
             try
             {
+                var stored = _context.OneTimeTokens.FirstOrDefault(t => t.Token == token);
+                if (stored == null)
+                    throw new Exception("Token not recognized");
+                if (stored.IsUsed)
+                    throw new Exception("Token already used");
+                if (stored.Expiration < DateTime.UtcNow)
+                    throw new Exception("Token has expired");
+
+
+
+
                 var principal = tokenHandler.ValidateToken(token, validationParameters, out _);
 
                 var isReset = principal.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Name)?.Value;
@@ -94,6 +118,9 @@ namespace Infrastructure.Services
                     c.Type == ClaimTypes.Email || c.Type == JwtRegisteredClaimNames.Email)?.Value;
 
                 if (email == null) throw new Exception("Email claim not found in token");
+
+                stored.IsUsed = true;
+                _context.SaveChangesAsync();
 
                 return email;
             }
