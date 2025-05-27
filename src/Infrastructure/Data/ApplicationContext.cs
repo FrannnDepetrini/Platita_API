@@ -18,6 +18,7 @@ namespace Infrastructure.Data
         public DbSet<Postulation> Postulations { get; set; }
         public DbSet<Complaint> Complaints { get; set; }
         public DbSet<Payment> Payments { get; set; }
+        public DbSet<OneTimeToken> OneTimeTokens { get; set; }
 
         // Esto de acá no crea todas estas tablas sino que las hace disponibles para consultas en vez de tener que llamar a la tabla Users
         public DbSet<SysAdmin> SysAdmins { get; set; }
