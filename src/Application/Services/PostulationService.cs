@@ -150,6 +150,31 @@ namespace Application.Services
 
         }
 
+        public async Task<string> ShowPhoneForAcceptedPostulation(int postulationId, int userId)
+        {
+            var postulation = await _postulationRepository.GetById(postulationId);
+
+            if (postulation == null)
+                throw new Exception("Postulation not found");
+
+            if (postulation.Status != PostulationStatusEnum.Success)
+                throw new Exception("Postulation was not accepted");
+
+            if (userId == postulation.ClientId)
+            {
+                return $"https://wa.me/{postulation.Job.Client.PhoneNumber}";
+            }
+            else if (userId == postulation.Job.ClientId)
+            {
+                return $"https://wa.me/{postulation.Client.PhoneNumber}";
+            }
+            else
+            {
+                throw new Exception("User not authorized");
+            }
+        }
+
+
         public async Task<bool> DeletePostulationFisica(Postulation postJob)
         {
 
