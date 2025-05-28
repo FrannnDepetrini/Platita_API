@@ -29,8 +29,6 @@ namespace Domain.Entities
         public CategoryEnum Category { get; set; }
         public string Province { get; set; }
         public string City { get; set; }
-        public Payment Payment { get; set; }
-        public int PaymentId {  get; set; } 
     }
 }
 
