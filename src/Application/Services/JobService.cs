@@ -147,7 +147,6 @@ namespace Application.Services
                 DayPublicationEnd = request.DayPublicationEnd,
                 Province = request.Province,
                 City = request.City,
-                PaymentId = 1
 
             };
             await _jobRepository.Create(newJob);

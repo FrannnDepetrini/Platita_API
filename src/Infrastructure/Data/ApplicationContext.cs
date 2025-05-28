@@ -17,7 +17,6 @@ namespace Infrastructure.Data
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Postulation> Postulations { get; set; }
         public DbSet<Complaint> Complaints { get; set; }
-        public DbSet<Payment> Payments { get; set; }
         public DbSet<OneTimeToken> OneTimeTokens { get; set; }
 
         // Esto de acá no crea todas estas tablas sino que las hace disponibles para consultas en vez de tener que llamar a la tabla Users
@@ -25,6 +24,7 @@ namespace Infrastructure.Data
         public DbSet<Moderator> Moderators { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Support> Supports { get; set; }
+        public DbSet<Report> Reports { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
 
@@ -65,10 +65,7 @@ namespace Infrastructure.Data
                 .WithOne(p => p.Job)
                 .HasForeignKey(p => p.JobId);
 
-            modelBuilder.Entity<Job>()
-                .HasOne(c => c.Payment)
-                .WithMany()
-                .HasForeignKey(c => c.PaymentId);
+           
 
             modelBuilder.Entity<Job>()
                 .HasOne(c => c.PostulationSelected)
@@ -105,22 +102,7 @@ namespace Infrastructure.Data
             // Despues hay que ver bien si en las entidades SysAdmin y Moderator hace falta que tenga una lista de Users
             //modelBuilder.Entity<SysAdmin>().Ignore(s => s.Users);
             //modelBuilder.Entity<Moderator>().Ignore(s => s.Users);
-
-            // PAYMENT
-            modelBuilder.Entity<Payment>().HasData(
-                new Payment
-                {
-                    Id = 1,
-                    Type = PaymentEnum.MercadoPago,
-                    Description = "Pagos digitales a través de MercadoPago. Rápido y seguro."
-                },
-                new Payment
-                {
-                    Id = 2,
-                    Type = PaymentEnum.Transference,
-                    Description = "Transferencia bancaria directa a la cuenta indicada por el usuario."
-                }
-            );
+            
 
             // CLIENTES (IDs: 4 al 10)
             modelBuilder.Entity<Client>().HasData(new Client
@@ -200,7 +182,6 @@ namespace Infrastructure.Data
                     City = "Rosario",
                     DayPublicationStart = new DateTime(2025, 5, 15),
                     DayPublicationEnd = new DateTime(2025, 5, 24),
-                    PaymentId = 1
                 },
                 new Job
                 {
@@ -214,7 +195,6 @@ namespace Infrastructure.Data
                     City = "Rosario",
                     DayPublicationStart = new DateTime(2025, 5, 13),
                     DayPublicationEnd = new DateTime(2025, 5, 20),
-                    PaymentId = 1
                 },
                 new Job
                 {
@@ -229,7 +209,6 @@ namespace Infrastructure.Data
                     City = "La Plata",
                     DayPublicationStart = new DateTime(2025, 5, 15),
                     DayPublicationEnd = new DateTime(2025, 5, 18),
-                    PaymentId = 1
                 },
                 new Job
                 {
@@ -244,7 +223,6 @@ namespace Infrastructure.Data
                     City = "Godoy Cruz",
                     DayPublicationStart = new DateTime(2025, 5, 17),
                     DayPublicationEnd = new DateTime(2025, 5, 23),
-                    PaymentId = 1
                 },
                 new Job
                 {
@@ -258,7 +236,6 @@ namespace Infrastructure.Data
                     City = "Rosario",
                     DayPublicationStart = new DateTime(2025, 5, 17),
                     DayPublicationEnd = new DateTime(2025, 5, 22),
-                    PaymentId = 1
                 },
                 new Job
                 {
@@ -272,7 +249,6 @@ namespace Infrastructure.Data
                     City = "Marcos Juarez",
                     DayPublicationStart = new DateTime(2025, 5, 16),
                     DayPublicationEnd = new DateTime(2025, 5, 20),
-                    PaymentId = 1
                 },
                 new Job
                 {
@@ -286,7 +262,6 @@ namespace Infrastructure.Data
                     City = "Firmat",
                     DayPublicationStart = new DateTime(2025, 4, 21),
                     DayPublicationEnd = new DateTime(2025, 4, 26),
-                    PaymentId = 1
                 },
                 new Job
                 {
@@ -300,7 +275,7 @@ namespace Infrastructure.Data
                     City = "Bigand",
                     DayPublicationStart = new DateTime(2025, 5, 17),
                     DayPublicationEnd = new DateTime(2025, 5, 24),
-                    PaymentId = 1
+                    
                 }
             ) ; 
 
