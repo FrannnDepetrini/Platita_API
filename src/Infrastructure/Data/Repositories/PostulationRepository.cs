@@ -18,17 +18,28 @@ namespace Infrastructure.Data.Repositories
             _context = context;
         }
 
-        public Task<Postulation?> GetByIdForPublisherAsync(int id)
+        public async Task<Postulation?> GetByIdForPublisherAsync(int id)
         {
-            return _context.Postulations
+            return await _context.Postulations
                 .Include(p => p.Client)
                 .FirstOrDefaultAsync(p => p.Id == id);
         }  
 
-        public Task<Postulation?> GetByIdForApplicantAsync(int id)
+        public async Task<Postulation?> GetByIdForApplicantAsync(int id)
         {
-            return _context.Postulations
+            return await _context.Postulations
                 .Include(p => p.Job)
+                .FirstOrDefaultAsync(p => p.Id == id);
+        }   
+
+        public override async Task<Postulation?> GetById(int id)
+        {
+            return await _context.Postulations
+                .Include(p => p.Job)
+                    .ThenInclude(p => p.PostulationSelected)
+                    .ThenInclude(c => c.Client)
+                .Include(c => c.Job)
+                    .ThenInclude(c => c.Client)
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 
