@@ -26,6 +26,8 @@ namespace Infrastructure.Data
         public DbSet<Support> Supports { get; set; }
         public DbSet<Report> Reports { get; set; }
 
+
+
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
 
         //Trabajos para testear db y endpoints de delete/deleteLogic
@@ -65,7 +67,11 @@ namespace Infrastructure.Data
                 .WithOne(p => p.Job)
                 .HasForeignKey(p => p.JobId);
 
-           
+            modelBuilder.Entity<Job>()
+                 .HasMany(j => j.Reports)
+                 .WithOne(j => j.Job)
+                 .HasForeignKey(j => j.JobId)
+                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Job>()
                 .HasOne(c => c.PostulationSelected)
@@ -88,52 +94,39 @@ namespace Infrastructure.Data
                 .WithMany()
                 .HasForeignKey(r => r.JobId);
 
-            //modelBuilder.Entity<Payment>().HasData(new Payment
-            //{
-            //    Id = 1,
-            //    Type = PaymentEnum.MercadoPago,
-            //    Description = "podes pagar con mp"
-            //});
-            //ignora claves foraneas
-            //modelBuilder.Entity<Job>().Ignore(j => j.Employer);
-            //modelBuilder.Entity<Job>().Ignore(j => j.Postulations);
 
-            // Esto lo agrego para que en la tabla Users no me agregue las columnas SysAdminId y ModeratorId
-            // Despues hay que ver bien si en las entidades SysAdmin y Moderator hace falta que tenga una lista de Users
-            //modelBuilder.Entity<SysAdmin>().Ignore(s => s.Users);
-            //modelBuilder.Entity<Moderator>().Ignore(s => s.Users);
-            
 
-            // CLIENTES (IDs: 4 al 10)
+
+            //CLIENTES(IDs: 4 al 10)
             modelBuilder.Entity<Client>().HasData(new Client
-                {
-                    Id = 4,
-                    Province = "Santa Fe",
-                    City = "Rosario",
-                    Email = "marmax0504@gmail.com",
-                    UserName = "Maximo Martin",
-                    Password = BCrypt.Net.BCrypt.HashPassword("123"),
-                    PhoneNumber = "3496502453",
+            {
+                Id = 4,
+                Province = "Santa Fe",
+                City = "Rosario",
+                Email = "marmax0504@gmail.com",
+                UserName = "Maximo Martin",
+                Password = BCrypt.Net.BCrypt.HashPassword("123"),
+                PhoneNumber = "3496502453",
 
-                }, new Client
-                {
-                    Id = 5,
-                    Province = "Buenos Aires",
-                    City = "La Plata",
-                    Email = "joako.tanlon@gmail.com",
-                    UserName = "Joaquin Tanlongo",
-                    Password = BCrypt.Net.BCrypt.HashPassword("456"),
-                    PhoneNumber = "3412122907",
-                }, new Client
-                {
-                    Id = 6,
-                    Province = "Santa Fe",
-                    City = "Rosario",
-                    Email = "marucomass@gmail.com",
-                    UserName = "Mario Massonnat",
-                    Password = BCrypt.Net.BCrypt.HashPassword("789"),
-                    PhoneNumber = "3467637190",
-                },
+            }, new Client
+            {
+                Id = 5,
+                Province = "Buenos Aires",
+                City = "La Plata",
+                Email = "joako.tanlon@gmail.com",
+                UserName = "Joaquin Tanlongo",
+                Password = BCrypt.Net.BCrypt.HashPassword("456"),
+                PhoneNumber = "3412122907",
+            }, new Client
+            {
+                Id = 6,
+                Province = "Santa Fe",
+                City = "Rosario",
+                Email = "marucomass@gmail.com",
+                UserName = "Mario Massonnat",
+                Password = BCrypt.Net.BCrypt.HashPassword("789"),
+                PhoneNumber = "3467637190",
+            },
                 new Client
                 {
                     Id = 7,
@@ -167,7 +160,7 @@ namespace Infrastructure.Data
             );
 
 
-            // JOBS (IDs: 1 al 4)
+            //JOBS(IDs: 1 al 4)
             modelBuilder.Entity<Job>().HasData(
                 new Job
                 {
@@ -275,69 +268,88 @@ namespace Infrastructure.Data
                     City = "Bigand",
                     DayPublicationStart = new DateTime(2025, 5, 17),
                     DayPublicationEnd = new DateTime(2025, 5, 24),
-                    
-                }
-            ) ; 
 
-
-            //// POSTULATIONS (IDs: 1 al 5)
-            modelBuilder.Entity<Postulation>().HasData(
-                new Postulation
-                {
-                    Id = 1,
-                    ClientId = 6, // Mario
-                    JobId = 1,
-                    Budget = 15000,
-                    JobDay = new DateTime(2025,5, 23),
-                    Status = PostulationStatusEnum.Pending
-                },
-                new Postulation
-                {
-                    Id = 2,
-                    ClientId = 7, // Depe
-                    JobId = 1,
-                    Budget = 14000,
-                    JobDay = new DateTime(2025, 5, 22),
-                    Status = PostulationStatusEnum.Success
-                },
-                new Postulation
-                {
-                    Id = 3,
-                    ClientId = 4, // Maximo
-                    JobId = 3,
-                    Budget = 20000,
-                    JobDay = new DateTime(2025, 5, 16),
-                    Status = PostulationStatusEnum.Success
-                },
-                new Postulation
-                {
-                    Id = 4,
-                    ClientId = 8, // Pale
-                    JobId = 3,
-                    Budget = 18000,
-                    JobDay = new DateTime(2025, 5, 17),
-                    Status = PostulationStatusEnum.Rejected
-                },
-                new Postulation
-                {
-                    Id = 5,
-                    ClientId = 9, // Pedro
-                    JobId = 4,
-                    Budget = 22000,
-                    JobDay = new DateTime(2025, 5, 21),
-                    Status = PostulationStatusEnum.Success
                 }
             );
 
-            /*public int Id { get; set; }
-               public int RatedByUserId { get; set; }
-               public int RatedUserId { get; set; }
-               public int Score { get; set; }
-               public string Description { get; set; }
+            //REPORTS
+            modelBuilder.Entity<Report>().HasData(
+                new Report
+                {
+                    Id = 1,
+                    Created_At = new DateTime(2025, 5, 28),
+                    CategoryReport = CategoryReport.OffensiveContent,
+                    JobId = 8,
+                    ClientId = 4,
+                },
+                new Report
+                {
+                    Id = 2,
+                    Created_At = new DateTime(2025, 5, 27),
+                    CategoryReport = CategoryReport.Spam,
+                    JobId = 8,
+                    ClientId = 5,
+                },
+                new Report
+                {
+                    Id = 3,
+                    Created_At = new DateTime(2025, 5, 25),
+                    CategoryReport = CategoryReport.OffensiveContent,
+                    JobId = 7,
+                    ClientId = 6,
+                }
+            );
 
-               public int JobId { get; set; }
+            // POSTULATIONS (IDs: 1 al 5)
+            modelBuilder.Entity<Postulation>().HasData(
+                    new Postulation
+                    {
+                        Id = 1,
+                        ClientId = 6, // Mario
+                        JobId = 1,
+                        Budget = 15000,
+                        JobDay = new DateTime(2025, 5, 23),
+                        Status = PostulationStatusEnum.Pending
+                    },
+                    new Postulation
+                    {
+                        Id = 2,
+                        ClientId = 7, // Depe
+                        JobId = 1,
+                        Budget = 14000,
+                        JobDay = new DateTime(2025, 5, 22),
+                        Status = PostulationStatusEnum.Success
+                    },
+                    new Postulation
+                    {
+                        Id = 3,
+                        ClientId = 4, // Maximo
+                        JobId = 3,
+                        Budget = 20000,
+                        JobDay = new DateTime(2025, 5, 16),
+                        Status = PostulationStatusEnum.Success
+                    },
+                    new Postulation
+                    {
+                        Id = 4,
+                        ClientId = 8, // Pale
+                        JobId = 3,
+                        Budget = 18000,
+                        JobDay = new DateTime(2025, 5, 17),
+                        Status = PostulationStatusEnum.Rejected
+                    },
+                    new Postulation
+                    {
+                        Id = 5,
+                        ClientId = 9, // Pedro
+                        JobId = 4,
+                        Budget = 22000,
+                        JobDay = new DateTime(2025, 5, 21),
+                        Status = PostulationStatusEnum.Success
+                    }
+                );
 
-               public Job Job { get; set; }*/
+            
 
             modelBuilder.Entity<Rating>().HasData(
                     new Rating

@@ -29,6 +29,7 @@ namespace Domain.Entities
         public CategoryEnum Category { get; set; }
         public string Province { get; set; }
         public string City { get; set; }
+        public List<Report> Reports { get; set; }
     }
 }
 

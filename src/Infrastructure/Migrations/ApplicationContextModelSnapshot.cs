@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Infrastructure.Data.Migrations
+namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
     partial class ApplicationContextModelSnapshot : ModelSnapshot
@@ -413,6 +413,32 @@ namespace Infrastructure.Data.Migrations
                     b.HasIndex("JobId");
 
                     b.ToTable("Reports");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryReport = 3,
+                            ClientId = 4,
+                            Created_At = new DateTime(2025, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            JobId = 8
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryReport = 0,
+                            ClientId = 5,
+                            Created_At = new DateTime(2025, 5, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            JobId = 8
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryReport = 3,
+                            ClientId = 6,
+                            Created_At = new DateTime(2025, 5, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            JobId = 7
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -468,7 +494,7 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 4,
                             Email = "marmax0504@gmail.com",
-                            Password = "$2a$11$y1uFioL1tSC4AxjgqyGiv.Cjw9bDu2AmaxsjyP7wBLCF72cFLyKLa",
+                            Password = "$2a$11$len05k4w5houjF87JQ0laeF3WBR3cXjDDcFAPUoTaETZvSFknjJfu",
                             PhoneNumber = "3496502453",
                             UserName = "Maximo Martin",
                             City = "Rosario",
@@ -478,7 +504,7 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 5,
                             Email = "joako.tanlon@gmail.com",
-                            Password = "$2a$11$gP9l7qNFM8FLV9l.8AJNxOql3DEqHkBbidp4RWlz9O.OxWW.s3zy2",
+                            Password = "$2a$11$aAbql5dXB/Oj3MDgKxWjpugEABpDetu7kPAGIuWXZYU6UjnZh0Ujq",
                             PhoneNumber = "3412122907",
                             UserName = "Joaquin Tanlongo",
                             City = "La Plata",
@@ -488,7 +514,7 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 6,
                             Email = "marucomass@gmail.com",
-                            Password = "$2a$11$yTPuncjT1IddDWD5G.Tlnuljalb5mfyrNrRmmi88nEazohE3EnbPa",
+                            Password = "$2a$11$Lk6jslDT/mKHowtPDNWLw.MvA.mpx9OEAdV78TH.TO9VYXQWgE0oC",
                             PhoneNumber = "3467637190",
                             UserName = "Mario Massonnat",
                             City = "Rosario",
@@ -498,7 +524,7 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 7,
                             Email = "frandepe7@gmail.com",
-                            Password = "$2a$11$WcWXC7AopHLZGOvwqnoUEOhNHcK0Ps0GJC4/ldRYMf64wz0sHCTuK",
+                            Password = "$2a$11$fGzM1qKnpnJKwO8Cw31JauMsn.rYc9Qjqx.87vie1Z2IRfXvJsFbS",
                             PhoneNumber = "3472582334",
                             UserName = "Francisco Depetrini",
                             City = "Marcos Juarez",
@@ -508,7 +534,7 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 8,
                             Email = "palenafrancisco@gmail.com",
-                            Password = "$2a$11$gv9ZtI4ZtIesQWzUNBHXzub18cHLkS05g8GNsCFyoDeT.CLjFlauu",
+                            Password = "$2a$11$uvmVYeCcjWP/.MN0t0ZAs.EgMCl6IvVrONFGGQREtYj2xEnOzBXpC",
                             PhoneNumber = "3465664518",
                             UserName = "Francisco Palena",
                             City = "Firmat",
@@ -518,7 +544,7 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 9,
                             Email = "pedrogasparini99@gmail.com",
-                            Password = "$2a$11$ndjPdDeCFMotZyp3qY4b4uuBfw5Si.8/Zj7SfTTyW9ZzE5oQNo772",
+                            Password = "$2a$11$g/PhDPHfGNOkfeP11.CI7OgVFNYZKWn0lOBGGG6C.mph.48gULJ2O",
                             PhoneNumber = "3464445164",
                             UserName = "Pedro Gasparini",
                             City = "Bigand",
@@ -628,7 +654,7 @@ namespace Infrastructure.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Job", "Job")
-                        .WithMany()
+                        .WithMany("Reports")
                         .HasForeignKey("JobId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -641,6 +667,8 @@ namespace Infrastructure.Data.Migrations
             modelBuilder.Entity("Domain.Entities.Job", b =>
                 {
                     b.Navigation("Postulations");
+
+                    b.Navigation("Reports");
                 });
 
             modelBuilder.Entity("Domain.Entities.Client", b =>

@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Infrastructure.Data.Migrations
+namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250527202858_Add_Table_Token")]
-    partial class Add_Table_Token
+    [Migration("20250529182446_Seeds")]
+    partial class Seeds
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,9 +77,6 @@ namespace Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("PaymentId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int?>("PostulationSelectedId")
                         .HasColumnType("INTEGER");
 
@@ -98,8 +95,6 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.HasIndex("PaymentId");
-
                     b.HasIndex("PostulationSelectedId");
 
                     b.ToTable("Jobs");
@@ -114,8 +109,6 @@ namespace Infrastructure.Data.Migrations
                             DayPublicationEnd = new DateTime(2025, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DayPublicationStart = new DateTime(2025, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Necesito pintar un monoambiente en el centro",
-                            PaymentId = 1,
-                            PostulationSelectedId = 2,
                             Province = "Santa Fe",
                             Status = 0,
                             Title = "Pintar departamento"
@@ -129,7 +122,6 @@ namespace Infrastructure.Data.Migrations
                             DayPublicationEnd = new DateTime(2025, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DayPublicationStart = new DateTime(2025, 5, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Instalación de 10 luces LED en cocina y living",
-                            PaymentId = 1,
                             Province = "Santa Fe",
                             Status = 0,
                             Title = "Instalación de luces LED"
@@ -143,8 +135,6 @@ namespace Infrastructure.Data.Migrations
                             DayPublicationEnd = new DateTime(2025, 5, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DayPublicationStart = new DateTime(2025, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Patio de 100m2 con pasto alto, se necesita corte y limpieza",
-                            PaymentId = 1,
-                            PostulationSelectedId = 3,
                             Province = "Buenos Aires",
                             Status = 0,
                             Title = "Corte de pasto y desmalezado"
@@ -158,8 +148,6 @@ namespace Infrastructure.Data.Migrations
                             DayPublicationEnd = new DateTime(2025, 5, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DayPublicationStart = new DateTime(2025, 5, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Hay una pérdida debajo del lavabo",
-                            PaymentId = 1,
-                            PostulationSelectedId = 5,
                             Province = "Mendoza",
                             Status = 0,
                             Title = "Reparar cañería del baño"
@@ -173,7 +161,6 @@ namespace Infrastructure.Data.Migrations
                             DayPublicationEnd = new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DayPublicationStart = new DateTime(2025, 5, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Necesito ayuda para mudar muebles pesados",
-                            PaymentId = 1,
                             Province = "Santa Fe",
                             Status = 0,
                             Title = "Mudanza de muebles"
@@ -187,7 +174,6 @@ namespace Infrastructure.Data.Migrations
                             DayPublicationEnd = new DateTime(2025, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DayPublicationStart = new DateTime(2025, 5, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Jardín de 50m2 con césped crecido",
-                            PaymentId = 1,
                             Province = "Córdoba",
                             Status = 0,
                             Title = "Corte de césped y limpieza del jardín"
@@ -201,7 +187,6 @@ namespace Infrastructure.Data.Migrations
                             DayPublicationEnd = new DateTime(2025, 4, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DayPublicationStart = new DateTime(2025, 4, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Limpieza profunda de casa de 3 ambientes",
-                            PaymentId = 1,
                             Province = "Santa Fe",
                             Status = 0,
                             Title = "Limpieza de hogar"
@@ -215,7 +200,6 @@ namespace Infrastructure.Data.Migrations
                             DayPublicationEnd = new DateTime(2025, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DayPublicationStart = new DateTime(2025, 5, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Necesito un desarrollador fullstack para una app de gestión",
-                            PaymentId = 1,
                             Province = "Santa Fe",
                             Status = 0,
                             Title = "Programar aplicación web"
@@ -244,38 +228,6 @@ namespace Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OneTimeTokens");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Payment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Payments");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Pagos digitales a través de MercadoPago. Rápido y seguro.",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Transferencia bancaria directa a la cuenta indicada por el usuario.",
-                            Type = 1
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Postulation", b =>
@@ -436,6 +388,59 @@ namespace Infrastructure.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Domain.Entities.Report", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CategoryReport")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Created_At")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("JobId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("JobId");
+
+                    b.ToTable("Reports");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryReport = 3,
+                            ClientId = 4,
+                            Created_At = new DateTime(2025, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            JobId = 8
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryReport = 0,
+                            ClientId = 5,
+                            Created_At = new DateTime(2025, 5, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            JobId = 8
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryReport = 3,
+                            ClientId = 6,
+                            Created_At = new DateTime(2025, 5, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            JobId = 7
+                        });
+                });
+
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -479,13 +484,8 @@ namespace Infrastructure.Data.Migrations
                     b.Property<string>("City")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("PaymentId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Province")
                         .HasColumnType("TEXT");
-
-                    b.HasIndex("PaymentId");
 
                     b.HasDiscriminator().HasValue("Client");
 
@@ -494,7 +494,7 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 4,
                             Email = "marmax0504@gmail.com",
-                            Password = "$2a$11$/fLu926cOfmjOTiQ5dt9yOp2BfLoTXYfHlqH78JLMQOeBcQQC2oqi",
+                            Password = "$2a$11$CfbSAv//7Sy7KlTfgVITHe9Hkm16.8ibd.UU8mxFDTlZBTLUhDWJW",
                             PhoneNumber = "3496502453",
                             UserName = "Maximo Martin",
                             City = "Rosario",
@@ -504,7 +504,7 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 5,
                             Email = "joako.tanlon@gmail.com",
-                            Password = "$2a$11$GpBIDM7gbDy9gH0kLiLOh.8VfRV.7hAyCedrreX58HeXfWgK3jr8m",
+                            Password = "$2a$11$WSI7flznekce6WfzTv7fhOtypPO4JogIJ5HX2XPW80dyfBDIiLK/G",
                             PhoneNumber = "3412122907",
                             UserName = "Joaquin Tanlongo",
                             City = "La Plata",
@@ -514,7 +514,7 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 6,
                             Email = "marucomass@gmail.com",
-                            Password = "$2a$11$2MqehDXhSYldtaa1K1bjMuDc.ZEDjVw6S3pdhmCH8xJgdKdxfU/Rq",
+                            Password = "$2a$11$v7o2qWdBz7tB63Z4Pe89CuUW3KFuIa5dD.PCVV5xIovGReECuFM1a",
                             PhoneNumber = "3467637190",
                             UserName = "Mario Massonnat",
                             City = "Rosario",
@@ -524,7 +524,7 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 7,
                             Email = "frandepe7@gmail.com",
-                            Password = "$2a$11$QdwI.sTEY3WW/WkJW2Y6eu5nyvHTQCD742sihZy2BEpWd.fCbmB1e",
+                            Password = "$2a$11$4kqg9yk4OgCcIq7fksQUKes5RZSv61Nu67srCImSbGpci8yRxPDoG",
                             PhoneNumber = "3472582334",
                             UserName = "Francisco Depetrini",
                             City = "Marcos Juarez",
@@ -534,7 +534,7 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 8,
                             Email = "palenafrancisco@gmail.com",
-                            Password = "$2a$11$hSHjIpRN/VoyjKSCy0kTjeBtGBPzL.lAvXHpCakGMS1uVBAhFwFnO",
+                            Password = "$2a$11$teJ9CDRzkVZKQByAgMKS5u2cwlVWnV7XkGAgrXhjY5Yyp3rUG8JpC",
                             PhoneNumber = "3465664518",
                             UserName = "Francisco Palena",
                             City = "Firmat",
@@ -544,7 +544,7 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 9,
                             Email = "pedrogasparini99@gmail.com",
-                            Password = "$2a$11$8tGhAj3lcb7EU46T4JHgWOvGcLRLqvU6/eYaykXBaBWTiUAnlGoRK",
+                            Password = "$2a$11$oguOFQoITRdDaB6sk5Gk/.pZ8K61IyhiILk9gX6GQ8k409fXH8uiy",
                             PhoneNumber = "3464445164",
                             UserName = "Pedro Gasparini",
                             City = "Bigand",
@@ -600,20 +600,12 @@ namespace Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Payment", "Payment")
-                        .WithMany()
-                        .HasForeignKey("PaymentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Domain.Entities.Postulation", "PostulationSelected")
                         .WithMany()
                         .HasForeignKey("PostulationSelectedId")
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Client");
-
-                    b.Navigation("Payment");
 
                     b.Navigation("PostulationSelected");
                 });
@@ -653,18 +645,30 @@ namespace Infrastructure.Data.Migrations
                     b.Navigation("Job");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Client", b =>
+            modelBuilder.Entity("Domain.Entities.Report", b =>
                 {
-                    b.HasOne("Domain.Entities.Payment", "PreferredPayment")
+                    b.HasOne("Domain.Entities.Client", "Client")
                         .WithMany()
-                        .HasForeignKey("PaymentId");
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("PreferredPayment");
+                    b.HasOne("Domain.Entities.Job", "Job")
+                        .WithMany("Reports")
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Job");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job", b =>
                 {
                     b.Navigation("Postulations");
+
+                    b.Navigation("Reports");
                 });
 
             modelBuilder.Entity("Domain.Entities.Client", b =>
