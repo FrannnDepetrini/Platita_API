@@ -93,7 +93,9 @@ builder.Services.AddScoped<IRatingService, RatingService>();
 builder.Services.AddScoped<IPostulationService, PostulationService>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IJobExpirationService, JobExpirationService>();
+builder.Services.AddScoped<IReportService, ReportService>();
 builder.Services.AddHostedService<JobExpirationChecker>();
+
 #endregion
 //Envio de mail
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
@@ -104,6 +106,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IRatingRepository, RatingRepository> ();
 builder.Services.AddScoped<IPostulationRepository, PostulationRepository>();
+builder.Services.AddScoped<IReportRepository, ReportRepository>();
 #endregion
 
 //conexion a la db
