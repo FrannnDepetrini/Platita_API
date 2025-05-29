@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Infrastructure.Data.Migrations
+namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250507155011_Test-Email")]
-    partial class TestEmail
+    [Migration("20250529182102_ReinitialMigration")]
+    partial class ReinitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,18 +67,17 @@ namespace Infrastructure.Data.Migrations
                     b.Property<int>("ClientId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime?>("DateTime")
+                    b.Property<DateTime?>("DayPublicationEnd")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DayPublicationStart")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Picture")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("PostulationSelectedId")
+                    b.Property<int?>("PostulationSelectedId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Province")
@@ -96,30 +95,38 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasIndex("ClientId");
 
+                    b.HasIndex("PostulationSelectedId");
+
                     b.ToTable("Jobs");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Payment", b =>
+            modelBuilder.Entity("Domain.Entities.OneTimeToken", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Description")
+                    b.Property<DateTime>("Expiration")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Token")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Type")
+                    b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Payments");
+                    b.ToTable("OneTimeTokens");
                 });
 
             modelBuilder.Entity("Domain.Entities.Postulation", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -129,13 +136,16 @@ namespace Infrastructure.Data.Migrations
                     b.Property<int>("ClientId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime>("JobDay")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("JobId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Status")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.HasIndex("ClientId");
 
@@ -160,7 +170,7 @@ namespace Infrastructure.Data.Migrations
                     b.Property<int>("JobId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("RatedByUserId")
+                    b.Property<int?>("RatedByUserId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("RatedUserId")
@@ -178,6 +188,33 @@ namespace Infrastructure.Data.Migrations
                     b.ToTable("Ratings");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Report", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CategoryReport")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Created_At")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("JobId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("JobId");
+
+                    b.ToTable("Reports");
+                });
+
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -192,8 +229,9 @@ namespace Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("PhoneNumber")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Role")
                         .IsRequired()
@@ -220,27 +258,10 @@ namespace Infrastructure.Data.Migrations
                     b.Property<string>("City")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("PaymentId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Province")
                         .HasColumnType("TEXT");
 
-                    b.HasIndex("PaymentId");
-
                     b.HasDiscriminator().HasValue("Client");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 4,
-                            Email = "marmax0504@gmail.com",
-                            Password = "1234",
-                            PhoneNumber = 341,
-                            UserName = "Maximo",
-                            City = "Rosario",
-                            Province = "Santa Fe"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Moderator", b =>
@@ -291,7 +312,14 @@ namespace Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Entities.Postulation", "PostulationSelected")
+                        .WithMany()
+                        .HasForeignKey("PostulationSelectedId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.Navigation("Client");
+
+                    b.Navigation("PostulationSelected");
                 });
 
             modelBuilder.Entity("Domain.Entities.Postulation", b =>
@@ -329,18 +357,30 @@ namespace Infrastructure.Data.Migrations
                     b.Navigation("Job");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Client", b =>
+            modelBuilder.Entity("Domain.Entities.Report", b =>
                 {
-                    b.HasOne("Domain.Entities.Payment", "Payment")
+                    b.HasOne("Domain.Entities.Client", "Client")
                         .WithMany()
-                        .HasForeignKey("PaymentId");
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Payment");
+                    b.HasOne("Domain.Entities.Job", "Job")
+                        .WithMany("Reports")
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Job");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job", b =>
                 {
                     b.Navigation("Postulations");
+
+                    b.Navigation("Reports");
                 });
 
             modelBuilder.Entity("Domain.Entities.Client", b =>

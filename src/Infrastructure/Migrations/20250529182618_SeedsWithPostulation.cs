@@ -1,149 +1,144 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Infrastructure.Data.Migrations
+namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class JOBDAYaddinPostulation : Migration
+    public partial class SeedsWithPostulation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<DateTime>(
-                name: "JobDay",
-                table: "Postulations",
-                type: "TEXT",
-                nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
-
             migrationBuilder.UpdateData(
-                table: "Postulations",
+                table: "Jobs",
                 keyColumn: "Id",
                 keyValue: 1,
-                column: "JobDay",
-                value: new DateTime(2025, 5, 23, 0, 0, 0, 0, DateTimeKind.Unspecified));
+                column: "PostulationSelectedId",
+                value: 2);
 
             migrationBuilder.UpdateData(
-                table: "Postulations",
-                keyColumn: "Id",
-                keyValue: 2,
-                column: "JobDay",
-                value: new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified));
-
-            migrationBuilder.UpdateData(
-                table: "Postulations",
+                table: "Jobs",
                 keyColumn: "Id",
                 keyValue: 3,
-                column: "JobDay",
-                value: new DateTime(2025, 5, 16, 0, 0, 0, 0, DateTimeKind.Unspecified));
+                column: "PostulationSelectedId",
+                value: 3);
 
             migrationBuilder.UpdateData(
-                table: "Postulations",
+                table: "Jobs",
                 keyColumn: "Id",
                 keyValue: 4,
-                column: "JobDay",
-                value: new DateTime(2025, 5, 17, 0, 0, 0, 0, DateTimeKind.Unspecified));
-
-            migrationBuilder.UpdateData(
-                table: "Postulations",
-                keyColumn: "Id",
-                keyValue: 5,
-                column: "JobDay",
-                value: new DateTime(2025, 5, 21, 0, 0, 0, 0, DateTimeKind.Unspecified));
+                column: "PostulationSelectedId",
+                value: 5);
 
             migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 4,
                 column: "Password",
-                value: "$2a$11$62/ktj3.pWYpPSxoTfIVceKpmBP8eEaynOd1tTR2dWtLBp0KlXE76");
+                value: "$2a$11$len05k4w5houjF87JQ0laeF3WBR3cXjDDcFAPUoTaETZvSFknjJfu");
 
             migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 5,
                 column: "Password",
-                value: "$2a$11$OsXpT8tGJICtNJ9rfEGhReMfUz3Bwns8st/rcfH08fjkujH6HUOwa");
+                value: "$2a$11$aAbql5dXB/Oj3MDgKxWjpugEABpDetu7kPAGIuWXZYU6UjnZh0Ujq");
 
             migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 6,
                 column: "Password",
-                value: "$2a$11$okz6lEDGJpQoVSEH2/8v8e9l4kv5YJXKXBXVlC/d429Hojg21jJlG");
+                value: "$2a$11$Lk6jslDT/mKHowtPDNWLw.MvA.mpx9OEAdV78TH.TO9VYXQWgE0oC");
 
             migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 7,
                 column: "Password",
-                value: "$2a$11$hx9mYrEhXpxjepo/oB9omO.nidHD5bW7bFHP3ab65gmm5UHkouvLi");
+                value: "$2a$11$fGzM1qKnpnJKwO8Cw31JauMsn.rYc9Qjqx.87vie1Z2IRfXvJsFbS");
 
             migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 8,
                 column: "Password",
-                value: "$2a$11$7zFrfm79NSWLUKbqVCRdHe1ms3K5.54dU5sskhqAJMYzvK6KQY2JG");
+                value: "$2a$11$uvmVYeCcjWP/.MN0t0ZAs.EgMCl6IvVrONFGGQREtYj2xEnOzBXpC");
 
             migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 9,
                 column: "Password",
-                value: "$2a$11$h7llnqtbrY9ugyt0uxO/r.RpWIDnxV52SJbKIx.UDFHyG/U4RFQ3a");
+                value: "$2a$11$g/PhDPHfGNOkfeP11.CI7OgVFNYZKWn0lOBGGG6C.mph.48gULJ2O");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "JobDay",
-                table: "Postulations");
+            migrationBuilder.UpdateData(
+                table: "Jobs",
+                keyColumn: "Id",
+                keyValue: 1,
+                column: "PostulationSelectedId",
+                value: null);
+
+            migrationBuilder.UpdateData(
+                table: "Jobs",
+                keyColumn: "Id",
+                keyValue: 3,
+                column: "PostulationSelectedId",
+                value: null);
+
+            migrationBuilder.UpdateData(
+                table: "Jobs",
+                keyColumn: "Id",
+                keyValue: 4,
+                column: "PostulationSelectedId",
+                value: null);
 
             migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 4,
                 column: "Password",
-                value: "$2a$11$RuEr23Bctx0CbT6JYrYUse7CCU94SG8nYwhCdmlKz/6YNSJcKaeUi");
+                value: "$2a$11$CfbSAv//7Sy7KlTfgVITHe9Hkm16.8ibd.UU8mxFDTlZBTLUhDWJW");
 
             migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 5,
                 column: "Password",
-                value: "$2a$11$e4q9lU69thWsFIGPaObkO.H7cLi0ykZSvHhlTwlvJiVEMrVGJm/DC");
+                value: "$2a$11$WSI7flznekce6WfzTv7fhOtypPO4JogIJ5HX2XPW80dyfBDIiLK/G");
 
             migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 6,
                 column: "Password",
-                value: "$2a$11$Ir9f0SCAD0tqFZIEGeWyeOwJHhpvqWKu84KMTKZWqItJyhkNgVE8m");
+                value: "$2a$11$v7o2qWdBz7tB63Z4Pe89CuUW3KFuIa5dD.PCVV5xIovGReECuFM1a");
 
             migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 7,
                 column: "Password",
-                value: "$2a$11$6R3WsIpEyMlsYMNgTzbE/OkVyLEbTLUpasATzDI7q37cGrEJpocNG");
+                value: "$2a$11$4kqg9yk4OgCcIq7fksQUKes5RZSv61Nu67srCImSbGpci8yRxPDoG");
 
             migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 8,
                 column: "Password",
-                value: "$2a$11$4jYOJNLsUbya69urkBpHOO5pR53hnU532xLLCKbLHQKKbJlqOF/8a");
+                value: "$2a$11$teJ9CDRzkVZKQByAgMKS5u2cwlVWnV7XkGAgrXhjY5Yyp3rUG8JpC");
 
             migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 9,
                 column: "Password",
-                value: "$2a$11$fgwPSIi2V6NobJmBGAmWceL1rziedxMn8J8fYcWnLe2y.lCDikYZm");
+                value: "$2a$11$oguOFQoITRdDaB6sk5Gk/.pZ8K61IyhiILk9gX6GQ8k409fXH8uiy");
         }
     }
 }

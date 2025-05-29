@@ -95,52 +95,38 @@ namespace Infrastructure.Data
                 .HasForeignKey(r => r.JobId);
 
 
-            //modelBuilder.Entity<Payment>().HasData(new Payment
-            //{
-            //    Id = 1,
-            //    Type = PaymentEnum.MercadoPago,
-            //    Description = "podes pagar con mp"
-            //});
-            //ignora claves foraneas
-            //modelBuilder.Entity<Job>().Ignore(j => j.Employer);
-            //modelBuilder.Entity<Job>().Ignore(j => j.Postulations);
 
-            // Esto lo agrego para que en la tabla Users no me agregue las columnas SysAdminId y ModeratorId
-            // Despues hay que ver bien si en las entidades SysAdmin y Moderator hace falta que tenga una lista de Users
-            //modelBuilder.Entity<SysAdmin>().Ignore(s => s.Users);
-            //modelBuilder.Entity<Moderator>().Ignore(s => s.Users);
-            
 
-            // CLIENTES (IDs: 4 al 10)
+            //CLIENTES(IDs: 4 al 10)
             modelBuilder.Entity<Client>().HasData(new Client
-                {
-                    Id = 4,
-                    Province = "Santa Fe",
-                    City = "Rosario",
-                    Email = "marmax0504@gmail.com",
-                    UserName = "Maximo Martin",
-                    Password = BCrypt.Net.BCrypt.HashPassword("123"),
-                    PhoneNumber = "3496502453",
+            {
+                Id = 4,
+                Province = "Santa Fe",
+                City = "Rosario",
+                Email = "marmax0504@gmail.com",
+                UserName = "Maximo Martin",
+                Password = BCrypt.Net.BCrypt.HashPassword("123"),
+                PhoneNumber = "3496502453",
 
-                }, new Client
-                {
-                    Id = 5,
-                    Province = "Buenos Aires",
-                    City = "La Plata",
-                    Email = "joako.tanlon@gmail.com",
-                    UserName = "Joaquin Tanlongo",
-                    Password = BCrypt.Net.BCrypt.HashPassword("456"),
-                    PhoneNumber = "3412122907",
-                }, new Client
-                {
-                    Id = 6,
-                    Province = "Santa Fe",
-                    City = "Rosario",
-                    Email = "marucomass@gmail.com",
-                    UserName = "Mario Massonnat",
-                    Password = BCrypt.Net.BCrypt.HashPassword("789"),
-                    PhoneNumber = "3467637190",
-                },
+            }, new Client
+            {
+                Id = 5,
+                Province = "Buenos Aires",
+                City = "La Plata",
+                Email = "joako.tanlon@gmail.com",
+                UserName = "Joaquin Tanlongo",
+                Password = BCrypt.Net.BCrypt.HashPassword("456"),
+                PhoneNumber = "3412122907",
+            }, new Client
+            {
+                Id = 6,
+                Province = "Santa Fe",
+                City = "Rosario",
+                Email = "marucomass@gmail.com",
+                UserName = "Mario Massonnat",
+                Password = BCrypt.Net.BCrypt.HashPassword("789"),
+                PhoneNumber = "3467637190",
+            },
                 new Client
                 {
                     Id = 7,
@@ -174,7 +160,7 @@ namespace Infrastructure.Data
             );
 
 
-            // JOBS (IDs: 1 al 4)
+            //JOBS(IDs: 1 al 4)
             modelBuilder.Entity<Job>().HasData(
                 new Job
                 {
@@ -282,141 +268,134 @@ namespace Infrastructure.Data
                     City = "Bigand",
                     DayPublicationStart = new DateTime(2025, 5, 17),
                     DayPublicationEnd = new DateTime(2025, 5, 24),
-                    
+
                 }
-            ) ;
+            );
 
-            // REPORTS
-            //modelBuilder.Entity<Report>().HasData(
-            //    new Report { 
-            //        Id = 1,
-            //        Created_At = new DateTime(2025, 5, 28),
-            //        CategoryReport = CategoryReport.OffensiveContent,
-            //        JobId = 8,
-            //        ClientId = 4,
-            //    },
-            //    new Report
-            //    {
-            //        Id = 2,
-            //        Created_At = new DateTime(2025, 5, 27),
-            //        CategoryReport = CategoryReport.Spam,
-            //        JobId = 8,
-            //        ClientId = 5,
-            //    },
-            //    new Report
-            //    {
-            //        Id = 3,
-            //        Created_At = new DateTime(2025, 5, 25),
-            //        CategoryReport = CategoryReport.OffensiveContent,
-            //        JobId = 7,
-            //        ClientId = 6,
-            //    }
-            //);
-              
-        //// POSTULATIONS (IDs: 1 al 5)
-        //modelBuilder.Entity<Postulation>().HasData(
-        //        new Postulation
-        //        {
-        //            Id = 1,
-        //            ClientId = 6, // Mario
-        //            JobId = 1,
-        //            Budget = 15000,
-        //            JobDay = new DateTime(2025,5, 23),
-        //            Status = PostulationStatusEnum.Pending
-        //        },
-        //        new Postulation
-        //        {
-        //            Id = 2,
-        //            ClientId = 7, // Depe
-        //            JobId = 1,
-        //            Budget = 14000,
-        //            JobDay = new DateTime(2025, 5, 22),
-        //            Status = PostulationStatusEnum.Success
-        //        },
-        //        new Postulation
-        //        {
-        //            Id = 3,
-        //            ClientId = 4, // Maximo
-        //            JobId = 3,
-        //            Budget = 20000,
-        //            JobDay = new DateTime(2025, 5, 16),
-        //            Status = PostulationStatusEnum.Success
-        //        },
-        //        new Postulation
-        //        {
-        //            Id = 4,
-        //            ClientId = 8, // Pale
-        //            JobId = 3,
-        //            Budget = 18000,
-        //            JobDay = new DateTime(2025, 5, 17),
-        //            Status = PostulationStatusEnum.Rejected
-        //        },
-        //        new Postulation
-        //        {
-        //            Id = 5,
-        //            ClientId = 9, // Pedro
-        //            JobId = 4,
-        //            Budget = 22000,
-        //            JobDay = new DateTime(2025, 5, 21),
-        //            Status = PostulationStatusEnum.Success
-        //        }
-        //    );
+            //REPORTS
+            modelBuilder.Entity<Report>().HasData(
+                new Report
+                {
+                    Id = 1,
+                    Created_At = new DateTime(2025, 5, 28),
+                    CategoryReport = CategoryReport.OffensiveContent,
+                    JobId = 8,
+                    ClientId = 4,
+                },
+                new Report
+                {
+                    Id = 2,
+                    Created_At = new DateTime(2025, 5, 27),
+                    CategoryReport = CategoryReport.Spam,
+                    JobId = 8,
+                    ClientId = 5,
+                },
+                new Report
+                {
+                    Id = 3,
+                    Created_At = new DateTime(2025, 5, 25),
+                    CategoryReport = CategoryReport.OffensiveContent,
+                    JobId = 7,
+                    ClientId = 6,
+                }
+            );
 
-        //    /*public int Id { get; set; }
-        //       public int RatedByUserId { get; set; }
-        //       public int RatedUserId { get; set; }
-        //       public int Score { get; set; }
-        //       public string Description { get; set; }
+            // POSTULATIONS (IDs: 1 al 5)
+            modelBuilder.Entity<Postulation>().HasData(
+                    new Postulation
+                    {
+                        Id = 1,
+                        ClientId = 6, // Mario
+                        JobId = 1,
+                        Budget = 15000,
+                        JobDay = new DateTime(2025, 5, 23),
+                        Status = PostulationStatusEnum.Pending
+                    },
+                    new Postulation
+                    {
+                        Id = 2,
+                        ClientId = 7, // Depe
+                        JobId = 1,
+                        Budget = 14000,
+                        JobDay = new DateTime(2025, 5, 22),
+                        Status = PostulationStatusEnum.Success
+                    },
+                    new Postulation
+                    {
+                        Id = 3,
+                        ClientId = 4, // Maximo
+                        JobId = 3,
+                        Budget = 20000,
+                        JobDay = new DateTime(2025, 5, 16),
+                        Status = PostulationStatusEnum.Success
+                    },
+                    new Postulation
+                    {
+                        Id = 4,
+                        ClientId = 8, // Pale
+                        JobId = 3,
+                        Budget = 18000,
+                        JobDay = new DateTime(2025, 5, 17),
+                        Status = PostulationStatusEnum.Rejected
+                    },
+                    new Postulation
+                    {
+                        Id = 5,
+                        ClientId = 9, // Pedro
+                        JobId = 4,
+                        Budget = 22000,
+                        JobDay = new DateTime(2025, 5, 21),
+                        Status = PostulationStatusEnum.Success
+                    }
+                );
 
-        //       public int JobId { get; set; }
+            
 
-        //       public Job Job { get; set; }*/
-
-        //    modelBuilder.Entity<Rating>().HasData(
-        //            new Rating
-        //            {
-        //                Id = 1,
-        //                RatedByUserId = 7,
-        //                RatedUserId = 4,
-        //                Score = 4,
-        //                Description = "muy amable y hasta me ofrecio facturas.",
-        //                JobId = 1
-        //            },
-        //            new Rating
-        //            {
-        //                Id = 2,
-        //                RatedByUserId = 4,
-        //                RatedUserId = 7,
-        //                Score = 5,
-        //                Description = "tipazo, muy prolijo!",
-        //                JobId = 1
-        //            },
-        //            new Rating
-        //            {
-        //                Id = 3,
-        //                RatedByUserId = 4,
-        //                RatedUserId = 5,
-        //                Score = 1,
-        //                Description = "estaba de mal humor y me trato bastante mal",
-        //                JobId = 3
-        //            }, new Rating
-        //            {
-        //                Id = 4,
-        //                RatedByUserId = 5,
-        //                RatedUserId = 4,
-        //                Score = 1,
-        //                Description = "me dejo el patio hecho un desastre",
-        //                JobId = 3
-        //            }, new Rating
-        //            {
-        //                Id = 5,
-        //                RatedByUserId = 9,
-        //                RatedUserId = 6,
-        //                Score = 3,
-        //                Description = "el baño estaba un poco sucio. buen trato!",
-        //                JobId = 4
-        //            }
-        //       );
+            modelBuilder.Entity<Rating>().HasData(
+                    new Rating
+                    {
+                        Id = 1,
+                        RatedByUserId = 7,
+                        RatedUserId = 4,
+                        Score = 4,
+                        Description = "muy amable y hasta me ofrecio facturas.",
+                        JobId = 1
+                    },
+                    new Rating
+                    {
+                        Id = 2,
+                        RatedByUserId = 4,
+                        RatedUserId = 7,
+                        Score = 5,
+                        Description = "tipazo, muy prolijo!",
+                        JobId = 1
+                    },
+                    new Rating
+                    {
+                        Id = 3,
+                        RatedByUserId = 4,
+                        RatedUserId = 5,
+                        Score = 1,
+                        Description = "estaba de mal humor y me trato bastante mal",
+                        JobId = 3
+                    }, new Rating
+                    {
+                        Id = 4,
+                        RatedByUserId = 5,
+                        RatedUserId = 4,
+                        Score = 1,
+                        Description = "me dejo el patio hecho un desastre",
+                        JobId = 3
+                    }, new Rating
+                    {
+                        Id = 5,
+                        RatedByUserId = 9,
+                        RatedUserId = 6,
+                        Score = 3,
+                        Description = "el baño estaba un poco sucio. buen trato!",
+                        JobId = 4
+                    }
+               );
         }
     }
 }
