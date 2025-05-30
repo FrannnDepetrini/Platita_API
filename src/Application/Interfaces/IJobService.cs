@@ -15,8 +15,8 @@ namespace Application.Interfaces
     public interface IJobService
     {
         Task<List<JobDTO>> GetJobsByClientLocationAsync(int userId);
-        Task<List<JobDTO>> GetJobsBySearchLocationAsync(string Province, string city);
-        Task<IEnumerable<JobDTO>> GetJobsByCategory(JobFilteredByCategoryRequest request);
+        Task<List<JobDTO>> GetJobsBySearchLocationAsync(string Province, string city, int userId);
+        Task<IEnumerable<JobDTO>> GetJobsByCategory(JobFilteredByCategoryRequest request, int userId);
         Task<List<JobDTO>> GetJobsByClientAsync(int userId);
         Task<List<AllJobsDTO>> GetAllJobs();
         Task<List<JobDtoReport>> GetAllJobsReported();

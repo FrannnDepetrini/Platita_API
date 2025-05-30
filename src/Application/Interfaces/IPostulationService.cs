@@ -11,9 +11,6 @@ namespace Application.Interfaces
     public interface IPostulationService
     {
         Task<PostulationDetailDTO> PostulateAsync(int userId, int jobId, float budget, DateTime jobDay);
-        Task UnpostulateAsync(int userId, int jobId);
-        Task<PostulationDetailDTO?> GetByIdForPublisherAsync(int id);
-        Task<MyPostulationDTO?> GetByIdForApplicantAsync(int id);
         Task<IEnumerable<PostulationDetailDTO>> GetPostulationsByJobIdAsync(int jobId, int publisherId);
         Task AcceptPostulationAsync(int postulationId);
         Task<bool> DeletePostulationFisica(Postulation postJob);
