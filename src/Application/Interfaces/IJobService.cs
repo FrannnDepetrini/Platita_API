@@ -13,23 +13,18 @@ using Domain.Entities;
 namespace Application.Interfaces
 {
     public interface IJobService
-{
-        //Task<JobsDTO> GetById(int id);
-
+    {
+        Task<List<JobDTO>> GetJobsByClientLocationAsync(int userId);
+        Task<List<JobDTO>> GetJobsBySearchLocationAsync(string Province, string city);
+        Task<IEnumerable<JobDTO>> GetJobsByCategory(JobFilteredByCategoryRequest request);
+        Task<List<JobDTO>> GetJobsByClientAsync(int userId);
+        Task<List<AllJobsDTO>> GetAllJobs();
+        Task<List<JobDtoReport>> GetAllJobsReported();
         Task<JobDTO> Create(JobRequest request, int userId);
         Task<JobDTO> Update(JobUpdateRequest request, int id, int userId);
         Task Delete(int id, int userId);
         Task DeleteLogic(int id, int userId);
-        //Task GetJobsByClientLocationAsync(int userId);
-        Task<List<JobDTO>> GetJobsByClientLocationAsync(int userId);
-            //Task JobByLocationRequest(string city, string Province);
-        Task<List<JobDTO>> GetJobsBySearchLocationAsync(string Province, string city);
-    
-        Task<List<JobDTO>> GetJobsByClientAsync(int userId);
-        Task<IEnumerable<JobDTO>> GetJobsByCategory(JobFilteredByCategoryRequest request);
-
         Task JobFinished(int idJob, int userId);
-
         Task ResetJobCancellation(int idJob, int userId);
     }
 

@@ -60,7 +60,6 @@ namespace Application.Services
             var jobs = await _jobRepository.GetJobsByLocationAsync(Province, city);
             var jobDtos = jobs.Select(j => new JobDTO
             {
-
                 Id = j.Id,
                 UserName = j.Client.UserName,
                 Title = j.Title,
@@ -128,7 +127,21 @@ namespace Application.Services
             return jobDtos;
         }
 
-                                // POST
+        public async Task<List<AllJobsDTO>> GetAllJobs()
+        {
+            var jobs = await _jobRepository.GetAllJobs();
+
+            return jobs.Select(AllJobsDTO.Create).ToList();
+        }
+
+        public async Task<List<JobDtoReport>> GetAllJobsReported()
+        {
+            var jobs = await _jobRepository.GetAllJobsReported();
+
+            return jobs.Select(JobDtoReport.Create).ToList();
+        }
+
+        // POST
         public async Task<JobDTO> Create(JobRequest request, int userId)
         {
             if (!Enum.TryParse<CategoryEnum>(request.Category, ignoreCase: true, out var parsedCategory) ||
