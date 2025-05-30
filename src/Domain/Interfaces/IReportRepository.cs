@@ -11,5 +11,7 @@ namespace Domain.Interfaces
     {
 
         Task DeleteByJobId(int jobId);
+
+        Task<bool> GetReportByUserAndJob(int userId, int jobId);
     }
 }

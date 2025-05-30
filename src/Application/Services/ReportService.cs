@@ -1,5 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.Models.Responses;
+using Domain.Constants;
+using Domain.Entities;
 using Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -49,5 +51,30 @@ namespace Application.Services
             await _reportRepository.DeleteByJobId(jobId);
         }
 
+        public async Task AddReport(int userId, int jobId, string category)
+        {
+            if (!Enum.TryParse<CategoryReport>(category, ignoreCase: true, out var parsedCategory) ||
+            !Enum.IsDefined(typeof(CategoryReport), parsedCategory))
+            {
+                throw new ArgumentException("Invalid report category");
+            }
+
+            var hasReported = await _reportRepository.GetReportByUserAndJob(userId, jobId);
+
+            if (hasReported)
+            {
+                throw new Exception("You has already reported this job");
+            }
+
+            var report = new Report
+            {
+                JobId = jobId,
+                ClientId = userId,
+                Created_At = DateTime.UtcNow,
+                CategoryReport = parsedCategory 
+            };
+
+            await _reportRepository.Create(report);
+        }
     }
 }

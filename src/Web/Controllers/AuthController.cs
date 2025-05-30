@@ -30,7 +30,7 @@ namespace Web.Controllers
 
             if (token == null)
             {
-                return Unauthorized();
+                return BadRequest();
             }
 
             return Ok(token);

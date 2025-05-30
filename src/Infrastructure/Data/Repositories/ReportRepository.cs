@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,11 @@ namespace Infrastructure.Data.Repositories
             await _context.SaveChangesAsync();
         }
 
+
+        public async Task<bool> GetReportByUserAndJob(int userId, int jobId)
+        {
+            return await _context.Reports.AnyAsync(r => r.ClientId == userId && r.JobId == jobId);
+        }
 
     }
 }

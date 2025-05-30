@@ -13,5 +13,7 @@ namespace Application.Interfaces
         Task<List<JobReportSummaryDTO>> GetJobReportSummariesAsync();
         Task DeleteReportedJob(int jobId);
         Task CleanReportedJob(int jobId);
+
+        Task AddReport(int userId, int jobId, string category);
     }
 }
