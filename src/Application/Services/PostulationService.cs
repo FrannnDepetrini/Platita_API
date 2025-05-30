@@ -220,44 +220,6 @@ namespace Application.Services
             return true;
         }
 
-        public async Task<PostulationDetailDTO?> GetByIdForPublisherAsync(int id)
-        {
-            var postulation = await _postulationRepository.GetByIdForPublisherAsync(id);
-            if(postulation is null)
-            {
-                throw new Exception("Postulation not found");
-            }
-
-            var postulationDetailDTO = PostulationDetailDTO.Create(postulation);
-
-            return postulationDetailDTO;
-        }     
-        
-        public async Task<MyPostulationDTO?> GetByIdForApplicantAsync(int id)
-        {
-            var postulation = await _postulationRepository.GetByIdForApplicantAsync(id);
-            if(postulation is null)
-            {
-                throw new Exception("Postulation not found");
-            }
-
-            var myPostulationDTO = MyPostulationDTO.Create(postulation);
-
-            return myPostulationDTO;
-        }
-
-
-
-        public async Task<IEnumerable<PostulationDetailDTO>> GetMyPostulationsAsync(int userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task UnpostulateAsync(int userId, int jobId)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IEnumerable<MyPostulationDTO>> GetMyPostulations(int userId)
         {
             var posts = await _postulationRepository.GetAllMyPostulations(userId);
