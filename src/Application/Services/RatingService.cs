@@ -66,7 +66,6 @@ namespace Application.Services
 
         public async Task CreateBadRating(int clientId, CreateRatingRequest request)
         {
-            var job = await _jobRepository.GetById(request.JobId);
 
             var newRating = new Rating
             {
