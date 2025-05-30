@@ -36,14 +36,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("SupportId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
-
-                    b.HasIndex("SupportId");
 
                     b.ToTable("Complaints");
                 });
@@ -494,7 +489,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 4,
                             Email = "marmax0504@gmail.com",
-                            Password = "$2a$11$len05k4w5houjF87JQ0laeF3WBR3cXjDDcFAPUoTaETZvSFknjJfu",
+                            Password = "$2a$11$TANTL6iLnGDdw5RnKiQmk.G7MrexXh4fpA7r2dEO27hGpVdTI36Zi",
                             PhoneNumber = "3496502453",
                             UserName = "Maximo Martin",
                             City = "Rosario",
@@ -504,7 +499,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 5,
                             Email = "joako.tanlon@gmail.com",
-                            Password = "$2a$11$aAbql5dXB/Oj3MDgKxWjpugEABpDetu7kPAGIuWXZYU6UjnZh0Ujq",
+                            Password = "$2a$11$l43eUoXysLdXWoGV3Y4RAO.6gpYwWr/8WXI4wkYrKMeCnihgs6Uvq",
                             PhoneNumber = "3412122907",
                             UserName = "Joaquin Tanlongo",
                             City = "La Plata",
@@ -514,7 +509,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 6,
                             Email = "marucomass@gmail.com",
-                            Password = "$2a$11$Lk6jslDT/mKHowtPDNWLw.MvA.mpx9OEAdV78TH.TO9VYXQWgE0oC",
+                            Password = "$2a$11$4CPo9wDu1Otj5ZEhk0S.tuc/UBHj25dNvyzV6/TMfegApa.JPsaXO",
                             PhoneNumber = "3467637190",
                             UserName = "Mario Massonnat",
                             City = "Rosario",
@@ -524,7 +519,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 7,
                             Email = "frandepe7@gmail.com",
-                            Password = "$2a$11$fGzM1qKnpnJKwO8Cw31JauMsn.rYc9Qjqx.87vie1Z2IRfXvJsFbS",
+                            Password = "$2a$11$JDjmCUD0.4R7OwoUkfCpc.2Wq2q70Y4vx.6VGFC95YdBtWabaTjoy",
                             PhoneNumber = "3472582334",
                             UserName = "Francisco Depetrini",
                             City = "Marcos Juarez",
@@ -534,7 +529,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 8,
                             Email = "palenafrancisco@gmail.com",
-                            Password = "$2a$11$uvmVYeCcjWP/.MN0t0ZAs.EgMCl6IvVrONFGGQREtYj2xEnOzBXpC",
+                            Password = "$2a$11$D6Qf2YJMqeZlTyreDOazjOLYsKvQB1uTiOqTbIQIUHLarTwX9IqgG",
                             PhoneNumber = "3465664518",
                             UserName = "Francisco Palena",
                             City = "Firmat",
@@ -544,7 +539,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 9,
                             Email = "pedrogasparini99@gmail.com",
-                            Password = "$2a$11$g/PhDPHfGNOkfeP11.CI7OgVFNYZKWn0lOBGGG6C.mph.48gULJ2O",
+                            Password = "$2a$11$nhZDJyXsArYeE/meDLgse.n6kNkIkspneF5L5t61UsFzM/KphLnti",
                             PhoneNumber = "3464445164",
                             UserName = "Pedro Gasparini",
                             City = "Bigand",
@@ -581,15 +576,7 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Support", "Support")
-                        .WithMany("Complaints")
-                        .HasForeignKey("SupportId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Client");
-
-                    b.Navigation("Support");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job", b =>
@@ -678,11 +665,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Postulations");
 
                     b.Navigation("Ratings");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Support", b =>
-                {
-                    b.Navigation("Complaints");
                 });
 #pragma warning restore 612, 618
         }

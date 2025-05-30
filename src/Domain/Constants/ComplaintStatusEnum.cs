@@ -8,7 +8,6 @@ namespace Domain.Constants;
 
 public enum ComplaintStatusEnum
 {
-    Solved,
     Pending,
-    InProcess
+    Solved
 }

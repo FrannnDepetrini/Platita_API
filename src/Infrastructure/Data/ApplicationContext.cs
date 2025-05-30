@@ -84,11 +84,6 @@ namespace Infrastructure.Data
                 .WithMany()
                 .HasForeignKey(c => c.ClientId);
 
-            modelBuilder.Entity<Complaint>()
-                .HasOne(c => c.Support)
-                .WithMany(s => s.Complaints)
-                .HasForeignKey(c => c.SupportId);
-
             modelBuilder.Entity<Rating>()
                 .HasOne(r => r.Job)
                 .WithMany()

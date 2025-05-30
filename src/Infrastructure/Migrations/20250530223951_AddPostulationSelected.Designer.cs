@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250529182446_Seeds")]
-    partial class Seeds
+    [Migration("20250530223951_AddPostulationSelected")]
+    partial class AddPostulationSelected
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,14 +39,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("SupportId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
-
-                    b.HasIndex("SupportId");
 
                     b.ToTable("Complaints");
                 });
@@ -109,6 +104,7 @@ namespace Infrastructure.Migrations
                             DayPublicationEnd = new DateTime(2025, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DayPublicationStart = new DateTime(2025, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Necesito pintar un monoambiente en el centro",
+                            PostulationSelectedId = 2,
                             Province = "Santa Fe",
                             Status = 0,
                             Title = "Pintar departamento"
@@ -135,6 +131,7 @@ namespace Infrastructure.Migrations
                             DayPublicationEnd = new DateTime(2025, 5, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DayPublicationStart = new DateTime(2025, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Patio de 100m2 con pasto alto, se necesita corte y limpieza",
+                            PostulationSelectedId = 3,
                             Province = "Buenos Aires",
                             Status = 0,
                             Title = "Corte de pasto y desmalezado"
@@ -148,6 +145,7 @@ namespace Infrastructure.Migrations
                             DayPublicationEnd = new DateTime(2025, 5, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DayPublicationStart = new DateTime(2025, 5, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Hay una pérdida debajo del lavabo",
+                            PostulationSelectedId = 5,
                             Province = "Mendoza",
                             Status = 0,
                             Title = "Reparar cañería del baño"
@@ -494,7 +492,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 4,
                             Email = "marmax0504@gmail.com",
-                            Password = "$2a$11$CfbSAv//7Sy7KlTfgVITHe9Hkm16.8ibd.UU8mxFDTlZBTLUhDWJW",
+                            Password = "$2a$11$TANTL6iLnGDdw5RnKiQmk.G7MrexXh4fpA7r2dEO27hGpVdTI36Zi",
                             PhoneNumber = "3496502453",
                             UserName = "Maximo Martin",
                             City = "Rosario",
@@ -504,7 +502,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 5,
                             Email = "joako.tanlon@gmail.com",
-                            Password = "$2a$11$WSI7flznekce6WfzTv7fhOtypPO4JogIJ5HX2XPW80dyfBDIiLK/G",
+                            Password = "$2a$11$l43eUoXysLdXWoGV3Y4RAO.6gpYwWr/8WXI4wkYrKMeCnihgs6Uvq",
                             PhoneNumber = "3412122907",
                             UserName = "Joaquin Tanlongo",
                             City = "La Plata",
@@ -514,7 +512,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 6,
                             Email = "marucomass@gmail.com",
-                            Password = "$2a$11$v7o2qWdBz7tB63Z4Pe89CuUW3KFuIa5dD.PCVV5xIovGReECuFM1a",
+                            Password = "$2a$11$4CPo9wDu1Otj5ZEhk0S.tuc/UBHj25dNvyzV6/TMfegApa.JPsaXO",
                             PhoneNumber = "3467637190",
                             UserName = "Mario Massonnat",
                             City = "Rosario",
@@ -524,7 +522,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 7,
                             Email = "frandepe7@gmail.com",
-                            Password = "$2a$11$4kqg9yk4OgCcIq7fksQUKes5RZSv61Nu67srCImSbGpci8yRxPDoG",
+                            Password = "$2a$11$JDjmCUD0.4R7OwoUkfCpc.2Wq2q70Y4vx.6VGFC95YdBtWabaTjoy",
                             PhoneNumber = "3472582334",
                             UserName = "Francisco Depetrini",
                             City = "Marcos Juarez",
@@ -534,7 +532,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 8,
                             Email = "palenafrancisco@gmail.com",
-                            Password = "$2a$11$teJ9CDRzkVZKQByAgMKS5u2cwlVWnV7XkGAgrXhjY5Yyp3rUG8JpC",
+                            Password = "$2a$11$D6Qf2YJMqeZlTyreDOazjOLYsKvQB1uTiOqTbIQIUHLarTwX9IqgG",
                             PhoneNumber = "3465664518",
                             UserName = "Francisco Palena",
                             City = "Firmat",
@@ -544,7 +542,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 9,
                             Email = "pedrogasparini99@gmail.com",
-                            Password = "$2a$11$oguOFQoITRdDaB6sk5Gk/.pZ8K61IyhiILk9gX6GQ8k409fXH8uiy",
+                            Password = "$2a$11$nhZDJyXsArYeE/meDLgse.n6kNkIkspneF5L5t61UsFzM/KphLnti",
                             PhoneNumber = "3464445164",
                             UserName = "Pedro Gasparini",
                             City = "Bigand",
@@ -581,15 +579,7 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Support", "Support")
-                        .WithMany("Complaints")
-                        .HasForeignKey("SupportId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Client");
-
-                    b.Navigation("Support");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job", b =>
@@ -678,11 +668,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Postulations");
 
                     b.Navigation("Ratings");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Support", b =>
-                {
-                    b.Navigation("Complaints");
                 });
 #pragma warning restore 612, 618
         }

@@ -18,7 +18,6 @@ namespace Application.Services
         private readonly IPostulationRepository _postulationRepository = postulationRepository;
         private readonly IJobRepository _jobRepository = jobRepository;
         private readonly IRatingService _ratingService = ratingService;
-       // private readonly IJobService _jobService = jobService;
         public Task AcceptPostulationAsync(int postulationId)
         {
             throw new NotImplementedException();

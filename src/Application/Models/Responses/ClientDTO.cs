@@ -17,8 +17,9 @@ public class ClientDTO
     public string PhoneNumber { get; set; }
     public string Role { get; set; } = default!;
 
-    public static ClientDTO Create(Client Client)
+    public static ClientDTO Create(Client? Client)
     {
+        if (Client == null) return null;
         return new ClientDTO
         {
             Id = Client.Id,
