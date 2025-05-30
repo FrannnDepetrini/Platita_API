@@ -29,15 +29,14 @@ public class JobController : ControllerBase
     [HttpGet("by-location")]
     public async Task<ActionResult<List<JobDTO>>> GetJobsByLocation()
     {
-        var userId = User.GetUserIntId();
-        var jobs = await _jobService.GetJobsByClientLocationAsync(userId);
+        var jobs = await _jobService.GetJobsByClientLocationAsync(User.GetUserIntId());
         return Ok(jobs);
     }
 
     [HttpGet("[action]")]
     public async Task<ActionResult<List<JobDTO>>> GetJobForSearch(string Province, string city)
     {
-        var jobs = await _jobService.GetJobsBySearchLocationAsync(Province, city);
+        var jobs = await _jobService.GetJobsBySearchLocationAsync(Province, city, User.GetUserIntId());
         return Ok(jobs);
     }
 
@@ -46,7 +45,7 @@ public class JobController : ControllerBase
     {
         try
         {
-            var jobs = await _jobService.GetJobsByCategory(request);
+            var jobs = await _jobService.GetJobsByCategory(request, User.GetUserIntId());
             return Ok(jobs);
 
         }
@@ -67,21 +66,21 @@ public class JobController : ControllerBase
         }
         return Ok(jobs);
     }
-
+    
     [HttpGet("[action]")]
-    public async Task<ActionResult<List<AllJobsDTO>>> GetAllJobs()
+    public async Task<ActionResult<List<AllJobsDTO>>> GetAllJobsForModerator()
     {
         var jobs = await _jobService.GetAllJobs();
         return Ok(jobs);
     }
 
     [HttpGet("[action]")]
-    public async Task<ActionResult<List<JobDtoReport>>> GetAllJobsReported()
+    public async Task<ActionResult<List<JobDtoReport>>> GetAllJobsReportedForModerator()
     {
         var jobs = await _jobService.GetAllJobsReported();
         return Ok(jobs);
     }
-
+    
     [HttpPost("create")]
     public async Task<ActionResult<JobDTO>> Create([FromBody] JobRequest request)
     {

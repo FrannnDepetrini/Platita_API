@@ -33,7 +33,7 @@ namespace Application.Services
             {
                 throw new Exception("Usuario no encontrado.");
             }
-            var jobs = await _jobRepository.GetJobsByLocationAsync(existingUser.Province, existingUser.City);
+            var jobs = await _jobRepository.GetJobsByLocationAsync(existingUser.Province, existingUser.City, userId);
 
             var jobDtos = jobs.Select(j => new JobDTO
             {
@@ -55,9 +55,9 @@ namespace Application.Services
 
         }
         
-        public async Task<List<JobDTO>> GetJobsBySearchLocationAsync(string Province, string city)
+        public async Task<List<JobDTO>> GetJobsBySearchLocationAsync(string Province, string city, int userId)
         {
-            var jobs = await _jobRepository.GetJobsByLocationAsync(Province, city);
+            var jobs = await _jobRepository.GetJobsByLocationAsync(Province, city, userId);
             var jobDtos = jobs.Select(j => new JobDTO
             {
                 Id = j.Id,
@@ -77,9 +77,9 @@ namespace Application.Services
             return jobDtos;
         }
         
-        public async Task<IEnumerable<JobDTO>> GetJobsByCategory(JobFilteredByCategoryRequest request)
+        public async Task<IEnumerable<JobDTO>> GetJobsByCategory(JobFilteredByCategoryRequest request, int userId)
         {
-            var jobs = (await _jobRepository.GetJobsByCategory(request.Category)).ToList();
+            var jobs = (await _jobRepository.GetJobsByCategory(request.Category, userId)).ToList();
 
             var jobDtos = jobs.Select(j => new JobDTO
             {
@@ -95,11 +95,10 @@ namespace Application.Services
                 DayPublicationStart = j.DayPublicationStart,
                 DayPublicationEnd = j.DayPublicationEnd,
                 Category = j.Category.ToString()
-
             }).ToList();
             return jobDtos;
         }
-
+        // Mis trabajos
         public async Task<List<JobDTO>> GetJobsByClientAsync(int userId)
         {
             var client = await _clientRepository.GetById(userId);
@@ -121,8 +120,7 @@ namespace Application.Services
                 Description = j.Description,
                 DayPublicationStart = j.DayPublicationStart,
                 DayPublicationEnd = j.DayPublicationEnd,
-                Category = j.Category.ToString(),
-
+                Category = j.Category.ToString()
             }).ToList();
             return jobDtos;
         }

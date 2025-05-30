@@ -30,20 +30,25 @@ namespace Infrastructure.Data.Repositories
                 .FirstOrDefaultAsync(j => j.Id == id);
         }
 
-        public async Task<IEnumerable<Job>> GetJobsByCategory(CategoryEnum category)
+        public async Task<IEnumerable<Job>> GetJobsByCategory(CategoryEnum category, int userId)
         {
             return await _context.Set<Job>()
             .Include(j => j.Client)
             .Include(j => j.Postulations)
+            .Where(j => j.ClientId != userId)
             .Where(j => j.Category == category)
+            .Where(j => !_context.Reports.Any(r => r.ClientId == userId && r.JobId == j.Id))
             .ToListAsync();
         }
-        public async Task<List<Job>> GetJobsByLocationAsync(string Province, string city)
+        public async Task<List<Job>> GetJobsByLocationAsync(string Province, string city, int userId)
         {
             return await _context.Jobs
             .Include(j => j.Client)
             .Include(j => j.Postulations)
+            .Where(j => j.ClientId != userId)
             .Where(j => j.Province == Province && j.City == city)
+            .Where(j => j.Status == JobStatusEnum.Available)
+            .Where(j => !_context.Reports.Any(r => r.ClientId == userId && r.JobId == j.Id))
             .ToListAsync();
         }
 
