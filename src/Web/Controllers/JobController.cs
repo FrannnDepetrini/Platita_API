@@ -68,6 +68,20 @@ public class JobController : ControllerBase
         return Ok(jobs);
     }
 
+    [HttpGet("[action]")]
+    public async Task<ActionResult<List<AllJobsDTO>>> GetAllJobs()
+    {
+        var jobs = await _jobService.GetAllJobs();
+        return Ok(jobs);
+    }
+
+    [HttpGet("[action]")]
+    public async Task<ActionResult<List<JobDtoReport>>> GetAllJobsReported()
+    {
+        var jobs = await _jobService.GetAllJobsReported();
+        return Ok(jobs);
+    }
+
     [HttpPost("create")]
     public async Task<ActionResult<JobDTO>> Create([FromBody] JobRequest request)
     {

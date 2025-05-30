@@ -55,6 +55,25 @@ namespace Infrastructure.Data.Repositories
             .Where(j => j.ClientId == userId)
             .ToListAsync();
         }
+        public async Task<List<Job>> GetAllJobs()
+        {
+            return await _context.Jobs
+                .Include(j => j.Client)
+                .Include(j => j.Postulations)
+                .Include(j => j.Reports)
+                .ToListAsync();
+        }
+
+        public async Task<List<Job>> GetAllJobsReported()
+        {
+            return await _context.Jobs
+                .Include(j => j.Client)
+                .Include(j => j.Postulations)
+                .Include(j => j.Reports)
+                .Where(j => j.Reports.Count() > 0)
+                .OrderByDescending(j => j.Reports.Count)
+                .ToListAsync();
+        }
 
         public async Task<List<Job>> GetAllExpiratedJobs(CancellationToken cancellationToken)
         {

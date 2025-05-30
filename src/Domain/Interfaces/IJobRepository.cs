@@ -16,6 +16,10 @@ namespace Domain.Interfaces
 
             Task<IEnumerable<Job>> GetJobsByCategory(CategoryEnum category);
 
+            Task<List<Job>> GetAllJobs();
+
+            Task<List<Job>> GetAllJobsReported();
+
             Task<List<Job>> GetAllExpiratedJobs(CancellationToken cancellationToken);
 
             Task SaveChangesAsync();
