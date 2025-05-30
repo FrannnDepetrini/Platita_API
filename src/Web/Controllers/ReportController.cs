@@ -2,11 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Application.Interfaces;
 using Application.Models.Responses;
+using Web.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = "ModeratorPolicy")]
     public class ReportController : ControllerBase
     {
         private readonly IReportService _reportService ;
@@ -60,6 +63,20 @@ namespace Web.Controllers
             }
         }
 
+        [HttpPost("[action]")]
+        [AllowAnonymous]
+        public async Task<IActionResult> AddReport(int jobId, string category)
+        {
+            try
+            {
+                await _reportService.AddReport(User.GetUserIntId(), jobId, category);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
     }
 }
