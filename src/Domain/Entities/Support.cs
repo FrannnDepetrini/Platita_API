@@ -9,7 +9,7 @@ namespace Domain.Entities
 {
     public class Support : User
     {
-        public List<Complaint> Complaints {get; set;} = [];
+
     }
 }
 
