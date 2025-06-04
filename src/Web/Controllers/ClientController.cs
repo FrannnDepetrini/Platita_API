@@ -19,8 +19,8 @@ public class ClientController : ControllerBase
         _clientService = clientService;
     }
 
-    [HttpPut("updateUser")]
-    public async Task<ActionResult> Update([FromBody] UpdateClientRequest request)
+    [HttpPut("[action]")]
+    public async Task<ActionResult> UpdateClient([FromBody] UpdateClientRequest request)
     {
         try
         {
@@ -31,6 +31,13 @@ public class ClientController : ControllerBase
         {
             return BadRequest(ex.Message);
         }
+    }
+
+    [HttpDelete("[action]")]
+    public async Task<IActionResult> AutoDeleteClient()
+    {
+        await _clientService.AutoDeleteClient(User.GetUserIntId());
+        return Ok();
     }
 
 }

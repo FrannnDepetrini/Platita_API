@@ -44,22 +44,27 @@ namespace Infrastructure.Data
                 .HasValue<Client>(RolesEnum.Client)
                 .HasValue<Support>(RolesEnum.Support);
 
+            modelBuilder.Entity<Client>()
+                .HasMany(c => c.Jobs)
+                .WithOne(j => j.Client) 
+                .HasForeignKey(j => j.ClientId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Client>()
+                .HasMany(c => c.Ratings)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Job>()
+                .HasMany(j => j.Postulations)
+                .WithOne(p => p.Job)
+                .HasForeignKey(p => p.JobId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Job>()
                 .HasOne(j => j.Client)
                 .WithMany(c => c.Jobs)
                 .HasForeignKey(j => j.ClientId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<Postulation>()
-               .HasOne(j => j.Client)
-               .WithMany(c => c.Postulations)
-               .HasForeignKey(j => j.ClientId)
-               .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<Client>()
-                .HasMany(c => c.Ratings)
-                .WithOne()
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Job>()
@@ -79,16 +84,21 @@ namespace Infrastructure.Data
                 .HasForeignKey(c => c.PostulationSelectedId)
                 .OnDelete(DeleteBehavior.SetNull);
 
-            modelBuilder.Entity<Complaint>()
-                .HasOne(c => c.Client)
-                .WithMany()
-                .HasForeignKey(c => c.ClientId);
+            modelBuilder.Entity<Postulation>()
+               .HasOne(j => j.Client)
+               .WithMany(c => c.Postulations)
+               .HasForeignKey(j => j.ClientId)
+               .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Rating>()
                 .HasOne(r => r.Job)
                 .WithMany()
                 .HasForeignKey(r => r.JobId);
 
+            modelBuilder.Entity<Complaint>()
+                .HasOne(c => c.Client)
+                .WithMany()
+                .HasForeignKey(c => c.ClientId);
 
 
             //SYSADMIN

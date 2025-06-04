@@ -68,10 +68,9 @@ namespace Web.Controllers
                 await _ratingService.CreateRating(User.GetUserIntId(), request);
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
 
 
