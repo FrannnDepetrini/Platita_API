@@ -118,9 +118,9 @@ public class JobController : ControllerBase
             await _jobService.JobFinished(idJob, User.GetUserIntId());
             return Ok();
         }
-        catch
+        catch(Exception ex) 
         {
-            return NotFound();
+            return BadRequest(ex.Message);
         }
     }
 

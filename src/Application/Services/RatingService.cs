@@ -3,6 +3,7 @@ using Application.Models.Requests;
 using Application.Models.Responses;
 using Domain.Entities;
 using Domain.Interfaces;
+using Domain.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,16 +52,21 @@ namespace Application.Services
         {
             var job = await _jobRepository.GetById(request.JobId);
 
-                var newRating = new Rating
-                {
-                    RatedByUserId = clientId,
-                    RatedUserId = job.ClientId == clientId ? job.PostulationSelected.ClientId : job.ClientId,
-                    Score = request.Score,
-                    Description = request.Description,
-                    JobId = request.JobId,
-                };
+            if(job.ClientId != clientId && job.PostulationSelectedId != clientId)
+                throw new Exception("you are not allowed to create a rating");
+            if (job.Status != JobStatusEnum.Done)
+                throw new Exception("Job is not done");
 
-                await _ratingRepository.Create(newRating);
+            var newRating = new Rating
+            {
+                RatedByUserId = clientId,
+                RatedUserId = job.ClientId == clientId ? job.PostulationSelected.ClientId : job.ClientId,
+                Score = request.Score,
+                Description = request.Description,
+                JobId = request.JobId,
+            };
+
+            await _ratingRepository.Create(newRating);
 
         }
 

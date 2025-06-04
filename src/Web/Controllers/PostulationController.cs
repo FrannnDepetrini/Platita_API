@@ -59,6 +59,20 @@ namespace Web.Controllers
             }
         }
 
+        [HttpGet("[action]")]
+        public async Task<ActionResult<string>> ShowPhoneForAcceptedPostulation(int postulationId)
+        {
+            try
+            {
+                var phoneNumber = await _postulationService.ShowPhoneForAcceptedPostulation(postulationId, User.GetUserIntId());
+                return Ok(phoneNumber);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost("[action]")]
 
         public async Task<IActionResult> ApplicateJob(PostulationRequest request)
@@ -139,18 +153,6 @@ namespace Web.Controllers
             }
         }
 
-        [HttpGet("[action]")]
-        public async Task<ActionResult<string>> ShowPhoneForAcceptedPostulation(int postulationId)
-        {
-            try
-            {
-                var phoneNumber = await _postulationService.ShowPhoneForAcceptedPostulation(postulationId, User.GetUserIntId());
-                return Ok(phoneNumber);
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+        
     }
 }

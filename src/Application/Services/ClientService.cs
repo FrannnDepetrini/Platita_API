@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.Models.Requests;
 using Application.Models.Responses;
+using Domain.Entities;
 using Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -27,4 +28,11 @@ public class ClientService(IClientRepository clientRepository) : IClientService
 
         await _clientRepository.Update(clientToUpdate);
     }
+
+    public async Task AutoDeleteClient(int clientId)
+    {
+        var user = await _clientRepository.GetById(clientId);
+        await _clientRepository.Delete(user);
+    }
+
 }

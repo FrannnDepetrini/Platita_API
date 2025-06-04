@@ -218,6 +218,10 @@ namespace Application.Services
         public async Task JobFinished(int idJob, int userId)
         {
             var job = await _jobRepository.GetById(idJob);
+            if(job.PostulationSelectedId == null)
+            {
+                throw new Exception("Job has no applicants");
+            }
             if (job == null)
             {
                 throw new Exception("Job not found");
@@ -226,11 +230,7 @@ namespace Application.Services
             {
                 throw new UnauthorizedAccessException("You dont have permission");
             }
-            //var postulation = await _postulationService.GetPostulationsByJobIdAsync(job.Id, userId);
-            //if (postulation == null)
-            //{
-            //    throw new Exception("You dont have postulations");
-            //}
+            
             var postulations = job.Postulations.ToList();
             if (postulations.Count() <= 0) throw new Exception("You dont have postulations");
 
