@@ -10,5 +10,5 @@ namespace Application.Interfaces;
 
 public interface IClientService
 {
-    Task<ClientDTO> UpdateClient(UpdateClientRequest request, int clientId);
+    Task UpdateClient(UpdateClientRequest request, int clientId);
 }

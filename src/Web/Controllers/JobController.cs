@@ -104,13 +104,13 @@ public class JobController : ControllerBase
             await _jobService.Update(request, id, User.GetUserIntId());
             return Ok();
         }
-        catch (System.Exception)
+        catch (Exception ex)
         {
-            return NotFound();
+            return BadRequest(ex.Message);
         }
     }
 
-    [HttpPut("JobDone/{id}")]
+    [HttpPut("[action]")]
     public async Task<IActionResult> JobFinished(int idJob)
     {
         try

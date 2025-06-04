@@ -49,6 +49,30 @@ namespace Web.Controllers
                 return NotFound();
             }
         }
+
+        [HttpGet("[action]")]
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsersByRole(string role)
+        {
+            var userId = User.GetUserIntId();
+
+            var users = await _sysAdminService.GetAllUsersByRole(userId, role);
+            return Ok(users);
+        }
+
+        [HttpPut("[action]/{id}")]
+        public async Task<IActionResult> UpdateUser(int id, [FromBody] UpdateUserRequest request)
+        {
+            try
+            {
+                await _sysAdminService.UpdateUser(id, request);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpDelete("[action]")]
         public async Task<IActionResult> DeleteUser(int id)
         {
@@ -67,33 +91,5 @@ namespace Web.Controllers
                 return NotFound();
             }
         }
-
-        [HttpPut("[action]")]
-        public async Task<IActionResult>UpdateUser(int id, [FromBody]UpdateUserRequest request)
-        {
-            try
-            {
-                await _sysAdminService.UpdateUser(id,request);
-                return Ok();
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
-
-        [HttpGet("[action]")]
-        public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsersByRole(string role)
-        {
-            var userId = User.GetUserIntId();
-
-            var users = await _sysAdminService.GetAllUsersByRole(userId, role);
-            return Ok(users);
-        }
-
-        
-
-
-
     }
 }

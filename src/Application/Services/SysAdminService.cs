@@ -59,8 +59,8 @@ namespace Application.Services
                 throw new Exception("User not found");
             }
 
-            user.UserName = request.UserName;
-            user.PhoneNumber = request.PhoneNumber;
+            user.UserName = request.UserName ?? user.UserName;
+            user.PhoneNumber = request.PhoneNumber ?? user.PhoneNumber;
 
             var updatedUser = await _userRepository.Update(user);
             var userDTO = UserDTO.Create(updatedUser);

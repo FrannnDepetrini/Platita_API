@@ -20,17 +20,16 @@ public class ClientController : ControllerBase
     }
 
     [HttpPut("updateUser")]
-    public async Task<ActionResult<ClientDTO>> Update([FromBody] UpdateClientRequest request)
+    public async Task<ActionResult> Update([FromBody] UpdateClientRequest request)
     {
         try
         {
-            var userId = User.GetUserIntId();
-            await _clientService.UpdateClient(request, userId);
-            return Ok(request);
+            await _clientService.UpdateClient(request, User.GetUserIntId());
+            return Ok();
         }
-        catch (System.Exception)
+        catch (Exception ex)
         {
-            return NotFound();
+            return BadRequest(ex.Message);
         }
     }
 
