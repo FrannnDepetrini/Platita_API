@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Domain.Constants;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ public class ClientDTO
             City = Client.City,
             Province = Client.Province,
             PhoneNumber = Client.PhoneNumber,
-            Role = Client.Role
+            Role = Client.Role.ToString()
         };
     }
 

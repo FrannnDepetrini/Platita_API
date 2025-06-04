@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class ReinitialMigration : Migration
+    public partial class ReinitialMigration2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -39,7 +39,7 @@ namespace Infrastructure.Migrations
                     UserName = table.Column<string>(type: "TEXT", nullable: false),
                     Password = table.Column<string>(type: "TEXT", nullable: false),
                     PhoneNumber = table.Column<string>(type: "TEXT", nullable: false),
-                    Role = table.Column<string>(type: "TEXT", maxLength: 13, nullable: false),
+                    Role = table.Column<int>(type: "INTEGER", nullable: false),
                     Province = table.Column<string>(type: "TEXT", nullable: true),
                     City = table.Column<string>(type: "TEXT", nullable: true)
                 },
@@ -187,15 +187,25 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
+                columns: new[] { "Id", "Email", "Password", "PhoneNumber", "Role", "UserName" },
+                values: new object[,]
+                {
+                    { 1, "sysadmin@gmail.com", "$2a$11$xn2eIPdvb9wgYnQiz3iizuQ50tt.nwQrr46xnnAcoMw791ZdKbWGq", "341001122", 0, "platita" },
+                    { 2, "moderator@gmail.com", "$2a$11$59FQPCw8hwKq1EdZV5iXpO7Y65lb3Wvgajto3S3CcW24U3rfnVgi.", "341987654321", 1, "moderator1" },
+                    { 3, "support@gmail.com", "$2a$11$wqdHCv4.EqC/tI8vFBcQ5uDLUMeS0Vh96l2GcfgqvS1JDZhEY6i6C", "341112233", 3, "support1" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
                 columns: new[] { "Id", "City", "Email", "Password", "PhoneNumber", "Province", "Role", "UserName" },
                 values: new object[,]
                 {
-                    { 4, "Rosario", "marmax0504@gmail.com", "$2a$11$sK6ebe01CXcoAlX/qmUv8.w9cz7fZFWTxM1ZedqKdcw1fAVt5Wg3a", "3496502453", "Santa Fe", "Client", "Maximo Martin" },
-                    { 5, "La Plata", "joako.tanlon@gmail.com", "$2a$11$E9dodOoc0J/vf00AmgqNZePW8xcn14t9t1qomffZWbM4W6K8i92UC", "3412122907", "Buenos Aires", "Client", "Joaquin Tanlongo" },
-                    { 6, "Rosario", "marucomass@gmail.com", "$2a$11$0NJTFAZNbAPsBCjH6wDqQe58XxVjSMgQ34WIEroEghNdf6QsPnUE6", "3467637190", "Santa Fe", "Client", "Mario Massonnat" },
-                    { 7, "Marcos Juarez", "frandepe7@gmail.com", "$2a$11$blzCqabA0JXMQzu9OXZlxOwI5IWMY83J1SlXffuwbm1a1gyGpwf4K", "3472582334", "Córdoba", "Client", "Francisco Depetrini" },
-                    { 8, "Firmat", "palenafrancisco@gmail.com", "$2a$11$UwFLgycgGlB72eHz8/UKzebflQSUEqAFrkaYzjW2.N64IbqiQ/3be", "3465664518", "Santa Fe", "Client", "Francisco Palena" },
-                    { 9, "Bigand", "pedrogasparini99@gmail.com", "$2a$11$lJ8PpYJtFDOnvfh13klx9.WN8LU7ll5YCJ6p4ZlZWp0PYNU2.8IyO", "3464445164", "Santa Fe", "Client", "Pedro Gasparini" }
+                    { 4, "Rosario", "marmax0504@gmail.com", "$2a$11$KEPDwRX05iMJvOJnR1E6Z.IlB2d5JZORYS0De3r86n2omOikkK7hi", "3496502453", "Santa Fe", 2, "Maximo Martin" },
+                    { 5, "La Plata", "joako.tanlon@gmail.com", "$2a$11$5yf4GR1MiayiLE2SKScB.uzv5f6ufr/IfPvAPMrVqAIlnmgNeuAde", "3412122907", "Buenos Aires", 2, "Joaquin Tanlongo" },
+                    { 6, "Rosario", "marucomass@gmail.com", "$2a$11$d7Mns6UQ5cj.Ix4AzlTgWuQtfjgneO6uzShh0NCwILJNl2RWUnCti", "3467637190", "Santa Fe", 2, "Mario Massonnat" },
+                    { 7, "Marcos Juarez", "frandepe7@gmail.com", "$2a$11$AgNPiGrSx7lCUfivSyRe3.tmrWKFVtHsP7O0uza/wM6uYSmcn9r8W", "3472582334", "Córdoba", 2, "Francisco Depetrini" },
+                    { 8, "Firmat", "palenafrancisco@gmail.com", "$2a$11$pY2X1LbuC97ycUN0Q4C.xumai4FmDAzuQmSIxJdGk0CLC9xKEn0s2", "3465664518", "Santa Fe", 2, "Francisco Palena" },
+                    { 9, "Bigand", "pedrogasparini99@gmail.com", "$2a$11$HUC4ny922vfKrRGvFUjm.OZbAJoPTRZgOiBYc0Xx7aW5ZXhWyTWfe", "3464445164", "Santa Fe", 2, "Pedro Gasparini" }
                 });
 
             migrationBuilder.InsertData(

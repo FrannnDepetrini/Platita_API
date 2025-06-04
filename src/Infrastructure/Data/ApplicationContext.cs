@@ -38,11 +38,11 @@ namespace Infrastructure.Data
             //modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
             //  acá le digo a la tabla User que va a tener una columna que sirve para discriminar el tipo de User
             modelBuilder.Entity<User>()
-                .HasDiscriminator<string>("Role")
-                .HasValue<SysAdmin>("SysAdmin")
-                .HasValue<Moderator>("Moderator")
-                .HasValue<Client>("Client")
-                .HasValue<Support>("Support");
+                .HasDiscriminator<RolesEnum>("Role")
+                .HasValue<SysAdmin>(RolesEnum.SysAdmin)
+                .HasValue<Moderator>(RolesEnum.Moderator)
+                .HasValue<Client>(RolesEnum.Client)
+                .HasValue<Support>(RolesEnum.Support);
 
 
             modelBuilder.Entity<Job>()
@@ -91,8 +91,42 @@ namespace Infrastructure.Data
 
 
 
+            //SYSADMIN
+            modelBuilder.Entity<SysAdmin>().HasData(new SysAdmin
+            {
+                Id = 1,
+                Email = "sysadmin@gmail.com",
+                Password = BCrypt.Net.BCrypt.HashPassword("sysadmin"),
+                UserName = "platita",
+                PhoneNumber = "341001122",
+                Role = RolesEnum.SysAdmin
+            });
+
+            //MODERATOR
+            modelBuilder.Entity<Moderator>().HasData(new Moderator
+            {
+                Id = 2,
+                Email = "moderator@gmail.com",
+                Password = BCrypt.Net.BCrypt.HashPassword("moderator"),
+                UserName = "moderator1",
+                PhoneNumber = "341987654321",
+                Role = RolesEnum.Moderator
+            });
+
+
+            //SUPPORT
+            modelBuilder.Entity<Support>().HasData(new Support
+            {
+                Id = 3,
+                Email = "support@gmail.com",
+                Password = BCrypt.Net.BCrypt.HashPassword("support"),
+                UserName = "support1",
+                PhoneNumber = "341112233",
+                Role = RolesEnum.Support
+            });
 
             //CLIENTES(IDs: 4 al 10)
+
             modelBuilder.Entity<Client>().HasData(new Client
             {
                 Id = 4,
@@ -102,6 +136,7 @@ namespace Infrastructure.Data
                 UserName = "Maximo Martin",
                 Password = BCrypt.Net.BCrypt.HashPassword("123"),
                 PhoneNumber = "3496502453",
+                Role = RolesEnum.Client
 
             }, new Client
             {
@@ -112,6 +147,7 @@ namespace Infrastructure.Data
                 UserName = "Joaquin Tanlongo",
                 Password = BCrypt.Net.BCrypt.HashPassword("456"),
                 PhoneNumber = "3412122907",
+                Role = RolesEnum.Client
             }, new Client
             {
                 Id = 6,
@@ -121,6 +157,7 @@ namespace Infrastructure.Data
                 UserName = "Mario Massonnat",
                 Password = BCrypt.Net.BCrypt.HashPassword("789"),
                 PhoneNumber = "3467637190",
+                Role = RolesEnum.Client
             },
                 new Client
                 {
@@ -130,7 +167,8 @@ namespace Infrastructure.Data
                     Email = "frandepe7@gmail.com",
                     UserName = "Francisco Depetrini",
                     Password = BCrypt.Net.BCrypt.HashPassword("111"),
-                    PhoneNumber = "3472582334"
+                    PhoneNumber = "3472582334",
+                    Role = RolesEnum.Client
                 },
                 new Client
                 {
@@ -140,7 +178,8 @@ namespace Infrastructure.Data
                     Email = "palenafrancisco@gmail.com",
                     UserName = "Francisco Palena",
                     Password = BCrypt.Net.BCrypt.HashPassword("222"),
-                    PhoneNumber = "3465664518"
+                    PhoneNumber = "3465664518",
+                    Role = RolesEnum.Client
                 },
                 new Client
                 {
@@ -150,9 +189,11 @@ namespace Infrastructure.Data
                     Email = "pedrogasparini99@gmail.com",
                     UserName = "Pedro Gasparini",
                     Password = BCrypt.Net.BCrypt.HashPassword("333"),
-                    PhoneNumber = "3464445164"
+                    PhoneNumber = "3464445164",
+                    Role = RolesEnum.Client
                 }
             );
+
 
 
             //JOBS(IDs: 1 al 4)
@@ -344,7 +385,7 @@ namespace Infrastructure.Data
                     }
                 );
 
-            
+
 
             modelBuilder.Entity<Rating>().HasData(
                     new Rating

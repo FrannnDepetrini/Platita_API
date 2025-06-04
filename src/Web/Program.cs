@@ -92,6 +92,7 @@ builder.Services.AddScoped<IUserService, UserService> ();
 builder.Services.AddScoped<IRatingService, RatingService>();
 builder.Services.AddScoped<IPostulationService, PostulationService>();
 builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<ISysAdminService, SysAdminService>();
 builder.Services.AddScoped<IJobExpirationService, JobExpirationService>();
 builder.Services.AddScoped<IReportService, ReportService>();
 builder.Services.AddScoped<IComplaintService, ComplaintService>();
@@ -108,6 +109,7 @@ builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IRatingRepository, RatingRepository> ();
 builder.Services.AddScoped<IPostulationRepository, PostulationRepository>();
 builder.Services.AddScoped<IReportRepository, ReportRepository>();
+builder.Services.AddScoped<ISysAdminRepository, SysAdminRepository>();
 builder.Services.AddScoped<IComplaintRepository, ComplaintRepository>();
 #endregion
 

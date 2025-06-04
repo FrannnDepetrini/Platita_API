@@ -49,7 +49,7 @@ public class AuthService(IUserRepository userRepository, ITokenService tokenServ
             Password = hashedPassword,
             Province = request.Province,
             City = request.City,
-            Role = RolesEnum.Client.ToString(),
+            Role = RolesEnum.Client,
             UserName = request.UserName,
             PhoneNumber = request.PhoneNumber
         };
@@ -68,9 +68,17 @@ public class AuthService(IUserRepository userRepository, ITokenService tokenServ
             return false;
         }
 
+        //if (!Enum.TryParse<RolesEnum>(request.Role, ignoreCase: true, out var parsedRole) ||
+        //    !Enum.IsDefined(typeof(RolesEnum), parsedRole))
+        //{
+        //    throw new ArgumentException("Invalid role category");
+        //}
+
         if (request.Role != RolesEnum.Moderator.ToString() &&
             request.Role != RolesEnum.Support.ToString() &&
-            request.Role != RolesEnum.SysAdmin.ToString())
+            request.Role != RolesEnum.SysAdmin.ToString() &&
+            request.Role != RolesEnum.Client.ToString()
+           )
         {
             throw new ArgumentException("Invalid role");
         }
@@ -100,7 +108,7 @@ public class AuthService(IUserRepository userRepository, ITokenService tokenServ
             {
                 Email = email,
                 Password = password,
-                Role = role.ToString(),
+                Role = role,
                 UserName = userName,
                 PhoneNumber = phoneNumber
             },
@@ -108,7 +116,7 @@ public class AuthService(IUserRepository userRepository, ITokenService tokenServ
             {
                 Email = email,
                 Password = password,
-                Role = role.ToString(),
+                Role = role,
                 UserName = userName,
                 PhoneNumber = phoneNumber
             },
@@ -116,10 +124,19 @@ public class AuthService(IUserRepository userRepository, ITokenService tokenServ
             {
                 Email = email,
                 Password = password,
-                Role = role.ToString(),
+                Role = role,
                 UserName = userName,
                 PhoneNumber = phoneNumber
             },
+            RolesEnum.Client => new Client
+            {
+                Email = email,
+                Password = password,
+                Role = role,
+                UserName = userName,
+                PhoneNumber = phoneNumber
+            },
+
             _ => throw new ArgumentException("Invalid role")
         };
     }
