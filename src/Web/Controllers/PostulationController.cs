@@ -95,7 +95,19 @@ namespace Web.Controllers
             }
         }
 
-        
+        [HttpPut("[action]")]
+        public async Task<ActionResult> CancelWhenSuccessPostulation(int jobId, int postulationId)
+        {
+            try
+            {
+                await _postulationService.CancelPostulation(jobId, postulationId, User.GetUserIntId());
+                return Ok();
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         [HttpDelete("[action]")]
         public async Task<ActionResult> DeletePostulationFisic(int jobId, int postulationId)
@@ -119,20 +131,6 @@ namespace Web.Controllers
             try
             {
                 var postulation = await _postulationService.DeletePostulationLogic(jobId, postulationId);
-                return Ok();
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpPut("[action]")]
-        public async Task<ActionResult> CancelWhenSuccessPostulation(int jobId, int postulationId)
-        {
-            try
-            {
-                await _postulationService.CancelPostulation(jobId, postulationId, User.GetUserIntId());
                 return Ok();
             }
             catch (UnauthorizedAccessException ex)

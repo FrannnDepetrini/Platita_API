@@ -13,18 +13,18 @@ namespace Application.Services;
 public class ClientService(IClientRepository clientRepository) : IClientService
 {
     private readonly IClientRepository _clientRepository = clientRepository;
-    public async Task<ClientDTO> UpdateClient(UpdateClientRequest request, int clientId)
+    public async Task UpdateClient(UpdateClientRequest request, int clientId)
     {
         var clientToUpdate = await _clientRepository.GetById(clientId);
         if (clientToUpdate == null)
         {
             throw new Exception("user not found");
         }
-        clientToUpdate.UserName = request.UserName;
-        clientToUpdate.PhoneNumber = request.PhoneNumber;
+        clientToUpdate.UserName = request.UserName ?? clientToUpdate.UserName;
+        clientToUpdate.PhoneNumber = request.PhoneNumber ?? clientToUpdate.PhoneNumber;
+        clientToUpdate.City = request.City ?? clientToUpdate.City;
+        clientToUpdate.Province = request.Province ?? clientToUpdate.Province;
 
-        var updatedClient = await _clientRepository.Update(clientToUpdate);
-        var clientDto = ClientDTO.Create(updatedClient);
-        return clientDto;
+        await _clientRepository.Update(clientToUpdate);
     }
 }

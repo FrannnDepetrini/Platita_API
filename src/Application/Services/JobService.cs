@@ -188,19 +188,23 @@ namespace Application.Services
                 throw new Exception("You cant modify a job that has been taken");
             }
 
-            if (!Enum.TryParse<CategoryEnum>(request.Category, ignoreCase: true, out var parsedCategory) ||
-          !Enum.IsDefined(typeof(CategoryEnum), parsedCategory))
+            if (!string.IsNullOrWhiteSpace(request.Category))
             {
-                throw new ArgumentException($"Invalid category value: {request.Category}");
+                if (!Enum.TryParse<CategoryEnum>(request.Category, ignoreCase: true, out var parsedCategory) ||
+                    !Enum.IsDefined(typeof(CategoryEnum), parsedCategory))
+                {
+                    throw new ArgumentException($"Invalid category value: {request.Category}");
+                }
+
+                job.Category = parsedCategory;
             }
 
-            job.Title = request.Title;
+            job.Title = request.Title ?? job.Title;
             job.DayPublicationStart = job.DayPublicationStart;
-            job.DayPublicationEnd = request.DayPublicationEnd;
-            job.Province = request.Province;
-            job.City = request.City;
-            job.Description = request.Description;
-            job.Category = parsedCategory;
+            job.DayPublicationEnd = request.DayPublicationEnd ?? job.DayPublicationEnd;
+            job.Province = request.Province ?? job.Province;
+            job.City = request.City ?? job.City;
+            job.Description = request.Description ?? job.Description;
 
 
             var updatedJob = await _jobRepository.Update(job);

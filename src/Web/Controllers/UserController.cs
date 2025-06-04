@@ -19,7 +19,11 @@ namespace Web.Controllers
             _userService = userService;
         }
 
-
-       
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetUser()
+        {
+            
+            return Ok(await _userService.GetUser(User.GetUserIntId(), User.GetUserRole()));
+        }
     }
 }

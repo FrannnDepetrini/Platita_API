@@ -19,5 +19,16 @@ namespace Web.Extensions
 
             return intId;
         }
+        public static string GetUserRole(this ClaimsPrincipal user)
+        {
+            //var userId = user.FindFirst("id")?.Value;
+
+            var userRole = user.FindFirst(ClaimTypes.Role)?.Value;
+
+            if (userRole == null)
+                throw new Exception("Invalid Role");
+
+            return userRole;
+        }
     }
 }
