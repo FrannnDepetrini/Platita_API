@@ -5,19 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Entities
+namespace Application.Models.Requests
 {
-    public abstract class User
+    public class UpdateUserRequest
     {
-        public int Id { get; set; }
-        public string Email { get; set; }
         public string UserName { get; set; }
-        public string Password { get; set; }
         public string PhoneNumber { get; set; }
-        public RolesEnum Role { get; set; } = default!;
-
-        
     }
 }
-
-

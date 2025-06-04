@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250530223951_AddPostulationSelected")]
-    partial class AddPostulationSelected
+    [Migration("20250604035953_MigrationForPostulationSelected")]
+    partial class MigrationForPostulationSelected
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -457,10 +457,8 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Role")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -470,7 +468,7 @@ namespace Infrastructure.Migrations
 
                     b.ToTable("Users");
 
-                    b.HasDiscriminator<string>("Role").HasValue("User");
+                    b.HasDiscriminator<int>("Role");
 
                     b.UseTphMappingStrategy();
                 });
@@ -485,15 +483,16 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Province")
                         .HasColumnType("TEXT");
 
-                    b.HasDiscriminator().HasValue("Client");
+                    b.HasDiscriminator().HasValue(2);
 
                     b.HasData(
                         new
                         {
                             Id = 4,
                             Email = "marmax0504@gmail.com",
-                            Password = "$2a$11$TANTL6iLnGDdw5RnKiQmk.G7MrexXh4fpA7r2dEO27hGpVdTI36Zi",
+                            Password = "$2a$11$OCZCPMinj54gwyGdIqxOz.dbwZnGVOfhF6e2FrShY/U.HvSyENaBq",
                             PhoneNumber = "3496502453",
+                            Role = 2,
                             UserName = "Maximo Martin",
                             City = "Rosario",
                             Province = "Santa Fe"
@@ -502,8 +501,9 @@ namespace Infrastructure.Migrations
                         {
                             Id = 5,
                             Email = "joako.tanlon@gmail.com",
-                            Password = "$2a$11$l43eUoXysLdXWoGV3Y4RAO.6gpYwWr/8WXI4wkYrKMeCnihgs6Uvq",
+                            Password = "$2a$11$8qoJRK5kzG.jq8Ilypu8JeMsxaQ9nnIz0cTeKMlcFNblIoy9cN/hW",
                             PhoneNumber = "3412122907",
+                            Role = 2,
                             UserName = "Joaquin Tanlongo",
                             City = "La Plata",
                             Province = "Buenos Aires"
@@ -512,8 +512,9 @@ namespace Infrastructure.Migrations
                         {
                             Id = 6,
                             Email = "marucomass@gmail.com",
-                            Password = "$2a$11$4CPo9wDu1Otj5ZEhk0S.tuc/UBHj25dNvyzV6/TMfegApa.JPsaXO",
+                            Password = "$2a$11$PH9hYlqg40HiAu.c4ZsDc.L1FSu6MbhNkezj6/EHO9zKxJ9Y3bsty",
                             PhoneNumber = "3467637190",
+                            Role = 2,
                             UserName = "Mario Massonnat",
                             City = "Rosario",
                             Province = "Santa Fe"
@@ -522,8 +523,9 @@ namespace Infrastructure.Migrations
                         {
                             Id = 7,
                             Email = "frandepe7@gmail.com",
-                            Password = "$2a$11$JDjmCUD0.4R7OwoUkfCpc.2Wq2q70Y4vx.6VGFC95YdBtWabaTjoy",
+                            Password = "$2a$11$3lHs3shV9uY5wqAi.SMJcORCDsfY3wtV0mXYA487XBaUwo5OiNxw2",
                             PhoneNumber = "3472582334",
+                            Role = 2,
                             UserName = "Francisco Depetrini",
                             City = "Marcos Juarez",
                             Province = "Córdoba"
@@ -532,8 +534,9 @@ namespace Infrastructure.Migrations
                         {
                             Id = 8,
                             Email = "palenafrancisco@gmail.com",
-                            Password = "$2a$11$D6Qf2YJMqeZlTyreDOazjOLYsKvQB1uTiOqTbIQIUHLarTwX9IqgG",
+                            Password = "$2a$11$GG0VfUTVsT4uqUttat3qW.Icydh3WLFjxdr.KJxAysetVQcMgaJla",
                             PhoneNumber = "3465664518",
+                            Role = 2,
                             UserName = "Francisco Palena",
                             City = "Firmat",
                             Province = "Santa Fe"
@@ -542,8 +545,9 @@ namespace Infrastructure.Migrations
                         {
                             Id = 9,
                             Email = "pedrogasparini99@gmail.com",
-                            Password = "$2a$11$nhZDJyXsArYeE/meDLgse.n6kNkIkspneF5L5t61UsFzM/KphLnti",
+                            Password = "$2a$11$RP4syRjJj/0jwiS1vuuzl.9xXQi4uAJVPiKA9n.G8EUx.EJxPOLNy",
                             PhoneNumber = "3464445164",
+                            Role = 2,
                             UserName = "Pedro Gasparini",
                             City = "Bigand",
                             Province = "Santa Fe"
@@ -554,21 +558,54 @@ namespace Infrastructure.Migrations
                 {
                     b.HasBaseType("Domain.Entities.User");
 
-                    b.HasDiscriminator().HasValue("Moderator");
+                    b.HasDiscriminator().HasValue(1);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 2,
+                            Email = "moderator@gmail.com",
+                            Password = "$2a$11$Qo8mczr0dy.lznYPfvvkOeXEs/HUotPERYJ.FSqxBfc4jFXo5qSza",
+                            PhoneNumber = "341987654321",
+                            Role = 1,
+                            UserName = "moderator1"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Support", b =>
                 {
                     b.HasBaseType("Domain.Entities.User");
 
-                    b.HasDiscriminator().HasValue("Support");
+                    b.HasDiscriminator().HasValue(3);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 3,
+                            Email = "support@gmail.com",
+                            Password = "$2a$11$ub4kkJHYd0evvKycoywX7u/TYFGl98ZmoCQGrxz.T25dsASuECcBG",
+                            PhoneNumber = "341112233",
+                            Role = 3,
+                            UserName = "support1"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.SysAdmin", b =>
                 {
                     b.HasBaseType("Domain.Entities.User");
 
-                    b.HasDiscriminator().HasValue("SysAdmin");
+                    b.HasDiscriminator().HasValue(0);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "sysadmin@gmail.com",
+                            Password = "$2a$11$1bJMxIuOOd.BEDOVeTmf8.BX5D/WPgSX/4mSMMef24vh4SVB6XUfi",
+                            PhoneNumber = "341001122",
+                            Role = 0,
+                            UserName = "platita"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Complaint", b =>
