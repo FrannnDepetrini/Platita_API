@@ -159,6 +159,7 @@ public class AuthService(IUserRepository userRepository, ITokenService tokenServ
         await _emailService.SendPasswordRecoveryEmailAsync(email, token);
     }
 
+    
     public async Task ResetForgottenPassword(ResetForgottenPasswordRequest request)
     {
         var email = _tokenService.GetEmailFromToken(request.Token);

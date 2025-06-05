@@ -12,7 +12,6 @@ namespace Application.Interfaces
     {
         Task<PostulationDetailDTO> PostulateAsync(int userId, int jobId, float budget, DateTime jobDay);
         Task<IEnumerable<PostulationDetailDTO>> GetPostulationsByJobIdAsync(int jobId, int publisherId);
-        Task AcceptPostulationAsync(int postulationId);
         Task<bool> DeletePostulationFisica(Postulation postJob);
         Task<bool> DeletePostulationPhysics (int postulantId, int jobId);
         Task<bool> DeletePostulationLogic(int postulantId, int jobId);

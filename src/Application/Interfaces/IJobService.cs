@@ -26,6 +26,7 @@ namespace Application.Interfaces
         Task DeleteLogic(int id, int userId);
         Task JobFinished(int idJob, int userId);
         Task ResetJobCancellation(int idJob, int userId);
+
     }
 
 }

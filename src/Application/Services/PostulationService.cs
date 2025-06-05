@@ -13,15 +13,12 @@ using System.Threading.Tasks;
 
 namespace Application.Services
 {
-    public class PostulationService(IPostulationRepository postulationRepository, IJobRepository jobRepository, IRatingService ratingService) : IPostulationService
+    public class PostulationService(IPostulationRepository postulationRepository, IJobRepository jobRepository, IRatingService ratingService, IEmailService emailService) : IPostulationService
     {
         private readonly IPostulationRepository _postulationRepository = postulationRepository;
         private readonly IJobRepository _jobRepository = jobRepository;
         private readonly IRatingService _ratingService = ratingService;
-        public Task AcceptPostulationAsync(int postulationId)
-        {
-            throw new NotImplementedException();
-        }
+        private readonly IEmailService _emailService = emailService;
 
 
        
@@ -123,11 +120,12 @@ namespace Application.Services
                 if (postulation.Id == selectedPostulant.Id)
                 {
                     postulation.Status = PostulationStatusEnum.Success;
-                    
+                    await _emailService.SendNotificationEmailAsync(postulation.Client.Email, postulation.Client.UserName, CategoryNotificationsEnum.PostulantSelected);
                 }
                 else
                 {
                     postulation.Status = PostulationStatusEnum.Rejected;
+                    await _emailService.SendNotificationEmailAsync(postulation.Client.Email, postulation.Client.UserName, CategoryNotificationsEnum.PostulantRejected);
                 }                
             }
             selectedPostulant.Job.Status = JobStatusEnum.Taken;
@@ -265,6 +263,7 @@ namespace Application.Services
             if (postulation.Status == PostulationStatusEnum.Success)
             {
                 postulation.Status = PostulationStatusEnum.Cancelled;
+                await _emailService.SendNotificationEmailAsync(postulation.Client.Email, postulation.Client.UserName, CategoryNotificationsEnum.PostulantCancelled);
                 if ((DateTime.Now - postulation.JobDay).TotalHours <= 48)
                 {
                     //resena mala para el postulante
