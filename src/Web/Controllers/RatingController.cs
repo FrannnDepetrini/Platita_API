@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.Models.Requests;
 using Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Web.Extensions;
@@ -19,6 +20,7 @@ namespace Web.Controllers
         }
 
         [HttpGet("[action]")]
+        [Authorize(Policy = "ClientPolicy")]
         public async Task<IActionResult> GetMyOrOtherReceivedRatingsForEmployer(int clientId = 0)
         {
             try
@@ -32,6 +34,7 @@ namespace Web.Controllers
             }
         }
         [HttpGet("[action]")]
+        [Authorize(Policy = "ClientPolicy")]
         public async Task<IActionResult> GetMyOrOtherReceivedRatingsForEmployee(int clientId = 0)
         {
             try
@@ -46,6 +49,7 @@ namespace Web.Controllers
         }
 
         [HttpGet("[action]")]
+        [Authorize(Policy = "ClientPolicy")]
         public async Task<IActionResult> GetMyReceivedRatingsScore(int clientId = 0)
         {
             try
@@ -60,6 +64,7 @@ namespace Web.Controllers
         }
 
         [HttpPost("[action]")]
+        [Authorize(Policy = "ClientPolicy")]
         public async Task<IActionResult> CreateRating(CreateRatingRequest request)
         {
 
@@ -77,11 +82,12 @@ namespace Web.Controllers
         }
 
         [HttpDelete("[action]")]
-        public async Task<IActionResult> DeleteRatingFisic(int idRating)
+        [Authorize(Policy = "SysAdminPolicy")]
+        public async Task<IActionResult> DeleteRatingPhysics(int idRating)
         {
             try
             {
-                await _ratingService.DeleteRatingFisic(idRating);
+                await _ratingService.DeleteRatingPhysics(idRating);
                 return Ok();
             }
             catch (Exception)

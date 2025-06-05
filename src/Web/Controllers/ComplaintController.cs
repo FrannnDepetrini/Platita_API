@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.Models.Responses;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Web.Extensions;
@@ -18,6 +19,7 @@ namespace Web.Controllers
         }
 
         [HttpGet("[action]")]
+        [Authorize(Policy ="SysAdminOrSupportPolicy")]
         public async Task<ActionResult<List<ComplaintDTO>>> GetAllComplaint()
         {
             var complaints = await _complaintService.GetAllComplaint();
@@ -26,6 +28,7 @@ namespace Web.Controllers
 
 
         [HttpPost("[action]")]
+        [Authorize(Policy ="ClientPolicy")]
         public async Task<ActionResult<Complaint>> CreateComplaint(string description)
         {
             var complaint = await _complaintService.CreateComplaint(description, User.GetUserIntId());
@@ -33,6 +36,7 @@ namespace Web.Controllers
         }
 
         [HttpPatch("[action]")]
+        [Authorize(Policy = "SupportPolicy")]
         public async Task<IActionResult> CompleteComplaint(int complaintId)
         {
             try

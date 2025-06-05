@@ -23,7 +23,7 @@ namespace Infrastructure.Services
         {
             var jobs = await _jobRepository.GetAllExpiratedJobs(cancellationToken);
 
-            foreach (var job in jobs) 
+            foreach (var job in jobs)
             {
                 job.Status = JobStatusEnum.Deleted;
             }

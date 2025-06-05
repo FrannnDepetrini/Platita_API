@@ -3,6 +3,7 @@ using Application.Models.Requests;
 using Application.Models.Responses;
 using Domain.Constants;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -25,6 +26,8 @@ namespace Web.Controllers
         }
 
         [HttpGet("[action]")]
+        [Authorize(Policy = "ClientPolicy")]
+
         public async Task<IActionResult> GetPostulationsByJobId(int jobId)
         {
             try
@@ -45,6 +48,7 @@ namespace Web.Controllers
         }
 
         [HttpGet("[action]")]
+        [Authorize(Policy = "ClientPolicy")]
         public async Task<ActionResult> GetMyPostulations()
         {
             try
@@ -60,6 +64,8 @@ namespace Web.Controllers
         }
 
         [HttpGet("[action]")]
+        [Authorize(Policy = "ClientPolicy")]
+
         public async Task<ActionResult<string>> ShowPhoneForAcceptedPostulation(int postulationId)
         {
             try
@@ -74,7 +80,7 @@ namespace Web.Controllers
         }
 
         [HttpPost("[action]")]
-
+        [Authorize(Policy = "SysAdminOrClientPolicy")]
         public async Task<IActionResult> ApplicateJob(PostulationRequest request)
         {
             try
@@ -94,6 +100,7 @@ namespace Web.Controllers
         }
 
         [HttpPut("[action]")]
+        [Authorize(Policy = "ClientPolicy")]
         public async Task<IActionResult> ApproveApplication(int jobId, int postulantId)
         {
             try
@@ -110,6 +117,7 @@ namespace Web.Controllers
         }
 
         [HttpPut("[action]")]
+        [Authorize(Policy = "ClientPolicy")]
         public async Task<ActionResult> CancelWhenSuccessPostulation(int jobId, int postulationId)
         {
             try
@@ -124,11 +132,12 @@ namespace Web.Controllers
         }
 
         [HttpDelete("[action]")]
-        public async Task<ActionResult> DeletePostulationFisic(int jobId, int postulationId)
+        [Authorize(Policy = "SysAdminPolicy")]
+        public async Task<ActionResult> DeletePostulationPhysics(int jobId, int postulationId)
         {
             try
             {
-                var postulation = await _postulationService.DeletePostulationFisic(jobId, postulationId);
+                var postulation = await _postulationService.DeletePostulationPhysics(jobId, postulationId);
                 return Ok();
 
 
@@ -140,6 +149,7 @@ namespace Web.Controllers
         }
 
         [HttpPatch("[action]")]
+        [Authorize(Policy = "ClientPolicy")]
         public async Task<ActionResult> DeletePostulationLogic(int jobId, int postulationId)
         {
             try
