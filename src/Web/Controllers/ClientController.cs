@@ -2,6 +2,7 @@
 using Application.Models.Requests;
 using Application.Models.Responses;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Extensions;
 
@@ -9,6 +10,8 @@ namespace Web.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(Policy = "ClientPolicy")]
+
 
 public class ClientController : ControllerBase
 {

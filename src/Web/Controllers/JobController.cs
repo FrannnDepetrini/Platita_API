@@ -15,7 +15,6 @@ namespace Web.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-//[Authorize]
 public class JobController : ControllerBase
 {
     private readonly IJobService _jobService;
@@ -27,6 +26,7 @@ public class JobController : ControllerBase
 
 
     [HttpGet("by-location")]
+    [Authorize(Policy ="ClientPolicy")]
     public async Task<ActionResult<List<JobDTO>>> GetJobsByLocation()
     {
         var jobs = await _jobService.GetJobsByClientLocationAsync(User.GetUserIntId());
@@ -34,6 +34,7 @@ public class JobController : ControllerBase
     }
 
     [HttpGet("[action]")]
+    [Authorize(Policy = "ClientPolicy")]
     public async Task<ActionResult<List<JobDTO>>> GetJobForSearch(string Province, string city)
     {
         var jobs = await _jobService.GetJobsBySearchLocationAsync(Province, city, User.GetUserIntId());
@@ -41,6 +42,7 @@ public class JobController : ControllerBase
     }
 
     [HttpGet("[action]")]
+    [Authorize(Policy = "ClientPolicy")]
     public async Task<ActionResult<IEnumerable<JobDTO>>> GetJobByCategory([FromQuery] JobFilteredByCategoryRequest request)
     {
         try
@@ -56,6 +58,7 @@ public class JobController : ControllerBase
     }
 
     [HttpGet("my-jobs")]
+    [Authorize(Policy = "ClientPolicy")]
     public async Task<ActionResult<List<JobDTO>>> GetMyJobs()
     {
         var userId = User.GetUserIntId();
@@ -68,6 +71,7 @@ public class JobController : ControllerBase
     }
     
     [HttpGet("[action]")]
+    [Authorize(Policy = "ModeratorPolicy")]
     public async Task<ActionResult<List<AllJobsDTO>>> GetAllJobsForModerator()
     {
         var jobs = await _jobService.GetAllJobs();
@@ -75,6 +79,7 @@ public class JobController : ControllerBase
     }
 
     [HttpGet("[action]")]
+    [Authorize(Policy = "ModeratorPolicy")]
     public async Task<ActionResult<List<JobDtoReport>>> GetAllJobsReportedForModerator()
     {
         var jobs = await _jobService.GetAllJobsReported();
@@ -82,6 +87,7 @@ public class JobController : ControllerBase
     }
     
     [HttpPost("create")]
+    [Authorize(Policy = "ClientPolicy")]
     public async Task<ActionResult<JobDTO>> Create([FromBody] JobRequest request)
     {
         try
@@ -97,6 +103,7 @@ public class JobController : ControllerBase
     }
 
     [HttpPut("update/{id}")]
+    [Authorize(Policy = "ClientPolicy")]
     public async Task<ActionResult<JobDTO>> Update([FromBody] JobUpdateRequest request, [FromRoute] int id)
     {
         try
@@ -111,6 +118,7 @@ public class JobController : ControllerBase
     }
 
     [HttpPut("[action]")]
+    [Authorize(Policy = "ClientPolicy")]
     public async Task<IActionResult> JobFinished(int idJob)
     {
         try
@@ -125,6 +133,7 @@ public class JobController : ControllerBase
     }
 
     [HttpDelete("delete/{id}")]
+    [Authorize(Policy = "SysAdminOrModeratorPolicy")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
         try
@@ -139,6 +148,7 @@ public class JobController : ControllerBase
     }
 
     [HttpPatch("[action]")]
+    [Authorize(Policy = "ClientPolicy")]
     public async Task<IActionResult> DeleteLogic([FromRoute] int id)
     {
         try
@@ -154,6 +164,7 @@ public class JobController : ControllerBase
 
     
     [HttpPatch("[action]")]
+    [Authorize(Policy = "ClientPolicy")]
     public async Task<IActionResult> ResetJobCancellation(int idJob)
     {
         try

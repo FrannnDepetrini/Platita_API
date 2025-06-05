@@ -181,7 +181,7 @@ namespace Application.Services
            
             return true;
         }
-        public async Task<bool> DeletePostulationFisic(int jobId, int postulationId)
+        public async Task<bool> DeletePostulationPhysics(int jobId, int postulationId)
         {
             var postJob = await _postulationRepository.GetPostulationByJobAndPostulantId(jobId, postulationId);
 

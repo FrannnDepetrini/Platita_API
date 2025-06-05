@@ -32,13 +32,38 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             };
         });
 
+//POLICES
 builder.Services.AddAuthorization(options =>
 {
+    // Individuales
     options.AddPolicy("SysAdminPolicy", policy => policy.RequireRole("SysAdmin"));
     options.AddPolicy("ModeratorPolicy", policy => policy.RequireRole("Moderator"));
     options.AddPolicy("ClientPolicy", policy => policy.RequireRole("Client"));
     options.AddPolicy("SupportPolicy", policy => policy.RequireRole("Support"));
-    
+
+    // Combinaciones de 2 roles
+    options.AddPolicy("SysAdminOrModeratorPolicy", policy =>
+        policy.RequireRole("SysAdmin", "Moderator"));
+    options.AddPolicy("SysAdminOrClientPolicy", policy =>
+        policy.RequireRole("SysAdmin", "Client"));
+    options.AddPolicy("SysAdminOrSupportPolicy", policy =>
+        policy.RequireRole("SysAdmin", "Support"));
+    options.AddPolicy("ModeratorOrClientPolicy", policy =>
+        policy.RequireRole("Moderator", "Client"));
+    options.AddPolicy("ModeratorOrSupportPolicy", policy =>
+        policy.RequireRole("Moderator", "Support"));
+    options.AddPolicy("ClientOrSupportPolicy", policy =>
+        policy.RequireRole("Client", "Support"));
+
+    // Combinaciones de 3 roles
+    options.AddPolicy("SysAdminOrModeratorOrClientPolicy", policy =>
+        policy.RequireRole("SysAdmin", "Moderator", "Client"));
+    options.AddPolicy("SysAdminOrModeratorOrSupportPolicy", policy =>
+        policy.RequireRole("SysAdmin", "Moderator", "Support"));
+    options.AddPolicy("SysAdminOrClientOrSupportPolicy", policy =>
+        policy.RequireRole("SysAdmin", "Client", "Support"));
+    options.AddPolicy("ModeratorOrClientOrSupportPolicy", policy =>
+        policy.RequireRole("Moderator", "Client", "Support"));
 });
 // Add services to the container.
 

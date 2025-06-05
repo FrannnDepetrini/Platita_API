@@ -10,7 +10,7 @@ namespace Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(Policy = "SysAdminPolicy")]
+    [Authorize(Policy = "SysAdminPolicy")]
     public class SysAdminController : ControllerBase
     {
         private readonly ISysAdminService _sysAdminService;

@@ -9,7 +9,6 @@ namespace Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Policy = "ModeratorPolicy")]
     public class ReportController : ControllerBase
     {
         private readonly IReportService _reportService ;
@@ -22,6 +21,7 @@ namespace Web.Controllers
 
 
         [HttpGet("[action]")]
+        [Authorize(Policy = "ModeratorPolicy")]
         public async Task<ActionResult<List<JobReportSummaryDTO>>> GetAllReportedJobs()
         {
             try 
@@ -36,6 +36,7 @@ namespace Web.Controllers
         }
 
         [HttpDelete("[action]")]
+        [Authorize(Policy = "ModeratorPolicy")]
         public async Task<IActionResult> DeleteJobReported(int jobId)
         {
             try
@@ -50,6 +51,7 @@ namespace Web.Controllers
         }
         
         [HttpDelete("[action]")]
+        [Authorize(Policy = "ModeratorPolicy")]
         public async Task<IActionResult> CleanJobReported(int jobId)
         {
             try
@@ -64,6 +66,7 @@ namespace Web.Controllers
         }
 
         [HttpPost("[action]")]
+        [Authorize(Policy = "ClientPolicy")]
         [AllowAnonymous]
         public async Task<IActionResult> AddReport(int jobId, string category)
         {

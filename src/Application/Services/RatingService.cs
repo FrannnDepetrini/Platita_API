@@ -86,7 +86,7 @@ namespace Application.Services
 
         }
 
-        public async Task DeleteRatingFisic(int idRating)
+        public async Task DeleteRatingPhysics(int idRating)
         {
             var rating = await _ratingRepository.GetById(idRating);
             await _ratingRepository.Delete(rating);
