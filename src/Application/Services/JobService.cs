@@ -17,12 +17,14 @@ namespace Application.Services
         private readonly IJobRepository _jobRepository;
         private readonly IUserRepository _userRepository;
         private readonly IClientRepository _clientRepository;
+        
         public JobService(IPostulationService postulationService, IJobRepository jobRepository, IUserRepository userRepository, IClientRepository clientRepository)
         {
             _jobRepository = jobRepository;
             _userRepository = userRepository;
             _clientRepository = clientRepository;
             _postulationService = postulationService;
+           
         }
 
                                     // GET
@@ -323,5 +325,7 @@ namespace Application.Services
 
             await _jobRepository.Update(job);
         }
+
+        
     }
 }
