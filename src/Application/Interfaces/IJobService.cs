@@ -20,6 +20,7 @@ namespace Application.Interfaces
         Task<List<JobDTO>> GetJobsByClientAsync(int userId);
         Task<List<AllJobsDTO>> GetAllJobs();
         Task<List<JobDtoReport>> GetAllJobsReported();
+        Task<JobDTO> GetJobById(int jobId, int userId);
         Task<JobDTO> Create(JobRequest request, int userId);
         Task<JobDTO> Update(JobUpdateRequest request, int id, int userId);
         Task Delete(int id, int userId);

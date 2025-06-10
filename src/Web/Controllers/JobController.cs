@@ -85,7 +85,20 @@ public class JobController : ControllerBase
         var jobs = await _jobService.GetAllJobsReported();
         return Ok(jobs);
     }
-    
+
+    [HttpGet("[action]")]
+    [Authorize(Policy = "ClientPolicy")]
+    public async Task<ActionResult<JobDTO>> GetJobById(int jobId)
+    {
+        try
+        {
+            return Ok(await _jobService.GetJobById(jobId, User.GetUserIntId()));
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
     [HttpPost("create")]
     [Authorize(Policy = "ClientPolicy")]
     public async Task<ActionResult<JobDTO>> Create([FromBody] JobRequest request)
