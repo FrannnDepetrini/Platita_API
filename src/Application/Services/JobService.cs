@@ -141,6 +141,15 @@ namespace Application.Services
             return jobs.Select(JobDtoReport.Create).ToList();
         }
 
+        public async Task<JobDTO> GetJobById(int jobId, int userId)
+        {
+            var job = await _jobRepository.GetById(jobId);
+            if (job.ClientId != userId)
+                throw new Exception("this job is not yours");
+
+            return JobDTO.Create(job);
+        }
+
         // POST
         public async Task<JobDTO> Create(JobRequest request, int userId)
         {
