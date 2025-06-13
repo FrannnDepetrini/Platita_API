@@ -159,11 +159,11 @@ namespace Application.Services
 
             if (userId == postulation.ClientId)
             {
-                return $"https://wa.me/{postulation.Job.Client.PhoneNumber}";
+                return $"{postulation.Job.Client.PhoneNumber}";
             }
             else if (userId == postulation.Job.ClientId)
             {
-                return $"https://wa.me/{postulation.Client.PhoneNumber}";
+                return $"{postulation.Client.PhoneNumber}";
             }
             else
             {
