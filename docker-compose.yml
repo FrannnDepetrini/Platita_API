@@ -1,28 +1,6 @@
 services:
-  platita-api:
-    image: platita_api_v3
+  web:
+    image: ${DOCKER_REGISTRY-}web
     build:
       context: .
       dockerfile: src/Web/Dockerfile
-    ports:
-      - "5099:8080"  # HTTP
-      - "7224:8081"  # HTTPS 
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - Jwt__Key=06E6BFBF-3822-48FB-AF74-828A82544EDA
-      - Jwt__Issuer=platita.api
-      - Jwt__Audience=platita.frontend
-      - ConnectionStrings__DefaultConnection=Data Source=./data/DB-Platita.db
-    volumes:
-      - sqlite-data:/app/data
-    depends_on:
-      - init-db
-
-  init-db:
-    image: busybox
-    volumes:
-      - sqlite-data:/app/data
-    command: [ "sh", "-c", "mkdir -p /app/data" ]
-
-volumes:
-  sqlite-data:
