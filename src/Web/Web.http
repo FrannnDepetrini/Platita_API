@@ -1,6 +1,259 @@
-@Web_HostAddress = http://localhost:5099
+@Web_HostAddress = https://localhost:7224
 
-GET {{Web_HostAddress}}/weatherforecast/
-Accept: application/json
+###
+
+POST {{Web_HostAddress}}/api/auth/change-password
+Content-Type: application/json
+
+{
+  //ChangePasswordRequest
+}
+
+###
+
+POST {{Web_HostAddress}}/api/auth/forgot-password
+Content-Type: application/json
+
+{
+  //ForgotPasswordRequest
+}
+
+###
+
+POST {{Web_HostAddress}}/api/auth/Login
+Content-Type: application/json
+
+{
+  //LoginRequest
+}
+
+###
+
+POST {{Web_HostAddress}}/api/auth/Register
+Content-Type: application/json
+
+{
+  //RegisterRequest
+}
+
+###
+
+POST {{Web_HostAddress}}/api/auth/RegisterForSysAdmin/sysAdmin
+Content-Type: application/json
+
+{
+  //RegisterForSysAdminRequest
+}
+
+###
+
+PUT {{Web_HostAddress}}/api/auth/reset-password
+Content-Type: application/json
+
+{
+  //ResetForgottenPasswordRequest
+}
+
+###
+
+DELETE {{Web_HostAddress}}/api/client/AutoDeleteClient
+
+###
+
+PUT {{Web_HostAddress}}/api/client/UpdateClient
+Content-Type: application/json
+
+{
+  //UpdateClientRequest
+}
+
+###
+
+@complaintId=0
+PATCH {{Web_HostAddress}}/api/complaint/CompleteComplaint?complaintId={{complaintId}}
+
+###
+
+@description=string
+POST {{Web_HostAddress}}/api/complaint/CreateComplaint?description={{description}}
+
+###
+
+GET {{Web_HostAddress}}/api/complaint/GetAllComplaint
+
+###
+
+GET {{Web_HostAddress}}/api/job/by-location
+
+###
+
+POST {{Web_HostAddress}}/api/job/create
+Content-Type: application/json
+
+{
+  //JobRequest
+}
+
+###
+
+DELETE {{Web_HostAddress}}/api/job/delete/{id}
+
+###
+
+PATCH {{Web_HostAddress}}/api/job/DeleteLogic
+
+###
+
+GET {{Web_HostAddress}}/api/job/GetAllJobsForModerator
+
+###
+
+GET {{Web_HostAddress}}/api/job/GetAllJobsReportedForModerator
+
+###
+
+GET {{Web_HostAddress}}/api/job/GetJobByCategory
+
+###
+
+@Province=string
+@city=string
+GET {{Web_HostAddress}}/api/job/GetJobForSearch?Province={{Province}}&city={{city}}
+
+###
+
+@idJob=0
+PUT {{Web_HostAddress}}/api/job/JobFinished?idJob={{idJob}}
+
+###
+
+GET {{Web_HostAddress}}/api/job/my-jobs
+
+###
+
+PATCH {{Web_HostAddress}}/api/job/ResetJobCancellation?idJob={{idJob}}
+
+###
+
+PUT {{Web_HostAddress}}/api/job/update/{id}
+Content-Type: application/json
+
+{
+  //JobUpdateRequest
+}
+
+###
+
+POST {{Web_HostAddress}}/api/postulation/ApplicateJob
+Content-Type: application/json
+
+{
+  //PostulationRequest
+}
+
+###
+
+@jobId=0
+@postulantId=0
+PUT {{Web_HostAddress}}/api/postulation/ApproveApplication?jobId={{jobId}}&postulantId={{postulantId}}
+
+###
+
+@postulationId=0
+PUT {{Web_HostAddress}}/api/postulation/CancelWhenSuccessPostulation?jobId={{jobId}}&postulationId={{postulationId}}
+
+###
+
+PATCH {{Web_HostAddress}}/api/postulation/DeletePostulationLogic?jobId={{jobId}}&postulationId={{postulationId}}
+
+###
+
+DELETE {{Web_HostAddress}}/api/postulation/DeletePostulationPhysics?jobId={{jobId}}&postulationId={{postulationId}}
+
+###
+
+GET {{Web_HostAddress}}/api/postulation/GetMyPostulations
+
+###
+
+GET {{Web_HostAddress}}/api/postulation/GetPostulationsByJobId?jobId={{jobId}}
+
+###
+
+GET {{Web_HostAddress}}/api/postulation/ShowPhoneForAcceptedPostulation?postulationId={{postulationId}}
+
+###
+
+POST {{Web_HostAddress}}/api/rating/CreateRating
+Content-Type: application/json
+
+{
+  //CreateRatingRequest
+}
+
+###
+
+@idRating=0
+DELETE {{Web_HostAddress}}/api/rating/DeleteRatingPhysics?idRating={{idRating}}
+
+###
+
+GET {{Web_HostAddress}}/api/rating/GetMyOrOtherReceivedRatingsForEmployee
+
+###
+
+GET {{Web_HostAddress}}/api/rating/GetMyOrOtherReceivedRatingsForEmployer
+
+###
+
+GET {{Web_HostAddress}}/api/rating/GetMyReceivedRatingsScore
+
+###
+
+@category=string
+POST {{Web_HostAddress}}/api/report/AddReport?jobId={{jobId}}&category={{category}}
+
+###
+
+DELETE {{Web_HostAddress}}/api/report/CleanJobReported?jobId={{jobId}}
+
+###
+
+DELETE {{Web_HostAddress}}/api/report/DeleteJobReported?jobId={{jobId}}
+
+###
+
+GET {{Web_HostAddress}}/api/report/GetAllReportedJobs
+
+###
+
+@id=0
+DELETE {{Web_HostAddress}}/api/sysadmin/DeleteUser?id={{id}}
+
+###
+
+GET {{Web_HostAddress}}/api/sysadmin/GetAllUsers
+
+###
+
+GET {{Web_HostAddress}}/api/sysadmin/GetUserById?id={{id}}
+
+###
+
+@role=string
+GET {{Web_HostAddress}}/api/sysadmin/GetUsersByRole?role={{role}}
+
+###
+
+PUT {{Web_HostAddress}}/api/sysadmin/UpdateUser/{{id}}
+Content-Type: application/json
+
+{
+  //UpdateUserRequest
+}
+
+###
+
+GET {{Web_HostAddress}}/api/user/GetUser
 
 ###

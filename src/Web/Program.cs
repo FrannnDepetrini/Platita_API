@@ -139,17 +139,25 @@ builder.Services.AddScoped<IComplaintRepository, ComplaintRepository>();
 #endregion
 
 //conexion a la db
-var connection = new SqliteConnection("Data source =DB-Platita.db");
-connection.Open();
+//var connection = new SqliteConnection("Data source =DB-Platita.db");
+//connection.Open();
 
-using (var command = connection.CreateCommand())
-{
-    command.CommandText = "PRAGMA journal_mode = DELETE;";
-    command.ExecuteNonQuery();
-}
+//using (var command = connection.CreateCommand())
+//{
+//    command.CommandText = "PRAGMA journal_mode = DELETE;";
+//    command.ExecuteNonQuery();
+//}
+
+//builder.Services.AddDbContext<ApplicationContext>(options =>
+//    options.UseSqlite(connection, b => b.MigrationsAssembly("Infrastructure")));
+
+//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+//builder.Services.AddDbContext<ApplicationContext>(options =>
+//    options.UseSqlite(connectionString, b => b.MigrationsAssembly("Infrastructure")));
 
 builder.Services.AddDbContext<ApplicationContext>(options =>
-    options.UseSqlite(connection, b => b.MigrationsAssembly("Infrastructure")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
 builder.Services.AddCors(options =>
@@ -165,6 +173,13 @@ builder.Services.AddCors(options =>
         });
 });
 var app = builder.Build();
+
+//using (var scope = app.Services.CreateScope())
+//{
+//    var db = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
+//    db.Database.Migrate(); 
+//}
+
 app.UseCors("AllowLocalHost5173");
 
 // Configure the HTTP request pipeline.
