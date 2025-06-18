@@ -1,6 +1,6 @@
 ﻿# Platita API
 
-## 🔐 Configuración local (`appsettings.json`)
+## 🔐 Configuración local (`.env`)
 
 Este proyecto requiere un archivo `.env` con claves de configuración sensibles como JWT y claves de la bd.
 Cada vez que se crea una branch hay que crear el .env para que funcione JWT y la bd.
