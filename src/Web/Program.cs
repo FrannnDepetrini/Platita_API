@@ -28,6 +28,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 ValidIssuer = builder.Configuration["Jwt:Issuer"],
                 ValidAudience = builder.Configuration["Jwt:Audience"],
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
+                //RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
                 ClockSkew = TimeSpan.Zero
             };
         });
@@ -174,11 +175,11 @@ builder.Services.AddCors(options =>
 });
 var app = builder.Build();
 
-//using (var scope = app.Services.CreateScope())
-//{
-//    var db = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
-//    db.Database.Migrate(); 
-//}
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
+    db.Database.Migrate();
+}
 
 app.UseCors("AllowLocalHost5173");
 

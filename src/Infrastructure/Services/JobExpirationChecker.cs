@@ -16,39 +16,42 @@ public class JobExpirationChecker : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        while (!stoppingToken.IsCancellationRequested)
+        try
         {
-            // Calcular el tiempo restante hasta la próxima medianoche (00:00 hs)
-            var now = DateTime.Now;
-            var nextMidnight = now.Date.AddDays(1);
-            var delay = nextMidnight - now;
-
-            // Esperar hasta la medianoche
-            await Task.Delay(delay, stoppingToken);
-
-            // Crear un scope para obtener el servicio
-            using (var scope = _scopeFactory.CreateScope())
+            while (!stoppingToken.IsCancellationRequested)
             {
-                var jobService = scope.ServiceProvider.GetRequiredService<IJobExpirationService>();
-                await jobService.CheckAndExpireJobsAsync(stoppingToken);
+                try
+                {
+                    // Calcular la próxima medianoche
+                    var now = DateTime.Now;
+                    var nextMidnight = now.Date.AddDays(1);
+                    var delay = nextMidnight - now;
+
+                    // Esperar hasta la medianoche
+                    await Task.Delay(delay, stoppingToken);
+
+                    using var scope = _scopeFactory.CreateScope();
+                    var jobService = scope.ServiceProvider.GetRequiredService<IJobExpirationService>();
+
+                    await jobService.CheckAndExpireJobsAsync(stoppingToken);
+                }
+                catch (TaskCanceledException)
+                {
+                    // Ignorar cancelación esperada
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[JobExpirationChecker] Error: {ex.Message}");
+                    // Podés loguear más en profundidad si tenés logger
+                }
             }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[JobExpirationChecker Fatal] Error fuera del bucle: {ex.Message}");
         }
     }
 
-    //    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-    //    {
-    //        while (!stoppingToken.IsCancellationRequested)
-    //        {
-    //            using (var scope = _scopeFactory.CreateScope())
-    //            {
-    //                var jobService = scope.ServiceProvider.GetRequiredService<IJobExpirationService>();
-    //                await jobService.CheckAndExpireJobsAsync(stoppingToken);
-    //            }
-
-    //            // Esperar 1 hora (ajustable)
-    //            await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
-    //        }
-    //    }
-    //}
 
 }
