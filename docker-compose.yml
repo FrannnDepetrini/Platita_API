@@ -12,7 +12,7 @@ services:
       - JWT__AUDIENCE=${JWT__AUDIENCE}
       - ConnectionStrings__DefaultConnection=Host=db;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
     ports:
-      - "5000:5000"
+      - "127.0.0.1:5000:5000"
       # - "127.0.0.1:5001:5001"
     depends_on:
       - db
