@@ -37,6 +37,7 @@ namespace Infrastructure.Data.Repositories
             .Include(j => j.Postulations)
             .Where(j => j.ClientId != userId)
             .Where(j => j.Category == category)
+            .Where(j => !j.Postulations.Any(p => p.ClientId == userId))
             .Where(j => !_context.Reports.Any(r => r.ClientId == userId && r.JobId == j.Id))
             .ToListAsync();
         }
@@ -48,6 +49,7 @@ namespace Infrastructure.Data.Repositories
             .Where(j => j.ClientId != userId)
             .Where(j => j.Province == Province && j.City == city)
             .Where(j => j.Status == JobStatusEnum.Available)
+            .Where(j => !j.Postulations.Any(p => p.ClientId == userId))
             .Where(j => !_context.Reports.Any(r => r.ClientId == userId && r.JobId == j.Id))
             .ToListAsync();
         }
