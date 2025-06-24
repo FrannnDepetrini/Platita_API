@@ -12,5 +12,6 @@ namespace Domain.Interfaces
         Task<List<Rating>> GetMyOrOtherReceivedRatingsForEmployer(int clientId);
         Task<List<Rating>> GetMyOrOtherReceivedRatingsForEmployee(int clientId);
         Task<List<object>> GetMyReceivedRatingsScore(int clientId);
+        Task<bool> GetExistingReviewForUser(int clientId, int reviewedClient, int jobId);
     }
 }

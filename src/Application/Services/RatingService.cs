@@ -57,10 +57,28 @@ namespace Application.Services
             if (job.Status != JobStatusEnum.Done)
                 throw new Exception("Job is not done");
 
+            // id del que recibe la reseña, que puede ser el dueño del trabajo o el empleado
+            var idReviewed = (job.ClientId == clientId) ? job.PostulationSelected.ClientId : job.ClientId;
+
+            var existingReview = await _ratingRepository.GetExistingReviewForUser(clientId, idReviewed, job.Id);
+
+            if (existingReview)
+                throw new Exception("You have already rated this client");
+
+            if (!job.DateJobFinished.HasValue)
+                throw new Exception("Job doesn't have a finish date");
+
+            var now = DateOnly.FromDateTime(DateTime.Now);
+            var days = (now.ToDateTime(TimeOnly.MinValue) - job.DateJobFinished.Value.ToDateTime(TimeOnly.MinValue)).Days;
+
+            if (days > 10)
+                throw new Exception("You can't review now");
+
+
             var newRating = new Rating
             {
                 RatedByUserId = clientId,
-                RatedUserId = job.ClientId == clientId ? job.PostulationSelected.ClientId : job.ClientId,
+                RatedUserId = idReviewed,
                 Score = request.Score,
                 Description = request.Description,
                 JobId = request.JobId,

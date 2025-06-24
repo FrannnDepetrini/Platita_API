@@ -18,6 +18,14 @@ namespace Infrastructure.Data.Repositories
         {
             _context = context;
         }
+
+        public async Task<bool> GetExistingReviewForUser(int clientId, int reviewedClient, int jobId)
+        {
+            return await _context.Ratings.AnyAsync(r => r.RatedByUserId == clientId
+                                                        && r.RatedUserId == reviewedClient
+                                                        && r.JobId == jobId);
+        }
+
         // Criticas por empleador
         public async Task<List<Rating>> GetMyOrOtherReceivedRatingsForEmployer(int clientId)
         {
@@ -86,7 +94,7 @@ namespace Infrastructure.Data.Repositories
             };
 
             return distributionList;
-                
+
         }
 
     }
