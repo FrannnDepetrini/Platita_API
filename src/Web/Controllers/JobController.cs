@@ -87,12 +87,21 @@ public class JobController : ControllerBase
     }
 
     [HttpGet("[action]")]
+    [Authorize(Policy = "ModeratorPolicy")]
+    public async Task<ActionResult<AllJobsDTO>> GetJobsForModeratorById(int jobId)
+    {
+        var jobs = await _jobService.GetJobForModeratorById(jobId);
+
+        return Ok(jobs);
+    }
+
+    [HttpGet("[action]")]
     [Authorize(Policy = "ClientPolicy")]
     public async Task<ActionResult<JobDTO>> GetJobById(int jobId)
     {
         try
         {
-            return Ok(await _jobService.GetJobById(jobId, User.GetUserIntId()));
+            return Ok(await _jobService.GetJobById(jobId));
         }
         catch (Exception ex)
         {
