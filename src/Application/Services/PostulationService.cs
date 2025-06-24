@@ -289,5 +289,11 @@ namespace Application.Services
                 await _jobRepository.SaveChangesAsync();
             }
         }
+
+        public async Task<IEnumerable<object>> GetMyPostulationsDone(int IdClient)
+        {
+            var postulationsDone = await _postulationRepository.GetAllMyPostulationsDone(IdClient);
+            return postulationsDone;
+        }
     }
 }

@@ -163,6 +163,20 @@ namespace Web.Controllers
             }
         }
 
+        [HttpGet("[action]")]
+        public async Task<ActionResult<IEnumerable<object>>> GetMyPostulationsDone()
+        {
+            try
+            {
+                var postulations = await _postulationService.GetMyPostulationsDone(User.GetUserIntId());
+                return Ok(postulations);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         
     }
 }

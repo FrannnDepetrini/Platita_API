@@ -18,13 +18,17 @@ namespace Application.Services
         private readonly IUserRepository _userRepository;
         private readonly IClientRepository _clientRepository;
         
-        public JobService(IPostulationService postulationService, IJobRepository jobRepository, IUserRepository userRepository, IClientRepository clientRepository)
+        public JobService(
+            IPostulationService postulationService, 
+            IJobRepository jobRepository, 
+            IUserRepository userRepository, 
+            IClientRepository clientRepository
+            )
         {
             _jobRepository = jobRepository;
             _userRepository = userRepository;
             _clientRepository = clientRepository;
             _postulationService = postulationService;
-           
         }
 
                                     // GET
@@ -266,6 +270,8 @@ namespace Application.Services
             }
 
             job.Status = JobStatusEnum.Done;
+
+            job.DateJobFinished = DateOnly.FromDateTime(DateTime.Now);
 
             await _jobRepository.Update(job);
 

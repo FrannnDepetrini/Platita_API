@@ -24,6 +24,8 @@ namespace Domain.Entities
         public int AmountPostulations => Postulations.Count;
         public DateTime? DayPublicationStart { get; set; } = DateTime.Now;
         public DateTime? DayPublicationEnd { get; set; } = DateTime.Now.AddDays(14);
+
+        public DateOnly? DateJobFinished { get; set; }
         public JobStatusEnum Status { get; set; }
         public string Description { get; set; }
         public CategoryEnum Category { get; set; }

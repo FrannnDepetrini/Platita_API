@@ -19,5 +19,7 @@ namespace Application.Interfaces
         Task<IEnumerable<MyPostulationDTO>> GetMyPostulations(int userId);
         Task CancelPostulation(int jobId, int postulationId, int userId);
         Task<string> ShowPhoneForAcceptedPostulation(int postulationId, int userId);
+
+        Task<IEnumerable<object>> GetMyPostulationsDone(int IdClient);
     }
 }
