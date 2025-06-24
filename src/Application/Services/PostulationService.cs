@@ -290,9 +290,10 @@ namespace Application.Services
             }
         }
 
-        public async Task<IEnumerable<PostulationDoneDTO>> GetMyPostulationsDone(int IdClient)
+        public async Task<IEnumerable<object>> GetMyPostulationsDone(int IdClient)
         {
-            throw new Exception();
+            var postulationsDone = await _postulationRepository.GetAllMyPostulationsDone(IdClient);
+            return postulationsDone;
         }
     }
 }

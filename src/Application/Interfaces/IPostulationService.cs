@@ -20,6 +20,6 @@ namespace Application.Interfaces
         Task CancelPostulation(int jobId, int postulationId, int userId);
         Task<string> ShowPhoneForAcceptedPostulation(int postulationId, int userId);
 
-        Task<IEnumerable<PostulationDoneDTO>> GetMyPostulationsDone(int IdClient);
+        Task<IEnumerable<object>> GetMyPostulationsDone(int IdClient);
     }
 }

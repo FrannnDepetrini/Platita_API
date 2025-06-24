@@ -52,7 +52,7 @@ namespace Application.Services
         {
             var job = await _jobRepository.GetById(request.JobId);
 
-            if(job.ClientId != clientId && job.PostulationSelectedId != clientId)
+            if(job.ClientId != clientId && job.PostulationSelected.ClientId != clientId)
                 throw new Exception("you are not allowed to create a rating");
             if (job.Status != JobStatusEnum.Done)
                 throw new Exception("Job is not done");
