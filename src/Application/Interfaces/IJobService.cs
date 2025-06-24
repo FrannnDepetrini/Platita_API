@@ -19,8 +19,9 @@ namespace Application.Interfaces
         Task<IEnumerable<JobDTO>> GetJobsByCategory(JobFilteredByCategoryRequest request, int userId);
         Task<List<JobDTO>> GetJobsByClientAsync(int userId);
         Task<List<AllJobsDTO>> GetAllJobs();
+        Task<AllJobsDTO> GetJobForModeratorById(int jobId);
         Task<List<JobDtoReport>> GetAllJobsReported();
-        Task<JobDTO> GetJobById(int jobId, int userId);
+        Task<JobDTO> GetJobById(int jobId);
         Task<JobDTO> Create(JobRequest request, int userId);
         Task<JobDTO> Update(JobUpdateRequest request, int id, int userId);
         Task Delete(int id, int userId);
