@@ -219,8 +219,8 @@ namespace Infrastructure.Data
                     Category = CategoryEnum.Painter,
                     Province = "Santa Fe",
                     City = "Rosario",
-                    DayPublicationStart = new DateTime(2025, 5, 15),
-                    DayPublicationEnd = new DateTime(2025, 5, 24),
+                    DayPublicationStart = new DateOnly(2025, 5, 15),
+                    DayPublicationEnd = new DateOnly(2025, 5, 24),
                 },
                 new Job
                 {
@@ -232,8 +232,8 @@ namespace Infrastructure.Data
                     Category = CategoryEnum.Electricity,
                     Province = "Santa Fe",
                     City = "Rosario",
-                    DayPublicationStart = new DateTime(2025, 5, 13),
-                    DayPublicationEnd = new DateTime(2025, 5, 20),
+                    DayPublicationStart = new DateOnly(2025, 5, 13),
+                    DayPublicationEnd = new DateOnly(2025, 5, 20),
                 },
                 new Job
                 {
@@ -246,8 +246,8 @@ namespace Infrastructure.Data
                     Category = CategoryEnum.Gardening,
                     Province = "Buenos Aires",
                     City = "La Plata",
-                    DayPublicationStart = new DateTime(2025, 5, 15),
-                    DayPublicationEnd = new DateTime(2025, 5, 18),
+                    DayPublicationStart = new DateOnly(2025, 5, 15),
+                    DayPublicationEnd = new DateOnly(2025, 5, 18),
                 },
                 new Job
                 {
@@ -260,8 +260,8 @@ namespace Infrastructure.Data
                     Category = CategoryEnum.Plumbing,
                     Province = "Mendoza",
                     City = "Godoy Cruz",
-                    DayPublicationStart = new DateTime(2025, 5, 17),
-                    DayPublicationEnd = new DateTime(2025, 5, 23),
+                    DayPublicationStart = new DateOnly(2025, 5, 17),
+                    DayPublicationEnd = new DateOnly(2025, 5, 23),
                 },
                 new Job
                 {
@@ -273,8 +273,8 @@ namespace Infrastructure.Data
                     Category = CategoryEnum.Moving,
                     Province = "Santa Fe",
                     City = "Rosario",
-                    DayPublicationStart = new DateTime(2025, 5, 17),
-                    DayPublicationEnd = new DateTime(2025, 5, 22),
+                    DayPublicationStart = new DateOnly(2025, 5, 17),
+                    DayPublicationEnd = new DateOnly(2025, 5, 22),
                 },
                 new Job
                 {
@@ -286,8 +286,8 @@ namespace Infrastructure.Data
                     Category = CategoryEnum.Gardening,
                     Province = "Córdoba",
                     City = "Marcos Juarez",
-                    DayPublicationStart = new DateTime(2025, 5, 16),
-                    DayPublicationEnd = new DateTime(2025, 5, 20),
+                    DayPublicationStart = new DateOnly(2025, 5, 16),
+                    DayPublicationEnd = new DateOnly(2025, 5, 20),
                 },
                 new Job
                 {
@@ -299,8 +299,8 @@ namespace Infrastructure.Data
                     Category = CategoryEnum.Cleaning,
                     Province = "Santa Fe",
                     City = "Firmat",
-                    DayPublicationStart = new DateTime(2025, 4, 21),
-                    DayPublicationEnd = new DateTime(2025, 4, 26),
+                    DayPublicationStart = new DateOnly(2025, 4, 21),
+                    DayPublicationEnd = new DateOnly(2025, 4, 26),
                 },
                 new Job
                 {
@@ -312,8 +312,8 @@ namespace Infrastructure.Data
                     Category = CategoryEnum.Technology,
                     Province = "Santa Fe",
                     City = "Bigand",
-                    DayPublicationStart = new DateTime(2025, 5, 17),
-                    DayPublicationEnd = new DateTime(2025, 5, 24),
+                    DayPublicationStart = new DateOnly(2025, 5, 17),
+                    DayPublicationEnd = new DateOnly(2025, 5, 24),
 
                 }
             );
@@ -323,7 +323,7 @@ namespace Infrastructure.Data
                 new Report
                 {
                     Id = 1,
-                    Created_At = new DateTime(2025, 5, 28),
+                    Created_At = new DateOnly(2025, 5, 28),
                     CategoryReport = CategoryReport.OffensiveContent,
                     JobId = 8,
                     ClientId = 4,
@@ -331,7 +331,7 @@ namespace Infrastructure.Data
                 new Report
                 {
                     Id = 2,
-                    Created_At = new DateTime(2025, 5, 27),
+                    Created_At = new DateOnly(2025, 5, 27),
                     CategoryReport = CategoryReport.Spam,
                     JobId = 8,
                     ClientId = 5,
@@ -339,7 +339,7 @@ namespace Infrastructure.Data
                 new Report
                 {
                     Id = 3,
-                    Created_At = new DateTime(2025, 5, 25),
+                    Created_At = new DateOnly(2025, 5, 25),
                     CategoryReport = CategoryReport.OffensiveContent,
                     JobId = 7,
                     ClientId = 6,
@@ -354,7 +354,7 @@ namespace Infrastructure.Data
                         ClientId = 6, // Mario
                         JobId = 1,
                         Budget = 15000,
-                        JobDay = new DateTime(2025, 5, 23),
+                        JobDay = new DateOnly(2025, 5, 23),
                         Status = PostulationStatusEnum.Pending
                     },
                     new Postulation
@@ -363,7 +363,7 @@ namespace Infrastructure.Data
                         ClientId = 7, // Depe
                         JobId = 1,
                         Budget = 14000,
-                        JobDay = new DateTime(2025, 5, 22),
+                        JobDay = new DateOnly(2025, 5, 22),
                         Status = PostulationStatusEnum.Success
                     },
                     new Postulation
@@ -372,7 +372,7 @@ namespace Infrastructure.Data
                         ClientId = 4, // Maximo
                         JobId = 3,
                         Budget = 20000,
-                        JobDay = new DateTime(2025, 5, 16),
+                        JobDay = new DateOnly(2025, 5, 16),
                         Status = PostulationStatusEnum.Success
                     },
                     new Postulation
@@ -381,7 +381,7 @@ namespace Infrastructure.Data
                         ClientId = 8, // Pale
                         JobId = 3,
                         Budget = 18000,
-                        JobDay = new DateTime(2025, 5, 17),
+                        JobDay = new DateOnly(2025, 5, 17),
                         Status = PostulationStatusEnum.Rejected
                     },
                     new Postulation
@@ -390,7 +390,7 @@ namespace Infrastructure.Data
                         ClientId = 9, // Pedro
                         JobId = 4,
                         Budget = 22000,
-                        JobDay = new DateTime(2025, 5, 21),
+                        JobDay = new DateOnly(2025, 5, 21),
                         Status = PostulationStatusEnum.Success
                     }
                 );

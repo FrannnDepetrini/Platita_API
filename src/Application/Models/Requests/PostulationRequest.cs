@@ -13,5 +13,5 @@ public class PostulationRequest
     public int JobId { get; set; }
     public float Budget { get; set; }
 
-    public DateTime jobDay { get; set; }
+    public string jobDay { get; set; }
 }

@@ -40,7 +40,7 @@ namespace Application.Services
                 ClientId = userId,
                 Description = description,
                 Status = ComplaintStatusEnum.Pending,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateOnly.FromDateTime(DateTime.Now)
             };
 
             return await _complaintRepository.Create(complaint);

@@ -79,6 +79,20 @@ namespace Web.Controllers
             }
         }
 
+        [HttpGet("[action]")]
+        public async Task<ActionResult<IEnumerable<object>>> GetMyPostulationsDone()
+        {
+            try
+            {
+                var postulations = await _postulationService.GetMyPostulationsDone(User.GetUserIntId());
+                return Ok(postulations);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost("[action]")]
         [Authorize(Policy = "SysAdminOrClientPolicy")]
         public async Task<IActionResult> ApplicateJob(PostulationRequest request)
@@ -86,7 +100,7 @@ namespace Web.Controllers
             try
             {
                 int userId = User.GetUserIntId();
-                var result = await _postulationService.PostulateAsync(userId, request.JobId, request.Budget, request.jobDay);
+                var result = await _postulationService.PostulateAsync(userId, request.JobId, request.Budget, DateOnly.Parse(request.jobDay));
                 return Ok(result);
             }
             catch (UnauthorizedAccessException ex)
@@ -163,19 +177,7 @@ namespace Web.Controllers
             }
         }
 
-        [HttpGet("[action]")]
-        public async Task<ActionResult<IEnumerable<object>>> GetMyPostulationsDone()
-        {
-            try
-            {
-                var postulations = await _postulationService.GetMyPostulationsDone(User.GetUserIntId());
-                return Ok(postulations);
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+        
 
         
     }

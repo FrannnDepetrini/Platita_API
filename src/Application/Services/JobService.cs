@@ -178,7 +178,7 @@ namespace Application.Services
                 Status = JobStatusEnum.Available,
                 Description = request.Description,
                 Category = parsedCategory,
-                DayPublicationEnd = request.DayPublicationEnd,
+                DayPublicationEnd = DateOnly.Parse(request.DayPublicationEnd),
                 Province = request.Province,
                 City = request.City,
 
@@ -222,9 +222,13 @@ namespace Application.Services
                 job.Category = parsedCategory;
             }
 
+            DateOnly? parsedDate = string.IsNullOrWhiteSpace(request.DayPublicationEnd)
+            ? null
+            : DateOnly.Parse(request.DayPublicationEnd);
+
             job.Title = request.Title ?? job.Title;
             job.DayPublicationStart = job.DayPublicationStart;
-            job.DayPublicationEnd = request.DayPublicationEnd ?? job.DayPublicationEnd;
+            job.DayPublicationEnd = parsedDate ?? job.DayPublicationEnd;
             job.Province = request.Province ?? job.Province;
             job.City = request.City ?? job.City;
             job.Description = request.Description ?? job.Description;
@@ -343,7 +347,7 @@ namespace Application.Services
                 await _postulationService.DeletePostulationFisica(post);
             }
 
-            job.DayPublicationStart = DateTime.Now;
+            job.DayPublicationStart = DateOnly.FromDateTime(DateTime.Now);
             job.Status = JobStatusEnum.Available;
 
             await _jobRepository.Update(job);

@@ -11,7 +11,7 @@ namespace Application.Models.Responses
     public class ReportDTO
     {
         public int Id { get; set; }
-        public DateTime Created_At { get; set; }
+        public DateOnly Created_At { get; set; }
         public string CategoryReport { get; set; }
 
         public int ClientId { get; set; }
