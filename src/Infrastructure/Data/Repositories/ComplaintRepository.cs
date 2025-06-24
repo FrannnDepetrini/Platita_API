@@ -28,5 +28,13 @@ namespace Infrastructure.Data.Repositories
                 .OrderBy(c => c.CreatedAt)
                 .ToListAsync();
         }
+        
+        public async Task<Complaint> GetByIdAsync(int complaintId)
+        {
+            return await _context.Complaints
+                .Include(c => c.Client)
+                .FirstOrDefaultAsync(c => c.Id == complaintId);
+
+        }
     }
 }

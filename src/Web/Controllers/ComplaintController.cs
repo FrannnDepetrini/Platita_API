@@ -26,6 +26,13 @@ namespace Web.Controllers
             return Ok(complaints);
         }
 
+        [HttpGet("[action]")]
+        [Authorize(Policy = "SysAdminOrSupportPolicy")]
+        public async Task<ActionResult<ComplaintDTO>> GetComplaintById(int complaintId)
+        {
+            var complaints = await _complaintService.GetComplaintById(complaintId);
+            return Ok(complaints);
+        }
 
         [HttpPost("[action]")]
         [Authorize(Policy ="ClientPolicy")]
