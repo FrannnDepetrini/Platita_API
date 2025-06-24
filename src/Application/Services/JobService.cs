@@ -14,12 +14,14 @@ namespace Application.Services
 
     {
         private readonly IPostulationService _postulationService;
+        private readonly IEmailService _emailService;
         private readonly IJobRepository _jobRepository;
         private readonly IUserRepository _userRepository;
         private readonly IClientRepository _clientRepository;
         
         public JobService(
-            IPostulationService postulationService, 
+            IPostulationService postulationService,
+            IEmailService emailService,
             IJobRepository jobRepository, 
             IUserRepository userRepository, 
             IClientRepository clientRepository
@@ -29,6 +31,7 @@ namespace Application.Services
             _userRepository = userRepository;
             _clientRepository = clientRepository;
             _postulationService = postulationService;
+            _emailService = emailService;
         }
 
                                     // GET
@@ -276,6 +279,10 @@ namespace Application.Services
             job.Status = JobStatusEnum.Done;
 
             job.DateJobFinished = DateOnly.FromDateTime(DateTime.Now);
+
+            await _emailService.SendNotificationEmailAsync(job.Client.Email, job.Client.UserName, CategoryNotificationsEnum.JobFinished);
+
+            await _emailService.SendNotificationEmailAsync(job.PostulationSelected.Client.Email, job.PostulationSelected.Client.UserName, CategoryNotificationsEnum.JobFinished);
 
             await _jobRepository.Update(job);
 
