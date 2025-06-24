@@ -12,6 +12,8 @@ namespace Application.Interfaces
     public interface IComplaintService
     {
         Task<List<ComplaintDTO>> GetAllComplaint();
+
+        Task<ComplaintDTO> GetComplaintById(int complaintId);
         Task<Complaint> CreateComplaint(string description, int userId);
         Task CompleteComplaint(int complaintId);
     }
