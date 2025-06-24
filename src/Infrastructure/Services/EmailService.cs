@@ -89,6 +89,18 @@ namespace Application.Services
                     };
                     message.Body = builder2.ToMessageBody();
                     break;
+
+                case CategoryNotificationsEnum.JobFinished:
+                    message.Subject = "Trabajo Finalizado";
+                    var builder3 = new BodyBuilder
+                        {
+                            HtmlBody = $@"
+                        <p>Estimado/a {userName},</p>
+                        <p>Se ha dado por finalizado el trabajo.</p>
+                        <p>Atentamente,<br/>El equipo de Platita</p>"
+                        };
+                    message.Body = builder3.ToMessageBody();
+                    break;
             }
 
             // Enviar el correo
@@ -98,5 +110,7 @@ namespace Application.Services
             await client.SendAsync(message);
             await client.DisconnectAsync(true);
         }
+
+        
     }
 }

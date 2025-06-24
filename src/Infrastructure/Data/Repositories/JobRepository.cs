@@ -27,6 +27,7 @@ namespace Infrastructure.Data.Repositories
                 .Include(j => j.Client)
                 .Include(j => j.Postulations)
                 .Include(j => j.PostulationSelected)
+                .ThenInclude(p => p.Client)
                 .FirstOrDefaultAsync(j => j.Id == id);
         }
 

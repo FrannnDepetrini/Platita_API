@@ -36,7 +36,7 @@ namespace Web.Controllers
 
         [HttpPost("[action]")]
         [Authorize(Policy ="ClientPolicy")]
-        public async Task<ActionResult<Complaint>> CreateComplaint(string description)
+        public async Task<ActionResult<Complaint>> CreateComplaint([FromBody]string description)
         {
             var complaint = await _complaintService.CreateComplaint(description, User.GetUserIntId());
             return Ok(complaint);
