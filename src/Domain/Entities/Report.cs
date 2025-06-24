@@ -14,7 +14,7 @@ namespace Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int Id { get; set; }
-        public DateTime Created_At { get; set; }
+        public DateOnly Created_At { get; set; }
         public CategoryReport CategoryReport { get; set; }
         public int JobId { get; set; }
         public int ClientId { get; set; }

@@ -70,7 +70,7 @@ namespace Application.Services
             {
                 JobId = jobId,
                 ClientId = userId,
-                Created_At = DateTime.UtcNow,
+                Created_At = DateOnly.FromDateTime(DateTime.Now),
                 CategoryReport = parsedCategory 
             };
 
