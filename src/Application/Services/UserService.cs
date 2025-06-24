@@ -37,6 +37,15 @@ namespace Application.Services
             return UserDTO.Create(user);
         }
 
+        public async Task<ClientProfileDTO> GetUserById(int userId)
+        {
+            var user = await _clientRepository.GetById(userId);
+            if (user == null)
+                throw new Exception("Invalid User");
+
+            return ClientProfileDTO.Create(user);
+        }
+
 
     }
 }

@@ -19,10 +19,17 @@ namespace Web.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetUser()
+        public async Task<IActionResult> GetUserMyProfile()
         {
             
             return Ok(await _userService.GetUser(User.GetUserIntId(), User.GetUserRole()));
+        }
+
+        [HttpGet("[action]")]
+        [Authorize(Policy = "ClientPolicy")]
+        public async Task<IActionResult> GetUserProfileById(int userId)
+        {
+            return Ok(await _userService.GetUserById(userId));
         }
     }
 }
