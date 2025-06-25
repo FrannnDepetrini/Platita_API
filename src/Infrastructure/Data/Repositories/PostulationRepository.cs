@@ -96,7 +96,7 @@ namespace Infrastructure.Data.Repositories
                     EmployerName = p.Job.Client.UserName,
                     Category = p.Job.Category.ToString(),
                     DateJobFinished = p.Job.DateJobFinished,
-                    CanRate = (DateTime.Now.Date - p.Job.DateJobFinished.Value.ToDateTime(TimeOnly.MinValue)).Days < 1,
+                    CanRate = (DateTime.Today.Date - p.Job.DateJobFinished.Value.ToDateTime(TimeOnly.MinValue)).Days < 1,
                     Score = _context.Ratings
                             .Where(r => r.RatedByUserId == userId
                                      && r.RatedUserId == p.Job.ClientId

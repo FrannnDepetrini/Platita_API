@@ -86,7 +86,7 @@ namespace Infrastructure.Data.Repositories
         public async Task<List<Job>> GetAllExpiratedJobs(CancellationToken cancellationToken)
         {
             return await _context.Jobs
-                .Where(j => j.Status == JobStatusEnum.Available && j.DayPublicationEnd < DateOnly.FromDateTime(DateTime.Now))
+                .Where(j => j.Status == JobStatusEnum.Available && j.DayPublicationEnd < DateOnly.FromDateTime(DateTime.Today))
                 .ToListAsync(cancellationToken);
         }
 

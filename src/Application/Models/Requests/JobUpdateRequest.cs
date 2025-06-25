@@ -12,7 +12,7 @@ namespace Application.Models.Requests
     {
         public string? Title { get; set; }
         //public float AveragePrice { get; set; }
-        public string? DayPublicationEnd { get; set; } = (DateOnly.FromDateTime(DateTime.Now).AddDays(7)).ToString();
+        public string? DayPublicationEnd { get; set; } = (DateOnly.FromDateTime(DateTime.Today).AddDays(7)).ToString();
 
         public string? Category {get; set;}
 

@@ -68,7 +68,7 @@ namespace Application.Services
             if (!job.DateJobFinished.HasValue)
                 throw new Exception("Job doesn't have a finish date");
 
-            var now = DateOnly.FromDateTime(DateTime.Now);
+            var now = DateOnly.FromDateTime(DateTime.Today);
             var days = (now.ToDateTime(TimeOnly.MinValue) - job.DateJobFinished.Value.ToDateTime(TimeOnly.MinValue)).Days;
 
             if (days > 10)

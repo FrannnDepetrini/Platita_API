@@ -155,7 +155,7 @@ public class JobController : ControllerBase
     }
 
     [HttpDelete("delete/{id}")]
-    [Authorize(Policy = "SysAdminOrModeratorPolicy")]
+    [Authorize(Policy = "ClientPolicy")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
         try

@@ -181,11 +181,16 @@ namespace Application.Services
                 Status = JobStatusEnum.Available,
                 Description = request.Description,
                 Category = parsedCategory,
-                DayPublicationEnd = DateOnly.Parse(request.DayPublicationEnd),
                 Province = request.Province,
                 City = request.City,
 
             };
+
+            if (!string.IsNullOrWhiteSpace(request.DayPublicationEnd))
+            {
+                newJob.DayPublicationEnd = DateOnly.Parse(request.DayPublicationEnd);
+            }
+
             await _jobRepository.Create(newJob);
 
             var job = await _jobRepository.GetById(newJob.Id);
@@ -278,7 +283,7 @@ namespace Application.Services
 
             job.Status = JobStatusEnum.Done;
 
-            job.DateJobFinished = DateOnly.FromDateTime(DateTime.Now);
+            job.DateJobFinished = DateOnly.FromDateTime(DateTime.Today);
 
             await _emailService.SendNotificationEmailAsync(job.Client.Email, job.Client.UserName, CategoryNotificationsEnum.JobFinished);
 
@@ -354,7 +359,7 @@ namespace Application.Services
                 await _postulationService.DeletePostulationFisica(post);
             }
 
-            job.DayPublicationStart = DateOnly.FromDateTime(DateTime.Now);
+            job.DayPublicationStart = DateOnly.FromDateTime(DateTime.Today);
             job.Status = JobStatusEnum.Available;
 
             await _jobRepository.Update(job);

@@ -19,7 +19,7 @@ public class JobExpirationChecker : BackgroundService
         while (!stoppingToken.IsCancellationRequested)
         {
             // Calcular el tiempo restante hasta la próxima medianoche (00:00 hs)
-            var now = DateTime.Now;
+            var now = DateTime.Today;
             var nextMidnight = now.Date.AddDays(1);
             var delay = nextMidnight - now;
 
