@@ -214,13 +214,13 @@ namespace Infrastructure.Data
                     ClientId = 4, // Maximo
                     PostulationSelectedId = 2,
                     Title = "Pintar departamento",
-                    Status = JobStatusEnum.Available,
+                    Status = JobStatusEnum.Taken,
                     Description = "Necesito pintar un monoambiente en el centro",
                     Category = CategoryEnum.Painter,
                     Province = "Santa Fe",
                     City = "Rosario",
-                    DayPublicationStart = new DateOnly(2025, 5, 15),
-                    DayPublicationEnd = new DateOnly(2025, 5, 24),
+                    DayPublicationStart = new DateOnly(2025, 7, 15),
+                    DayPublicationEnd = new DateOnly(2025, 7, 24),
                 },
                 new Job
                 {
@@ -232,8 +232,8 @@ namespace Infrastructure.Data
                     Category = CategoryEnum.Electricity,
                     Province = "Santa Fe",
                     City = "Rosario",
-                    DayPublicationStart = new DateOnly(2025, 5, 13),
-                    DayPublicationEnd = new DateOnly(2025, 5, 20),
+                    DayPublicationStart = new DateOnly(2025, 7, 13),
+                    DayPublicationEnd = new DateOnly(2025, 7, 20),
                 },
                 new Job
                 {
@@ -241,13 +241,13 @@ namespace Infrastructure.Data
                     ClientId = 5, // Joaquin
                     PostulationSelectedId = 3,
                     Title = "Corte de pasto y desmalezado",
-                    Status = JobStatusEnum.Available,
+                    Status = JobStatusEnum.Taken,
                     Description = "Patio de 100m2 con pasto alto, se necesita corte y limpieza",
                     Category = CategoryEnum.Gardening,
                     Province = "Buenos Aires",
                     City = "La Plata",
-                    DayPublicationStart = new DateOnly(2025, 5, 15),
-                    DayPublicationEnd = new DateOnly(2025, 5, 18),
+                    DayPublicationStart = new DateOnly(2025, 7, 15),
+                    DayPublicationEnd = new DateOnly(2025, 7, 18),
                 },
                 new Job
                 {
@@ -255,13 +255,13 @@ namespace Infrastructure.Data
                     ClientId = 6, // Mario
                     PostulationSelectedId = 5,
                     Title = "Reparar cañería del baño",
-                    Status = JobStatusEnum.Available,
+                    Status = JobStatusEnum.Taken,
                     Description = "Hay una pérdida debajo del lavabo",
                     Category = CategoryEnum.Plumbing,
                     Province = "Mendoza",
                     City = "Godoy Cruz",
-                    DayPublicationStart = new DateOnly(2025, 5, 17),
-                    DayPublicationEnd = new DateOnly(2025, 5, 23),
+                    DayPublicationStart = new DateOnly(2025, 7, 17),
+                    DayPublicationEnd = new DateOnly(2025, 7, 23),
                 },
                 new Job
                 {
@@ -273,8 +273,8 @@ namespace Infrastructure.Data
                     Category = CategoryEnum.Moving,
                     Province = "Santa Fe",
                     City = "Rosario",
-                    DayPublicationStart = new DateOnly(2025, 5, 17),
-                    DayPublicationEnd = new DateOnly(2025, 5, 22),
+                    DayPublicationStart = new DateOnly(2025, 7, 17),
+                    DayPublicationEnd = new DateOnly(2025, 7, 22),
                 },
                 new Job
                 {
@@ -286,8 +286,8 @@ namespace Infrastructure.Data
                     Category = CategoryEnum.Gardening,
                     Province = "Córdoba",
                     City = "Marcos Juarez",
-                    DayPublicationStart = new DateOnly(2025, 5, 16),
-                    DayPublicationEnd = new DateOnly(2025, 5, 20),
+                    DayPublicationStart = new DateOnly(2025, 7, 16),
+                    DayPublicationEnd = new DateOnly(2025, 7, 20),
                 },
                 new Job
                 {
@@ -299,8 +299,8 @@ namespace Infrastructure.Data
                     Category = CategoryEnum.Cleaning,
                     Province = "Santa Fe",
                     City = "Firmat",
-                    DayPublicationStart = new DateOnly(2025, 4, 21),
-                    DayPublicationEnd = new DateOnly(2025, 4, 26),
+                    DayPublicationStart = new DateOnly(2025, 7, 21),
+                    DayPublicationEnd = new DateOnly(2025, 7, 26),
                 },
                 new Job
                 {
@@ -312,8 +312,8 @@ namespace Infrastructure.Data
                     Category = CategoryEnum.Technology,
                     Province = "Santa Fe",
                     City = "Bigand",
-                    DayPublicationStart = new DateOnly(2025, 5, 17),
-                    DayPublicationEnd = new DateOnly(2025, 5, 24),
+                    DayPublicationStart = new DateOnly(2025, 7, 17),
+                    DayPublicationEnd = new DateOnly(2025, 7, 24),
 
                 }
             );
@@ -363,7 +363,7 @@ namespace Infrastructure.Data
                         ClientId = 7, // Depe
                         JobId = 1,
                         Budget = 14000,
-                        JobDay = new DateOnly(2025, 5, 22),
+                        JobDay = new DateOnly(2025, 7, 22),
                         Status = PostulationStatusEnum.Success
                     },
                     new Postulation
@@ -372,7 +372,7 @@ namespace Infrastructure.Data
                         ClientId = 4, // Maximo
                         JobId = 3,
                         Budget = 20000,
-                        JobDay = new DateOnly(2025, 5, 16),
+                        JobDay = new DateOnly(2025, 7, 16),
                         Status = PostulationStatusEnum.Success
                     },
                     new Postulation
@@ -390,7 +390,7 @@ namespace Infrastructure.Data
                         ClientId = 9, // Pedro
                         JobId = 4,
                         Budget = 22000,
-                        JobDay = new DateOnly(2025, 5, 21),
+                        JobDay = new DateOnly(2025, 7, 21),
                         Status = PostulationStatusEnum.Success
                     }
                 );
