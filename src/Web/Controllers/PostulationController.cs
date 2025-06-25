@@ -115,12 +115,12 @@ namespace Web.Controllers
 
         [HttpPut("[action]")]
         [Authorize(Policy = "ClientPolicy")]
-        public async Task<IActionResult> ApproveApplication(int jobId, int postulantId)
+        public async Task<IActionResult> ApproveApplication(int jobId, int postulationId)
         {
             try
             {
                 int userId = User.GetUserIntId();
-                var result = await _postulationService.ChangeStatusPostulation(jobId, postulantId, userId);
+                var result = await _postulationService.ChangeStatusPostulation(jobId, postulationId, userId);
 
                 return Ok(result);
             }

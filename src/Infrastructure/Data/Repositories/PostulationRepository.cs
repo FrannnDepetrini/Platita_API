@@ -92,7 +92,9 @@ namespace Infrastructure.Data.Repositories
                 .ThenInclude(p => p.Client)
                 .Select(p => new
                 {
+                    PostulationId = p.Id,
                     JobTitle = p.Job.Title,
+                    EmployerId = p.Job.Client.Id,
                     EmployerName = p.Job.Client.UserName,
                     Category = p.Job.Category.ToString(),
                     DateJobFinished = p.Job.DateJobFinished,
