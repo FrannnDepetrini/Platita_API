@@ -20,9 +20,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{397CB3E7-1F7B-49DF-8AF9-2B98158CADC4}"
 	ProjectSection(SolutionItems) = preProject
-		MinutaDeRelevamiento.md = MinutaDeRelevamiento.md
 		..\..\Downloads\Platita.drawio = ..\..\Downloads\Platita.drawio
-		docs\DescripcionDelSistema.md = docs\DescripcionDelSistema.md
+		docs\MinutaDeRelevamiento.md = docs\MinutaDeRelevamiento.md
+		MinutaDeRelevamient.md = MinutaDeRelevamient.md
 		..\..\Downloads\platita.png = ..\..\Downloads\platita.png
 	EndProjectSection
 EndProject
