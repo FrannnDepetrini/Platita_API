@@ -169,7 +169,7 @@ public class JobController : ControllerBase
         }
     }
 
-    [HttpPatch("[action]")]
+    [HttpPatch("[action]/{id}")]
     [Authorize(Policy = "ClientPolicy")]
     public async Task<IActionResult> DeleteLogic([FromRoute] int id)
     {
