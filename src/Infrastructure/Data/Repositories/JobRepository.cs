@@ -23,14 +23,17 @@ namespace Infrastructure.Data.Repositories
 
         public override async Task<Job?> GetById(int id)
         {
+            
             return await _context.Jobs
                 .Include(j => j.Client)
                 .Include(j => j.Postulations)
                 .Include(j => j.PostulationSelected)
+                    .ThenInclude(p => p.Client) 
                 .Include(j => j.Reports)
-                .ThenInclude(p => p.Client)
+                    .ThenInclude(r => r.Client)
                 .FirstOrDefaultAsync(j => j.Id == id);
         }
+
 
         public async Task<IEnumerable<Job>> GetJobsByCategory(CategoryEnum category, int userId)
         {
