@@ -21,7 +21,7 @@ namespace Domain.Entities
         public Postulation? PostulationSelected { get; set; }
         public string Title { get; set; }
         public float AveragePrice => Postulations.Count == 0 ? 0 : Postulations.Sum(x => x.Budget) / Postulations.Count;
-        public int AmountPostulations => Postulations.Count;
+        public int AmountPostulations => Postulations.Where(p => p.Status == PostulationStatusEnum.Pending).Count();
         public DateOnly? DayPublicationStart { get; set; } = DateOnly.FromDateTime(DateTime.Today);
         public DateOnly? DayPublicationEnd { get; set; } = DateOnly.FromDateTime(DateTime.Today).AddDays(14);
 
