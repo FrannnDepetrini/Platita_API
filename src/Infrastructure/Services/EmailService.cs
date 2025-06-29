@@ -19,7 +19,7 @@ namespace Application.Services
 
             // Crear el cuerpo del correo con el enlace para restablecer la contraseña
 
-            string resetLink = $"http://localhost:5173/recover-password?token={token}";
+            string resetLink = $"http://localhost:5174/recover-password?token={token}";
             var builder = new BodyBuilder
             {
                 HtmlBody = $@"
