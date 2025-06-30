@@ -173,7 +173,7 @@ namespace Infrastructure.Data
                 {
                     Id = 7,
                     Province = "Córdoba",
-                    City = "Marcos Juarez",
+                    City = "Marcos Juárez",
                     Email = "frandepe7@gmail.com",
                     UserName = "Francisco Depetrini",
                     Password = BCrypt.Net.BCrypt.HashPassword("111"),
@@ -285,7 +285,7 @@ namespace Infrastructure.Data
                     Description = "Jardín de 50m2 con césped crecido",
                     Category = CategoryEnum.Gardening,
                     Province = "Córdoba",
-                    City = "Marcos Juarez",
+                    City = "Marcos Juárez",
                     DayPublicationStart = new DateOnly(2025, 7, 16),
                     DayPublicationEnd = new DateOnly(2025, 7, 20),
                 },
