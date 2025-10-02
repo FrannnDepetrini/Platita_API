@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20250628200443_countOnlyPendingPostulations")]
+    partial class countOnlyPendingPostulations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.15");
@@ -167,7 +170,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 6,
                             Category = 4,
-                            City = "Marcos Juárez",
+                            City = "Marcos Juarez",
                             ClientId = 7,
                             DayPublicationEnd = new DateOnly(2025, 7, 20),
                             DayPublicationStart = new DateOnly(2025, 7, 16),
@@ -490,7 +493,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 4,
                             Email = "marmax0504@gmail.com",
-                            Password = "$2a$11$tY.hViKZV8Mj9cnMI2F31.j7LL0cYNEEP7IwRqU.M4KyqESzt4oa2",
+                            Password = "$2a$11$6CZ.Ukg31wBnlt2DH7mJAOgm4gqpN0Pi4hFhgODvnX7qGLKmL7CXW",
                             PhoneNumber = "3496502453",
                             Role = 2,
                             UserName = "Maximo Martin",
@@ -501,7 +504,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 5,
                             Email = "joako.tanlon@gmail.com",
-                            Password = "$2a$11$hRc08hY38yvJuUYkEy/JOufUCWgV2grSV7AyrrHZDdIswnFU15jJi",
+                            Password = "$2a$11$NvBN5y7wuMfSna9lXDKbce/YcepMIo73z13pDjjZfesrQ4oXc6ak2",
                             PhoneNumber = "3412122907",
                             Role = 2,
                             UserName = "Joaquin Tanlongo",
@@ -512,7 +515,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 6,
                             Email = "marucomass@gmail.com",
-                            Password = "$2a$11$JqPDkLBEXzuITOWSFzhpjOIZFYVXmtFYFvSXX4emCeSGvnzryuwxy",
+                            Password = "$2a$11$vlou8FR1a8ltdsw/tKzQaOc7gNw.W5NpgMaOH//665hNGpnWy132S",
                             PhoneNumber = "3467637190",
                             Role = 2,
                             UserName = "Mario Massonnat",
@@ -523,18 +526,18 @@ namespace Infrastructure.Migrations
                         {
                             Id = 7,
                             Email = "frandepe7@gmail.com",
-                            Password = "$2a$11$G/suGWwv/N9ABAkS3X4zkO.HusRFGxo/JQqAICRKAI.nbgWYzpiX.",
+                            Password = "$2a$11$tXCGt1rvv33Iqt4k8Frp9uGFby06t6R6uPeBOGQOdeKfcONpSPtt6",
                             PhoneNumber = "3472582334",
                             Role = 2,
                             UserName = "Francisco Depetrini",
-                            City = "Marcos Juárez",
+                            City = "Marcos Juarez",
                             Province = "Córdoba"
                         },
                         new
                         {
                             Id = 8,
                             Email = "palenafrancisco@gmail.com",
-                            Password = "$2a$11$hGNDN5kMkZIvl61rpZJ4u.W7eocqM9dNIOIAPvGQt/39RZFrYcAV6",
+                            Password = "$2a$11$sygfr2s7kJ24f4cK7jSAYOVH539yr2WDup6EKU4MVM.SwQnsPJb16",
                             PhoneNumber = "3465664518",
                             Role = 2,
                             UserName = "Francisco Palena",
@@ -545,7 +548,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 9,
                             Email = "pedrogasparini99@gmail.com",
-                            Password = "$2a$11$nSn1xuehu2TYMKKdzMa3VeGVtGGPKmI4OTmOr.qBGjuU4HBmTBocG",
+                            Password = "$2a$11$VkzPEw/bv.ggfgv9OHrRben8/F7q1hdhSK9civxIW.9P3Itn5BPOe",
                             PhoneNumber = "3464445164",
                             Role = 2,
                             UserName = "Pedro Gasparini",
@@ -565,7 +568,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             Email = "moderator@gmail.com",
-                            Password = "$2a$11$gB6.JBRG3IjgLBe6jO2//evPHXVUCqjUxeIr8pFlKikvWMtBGM.Du",
+                            Password = "$2a$11$uZG0mGxqmbdWyopG6SSGBu520fE4LSjqcylY2PkXYnVxweA9ILjT.",
                             PhoneNumber = "341987654321",
                             Role = 1,
                             UserName = "moderator1"
@@ -583,7 +586,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 3,
                             Email = "support@gmail.com",
-                            Password = "$2a$11$YLJGxq8CinjKOBUI2ZX2R.ZJrN2jUMhKNbAB4LK8qCbJMzaXx5322",
+                            Password = "$2a$11$.DcNPK7JJKJ4NXudgEov6eBQbSLan8RLvoAaBUwVMB/6v3UvZlJ8S",
                             PhoneNumber = "341112233",
                             Role = 3,
                             UserName = "support1"
@@ -601,7 +604,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             Email = "sysadmin@gmail.com",
-                            Password = "$2a$11$sDcMmIAjmxU/m.t24cde0eLN5jcXaFl0l0nQ2meb8Ovj4ffx2P99u",
+                            Password = "$2a$11$CB1ysl1/UPjCFvl/JXLP9OAVFp.dpgQzurRVmy2uLJA7B9uja4cr.",
                             PhoneNumber = "341001122",
                             Role = 0,
                             UserName = "platita"

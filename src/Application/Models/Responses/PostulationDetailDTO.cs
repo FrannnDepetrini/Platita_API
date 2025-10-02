@@ -11,7 +11,7 @@ namespace Application.Models.Responses
     {
         public int Id { get; set; }
         public float Budget { get; set; }
-        public DateTime JobDay { get; set; }
+        public DateOnly JobDay { get; set; }
         public string Status { get; set; }
         public ClientForJobDTO Client { get; set; }
         

@@ -27,6 +27,11 @@ namespace Application.Services
             return complaint.Select(ComplaintDTO.Create).ToList();
         }
 
+        public async Task<ComplaintDTO> GetComplaintById(int complaintId)
+        {
+            var complaint = await _complaintRepository.GetByIdAsync(complaintId);
+            return ComplaintDTO.Create(complaint);
+        }
         public async Task<Complaint> CreateComplaint(string description, int userId)
         {
 
@@ -35,7 +40,7 @@ namespace Application.Services
                 ClientId = userId,
                 Description = description,
                 Status = ComplaintStatusEnum.Pending,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateOnly.FromDateTime(DateTime.Today)
             };
 
             return await _complaintRepository.Create(complaint);

@@ -11,6 +11,7 @@ namespace Domain.Constants
         PostulantSelected,
         PostulantRejected,
         PostulantCancelled,
+        JobFinished,
         
     }
 }

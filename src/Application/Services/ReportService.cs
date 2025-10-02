@@ -42,10 +42,16 @@ namespace Application.Services
         public async Task DeleteReportedJob(int jobId)
         {
             var job = await _jobRepository.GetById(jobId);
-            await _jobRepository.Delete(job);
-            
-        }
 
+            job.PostulationSelectedId = null;
+
+            await _jobRepository.SaveChangesAsync();
+
+            await _jobRepository.Delete(job);
+
+            await _jobRepository.SaveChangesAsync();
+
+        }
         public async Task CleanReportedJob(int jobId)
         {
             await _reportRepository.DeleteByJobId(jobId);
@@ -70,7 +76,7 @@ namespace Application.Services
             {
                 JobId = jobId,
                 ClientId = userId,
-                Created_At = DateTime.UtcNow,
+                Created_At = DateOnly.FromDateTime(DateTime.Today),
                 CategoryReport = parsedCategory 
             };
 

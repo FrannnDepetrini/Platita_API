@@ -14,7 +14,7 @@ namespace Domain.Entities
         public int ClientId {get; set;}
         public string Description { get; set; }
         public ComplaintStatusEnum Status { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateOnly CreatedAt { get; set; }
 
     }
 }

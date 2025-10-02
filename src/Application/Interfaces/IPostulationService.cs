@@ -10,7 +10,7 @@ namespace Application.Interfaces
 {
     public interface IPostulationService
     {
-        Task<PostulationDetailDTO> PostulateAsync(int userId, int jobId, float budget, DateTime jobDay);
+        Task<PostulationDetailDTO> PostulateAsync(int userId, int jobId, float budget, DateOnly jobDay);
         Task<IEnumerable<PostulationDetailDTO>> GetPostulationsByJobIdAsync(int jobId, int publisherId);
         Task<bool> DeletePostulationFisica(Postulation postJob);
         Task<bool> DeletePostulationPhysics (int postulantId, int jobId);
@@ -19,5 +19,7 @@ namespace Application.Interfaces
         Task<IEnumerable<MyPostulationDTO>> GetMyPostulations(int userId);
         Task CancelPostulation(int jobId, int postulationId, int userId);
         Task<string> ShowPhoneForAcceptedPostulation(int postulationId, int userId);
+
+        Task<IEnumerable<object>> GetMyPostulationsDone(int IdClient);
     }
 }

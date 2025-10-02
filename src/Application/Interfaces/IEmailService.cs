@@ -11,5 +11,7 @@ namespace Application.Interfaces
     {
         Task SendPasswordRecoveryEmailAsync(string email, string token);
         Task SendNotificationEmailAsync(string email, string userName, CategoryNotificationsEnum category);
+
+   
     }
 }

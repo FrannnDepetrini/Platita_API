@@ -23,12 +23,17 @@ namespace Infrastructure.Data.Repositories
 
         public override async Task<Job?> GetById(int id)
         {
+            
             return await _context.Jobs
                 .Include(j => j.Client)
                 .Include(j => j.Postulations)
                 .Include(j => j.PostulationSelected)
+                    .ThenInclude(p => p.Client) 
+                .Include(j => j.Reports)
+                    .ThenInclude(r => r.Client)
                 .FirstOrDefaultAsync(j => j.Id == id);
         }
+
 
         public async Task<IEnumerable<Job>> GetJobsByCategory(CategoryEnum category, int userId)
         {
@@ -37,6 +42,7 @@ namespace Infrastructure.Data.Repositories
             .Include(j => j.Postulations)
             .Where(j => j.ClientId != userId)
             .Where(j => j.Category == category)
+            .Where(j => !j.Postulations.Any(p => p.ClientId == userId))
             .Where(j => !_context.Reports.Any(r => r.ClientId == userId && r.JobId == j.Id))
             .ToListAsync();
         }
@@ -48,6 +54,7 @@ namespace Infrastructure.Data.Repositories
             .Where(j => j.ClientId != userId)
             .Where(j => j.Province == Province && j.City == city)
             .Where(j => j.Status == JobStatusEnum.Available)
+            .Where(j => !j.Postulations.Any(p => p.ClientId == userId))
             .Where(j => !_context.Reports.Any(r => r.ClientId == userId && r.JobId == j.Id))
             .ToListAsync();
         }
@@ -83,7 +90,7 @@ namespace Infrastructure.Data.Repositories
         public async Task<List<Job>> GetAllExpiratedJobs(CancellationToken cancellationToken)
         {
             return await _context.Jobs
-                .Where(j => j.Status == JobStatusEnum.Available && j.DayPublicationEnd < DateTime.Now)
+                .Where(j => j.Status == JobStatusEnum.Available && j.DayPublicationEnd < DateOnly.FromDateTime(DateTime.Today))
                 .ToListAsync(cancellationToken);
         }
 

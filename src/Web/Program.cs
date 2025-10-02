@@ -154,10 +154,10 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowLocalHost5173",
+    options.AddPolicy("AllowLocalHost5174",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173")
+            policy.WithOrigins("http://localhost:5174")
                    .AllowAnyHeader()
                    .AllowAnyMethod()
                    .AllowCredentials();
@@ -165,7 +165,6 @@ builder.Services.AddCors(options =>
         });
 });
 var app = builder.Build();
-app.UseCors("AllowLocalHost5173");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -175,6 +174,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AllowLocalHost5174");
 
 app.UseAuthentication();
 

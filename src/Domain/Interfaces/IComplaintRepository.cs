@@ -10,5 +10,7 @@ namespace Domain.Interfaces
     public interface IComplaintRepository : IBaseRepository<Complaint>
     {
         Task<List<Complaint>> GetAllComplaint();
+
+        Task<Complaint> GetByIdAsync(int complaintId);
     }
 }

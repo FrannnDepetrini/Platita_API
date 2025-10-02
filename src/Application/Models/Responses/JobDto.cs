@@ -13,8 +13,8 @@ namespace Application.Models.Responses
         public string Status {get; set;}
         public string Province {get; set;}
         public string City {get; set;}
-        public DateTime? DayPublicationStart { get; set; }
-        public DateTime? DayPublicationEnd { get; set; }
+        public DateOnly? DayPublicationStart { get; set; }
+        public DateOnly? DayPublicationEnd { get; set; }
         public string Description{get; set;}
         public string Category { get; set; }
 

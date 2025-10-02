@@ -14,20 +14,27 @@ namespace Application.Services
 
     {
         private readonly IPostulationService _postulationService;
+        private readonly IEmailService _emailService;
         private readonly IJobRepository _jobRepository;
         private readonly IUserRepository _userRepository;
         private readonly IClientRepository _clientRepository;
-        
-        public JobService(IPostulationService postulationService, IJobRepository jobRepository, IUserRepository userRepository, IClientRepository clientRepository)
+
+        public JobService(
+            IPostulationService postulationService,
+            IEmailService emailService,
+            IJobRepository jobRepository,
+            IUserRepository userRepository,
+            IClientRepository clientRepository
+            )
         {
             _jobRepository = jobRepository;
             _userRepository = userRepository;
             _clientRepository = clientRepository;
             _postulationService = postulationService;
-           
+            _emailService = emailService;
         }
 
-                                    // GET
+        // GET
         public async Task<List<JobDTO>> GetJobsByClientLocationAsync(int userId)
         {
             var existingUser = await _clientRepository.GetById(userId);
@@ -56,7 +63,7 @@ namespace Application.Services
             return jobDtos;
 
         }
-        
+
         public async Task<List<JobDTO>> GetJobsBySearchLocationAsync(string Province, string city, int userId)
         {
             var jobs = await _jobRepository.GetJobsByLocationAsync(Province, city, userId);
@@ -78,7 +85,7 @@ namespace Application.Services
 
             return jobDtos;
         }
-        
+
         public async Task<IEnumerable<JobDTO>> GetJobsByCategory(JobFilteredByCategoryRequest request, int userId)
         {
             var jobs = (await _jobRepository.GetJobsByCategory(request.Category, userId)).ToList();
@@ -141,13 +148,21 @@ namespace Application.Services
             return jobs.Select(JobDtoReport.Create).ToList();
         }
 
-        public async Task<JobDTO> GetJobById(int jobId, int userId)
+        public async Task<JobDTO> GetJobById(int jobId)
         {
             var job = await _jobRepository.GetById(jobId);
-            if (job.ClientId != userId)
-                throw new Exception("this job is not yours");
+
 
             return JobDTO.Create(job);
+
+        }
+
+        public async Task<AllJobsDTO> GetJobForModeratorById(int jobId)
+        {
+            var job = await _jobRepository.GetById(jobId);
+
+
+            return AllJobsDTO.Create(job);
         }
 
         // POST
@@ -166,11 +181,16 @@ namespace Application.Services
                 Status = JobStatusEnum.Available,
                 Description = request.Description,
                 Category = parsedCategory,
-                DayPublicationEnd = request.DayPublicationEnd,
                 Province = request.Province,
                 City = request.City,
 
             };
+
+            if (!string.IsNullOrWhiteSpace(request.DayPublicationEnd))
+            {
+                newJob.DayPublicationEnd = DateOnly.Parse(request.DayPublicationEnd);
+            }
+
             await _jobRepository.Create(newJob);
 
             var job = await _jobRepository.GetById(newJob.Id);
@@ -180,7 +200,7 @@ namespace Application.Services
             return jobDTO;
         }
 
-                                // UPDATE
+        // UPDATE
         public async Task<JobDTO> Update(JobUpdateRequest request, int id, int userId)
         {
             var job = await _jobRepository.GetById(id);
@@ -210,9 +230,13 @@ namespace Application.Services
                 job.Category = parsedCategory;
             }
 
+            DateOnly? parsedDate = string.IsNullOrWhiteSpace(request.DayPublicationEnd)
+            ? null
+            : DateOnly.Parse(request.DayPublicationEnd);
+
             job.Title = request.Title ?? job.Title;
             job.DayPublicationStart = job.DayPublicationStart;
-            job.DayPublicationEnd = request.DayPublicationEnd ?? job.DayPublicationEnd;
+            job.DayPublicationEnd = parsedDate ?? job.DayPublicationEnd;
             job.Province = request.Province ?? job.Province;
             job.City = request.City ?? job.City;
             job.Description = request.Description ?? job.Description;
@@ -229,7 +253,7 @@ namespace Application.Services
         public async Task JobFinished(int idJob, int userId)
         {
             var job = await _jobRepository.GetById(idJob);
-            if(job.PostulationSelectedId == null)
+            if (job.PostulationSelectedId == null)
             {
                 throw new Exception("Job has no applicants");
             }
@@ -241,7 +265,7 @@ namespace Application.Services
             {
                 throw new UnauthorizedAccessException("You dont have permission");
             }
-            
+
             var postulations = job.Postulations.ToList();
             if (postulations.Count() <= 0) throw new Exception("You dont have postulations");
 
@@ -259,11 +283,17 @@ namespace Application.Services
 
             job.Status = JobStatusEnum.Done;
 
+            job.DateJobFinished = DateOnly.FromDateTime(DateTime.Today);
+
+            await _emailService.SendNotificationEmailAsync(job.Client.Email, job.Client.UserName, CategoryNotificationsEnum.JobFinished);
+
+            await _emailService.SendNotificationEmailAsync(job.PostulationSelected.Client.Email, job.PostulationSelected.Client.UserName, CategoryNotificationsEnum.JobFinished);
+
             await _jobRepository.Update(job);
 
         }
 
-                                // DELETE
+        // DELETE
         //baja fisica
         public async Task Delete(int id, int userId)
         {
@@ -287,7 +317,7 @@ namespace Application.Services
             await _jobRepository.Delete(job);
         }
 
-                                // PATCH
+        // PATCH
         //baja logica
         public async Task DeleteLogic(int id, int userId)
         {
@@ -323,18 +353,23 @@ namespace Application.Services
             }
 
             var postulations = job.Postulations.ToList();
-            if (postulations.Count() <= 0) throw new Exception("You dont have postulations");
-            foreach (var post in postulations)
+
+            if (postulations.Count() > 0)
             {
-                await _postulationService.DeletePostulationFisica(post);
+
+                foreach (var post in postulations)
+                {
+                    await _postulationService.DeletePostulationFisica(post);
+                }
+
             }
 
-            job.DayPublicationStart = DateTime.Now;
+            job.DayPublicationStart = DateOnly.FromDateTime(DateTime.Today);
             job.Status = JobStatusEnum.Available;
-
+            job.DayPublicationEnd = job.DayPublicationStart.Value.AddDays(14);
             await _jobRepository.Update(job);
         }
 
-        
+
     }
 }

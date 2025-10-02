@@ -1,4 +1,6 @@
-﻿using Application.Models.Responses;
+﻿
+using Application.Models.Responses;
+using Domain.Constants;
 using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -23,14 +25,14 @@ namespace Infrastructure.Data.Repositories
             return await _context.Postulations
                 .Include(p => p.Client)
                 .FirstOrDefaultAsync(p => p.Id == id);
-        }  
+        }
 
         public async Task<Postulation?> GetByIdForApplicantAsync(int id)
         {
             return await _context.Postulations
                 .Include(p => p.Job)
                 .FirstOrDefaultAsync(p => p.Id == id);
-        }   
+        }
 
         public override async Task<Postulation?> GetById(int id)
         {
@@ -57,7 +59,7 @@ namespace Infrastructure.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<Postulation> GetPostulationByJobAndPostulantId(int jobId, int postulantId) 
+        public async Task<Postulation> GetPostulationByJobAndPostulantId(int jobId, int postulantId)
         {
             return await _context.Postulations
                 .Include(p => p.Client)
@@ -75,12 +77,38 @@ namespace Infrastructure.Data.Repositories
         public async Task<IEnumerable<Postulation>> GetAllMyPostulations(int userId)
         {
             return await _context.Postulations
-                .Where(p=>p.ClientId == userId )
-                .Include(p=>p.Job)
-                .ThenInclude(p=> p.Client)
+                .Where(p => p.ClientId == userId)
+                .Include(p => p.Job)
+                .ThenInclude(p => p.Client)
                 .ToListAsync();
 
         }
+
+        public async Task<IEnumerable<object>> GetAllMyPostulationsDone(int userId)
+        {
+            return await _context.Postulations
+                .Where(p => p.ClientId == userId && p.Status == PostulationStatusEnum.Done)
+                .Include(p => p.Job)
+                .ThenInclude(p => p.Client)
+                .Select(p => new
+                {
+                    PostulationId = p.Id,
+                    JobTitle = p.Job.Title,
+                    EmployerId = p.Job.Client.Id,
+                    EmployerName = p.Job.Client.UserName,
+                    Category = p.Job.Category.ToString(),
+                    DateJobFinished = p.Job.DateJobFinished,
+                    CanRate = (DateTime.Today.Date - p.Job.DateJobFinished.Value.ToDateTime(TimeOnly.MinValue)).Days < 1,
+                    Score = _context.Ratings
+                            .Where(r => r.RatedByUserId == userId
+                                     && r.RatedUserId == p.Job.ClientId
+                                     && r.JobId == p.Job.Id)
+                            .Select(r => (int?)r.Score)
+                            .FirstOrDefault()
+                        })
+                            .ToListAsync();
+        }
+
 
         public async Task SaveChangesAsync()
         {

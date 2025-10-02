@@ -21,9 +21,11 @@ namespace Domain.Entities
         public Postulation? PostulationSelected { get; set; }
         public string Title { get; set; }
         public float AveragePrice => Postulations.Count == 0 ? 0 : Postulations.Sum(x => x.Budget) / Postulations.Count;
-        public int AmountPostulations => Postulations.Count;
-        public DateTime? DayPublicationStart { get; set; } = DateTime.Now;
-        public DateTime? DayPublicationEnd { get; set; } = DateTime.Now.AddDays(14);
+        public int AmountPostulations => Postulations.Where(p => p.Status == PostulationStatusEnum.Pending).Count();
+        public DateOnly? DayPublicationStart { get; set; } = DateOnly.FromDateTime(DateTime.Today);
+        public DateOnly? DayPublicationEnd { get; set; } = DateOnly.FromDateTime(DateTime.Today).AddDays(14);
+
+        public DateOnly? DateJobFinished { get; set; }
         public JobStatusEnum Status { get; set; }
         public string Description { get; set; }
         public CategoryEnum Category { get; set; }

@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20250625211514_seedNewJobs")]
+    partial class seedNewJobs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.15");
@@ -104,7 +107,6 @@ namespace Infrastructure.Migrations
                             DayPublicationEnd = new DateOnly(2025, 7, 24),
                             DayPublicationStart = new DateOnly(2025, 7, 15),
                             Description = "Necesito pintar un monoambiente en el centro",
-                            PostulationSelectedId = 2,
                             Province = "Santa Fe",
                             Status = 3,
                             Title = "Pintar departamento"
@@ -131,7 +133,6 @@ namespace Infrastructure.Migrations
                             DayPublicationEnd = new DateOnly(2025, 7, 18),
                             DayPublicationStart = new DateOnly(2025, 7, 15),
                             Description = "Patio de 100m2 con pasto alto, se necesita corte y limpieza",
-                            PostulationSelectedId = 3,
                             Province = "Buenos Aires",
                             Status = 3,
                             Title = "Corte de pasto y desmalezado"
@@ -145,7 +146,6 @@ namespace Infrastructure.Migrations
                             DayPublicationEnd = new DateOnly(2025, 7, 23),
                             DayPublicationStart = new DateOnly(2025, 7, 17),
                             Description = "Hay una pérdida debajo del lavabo",
-                            PostulationSelectedId = 5,
                             Province = "Mendoza",
                             Status = 3,
                             Title = "Reparar cañería del baño"
@@ -167,7 +167,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 6,
                             Category = 4,
-                            City = "Marcos Juárez",
+                            City = "Marcos Juarez",
                             ClientId = 7,
                             DayPublicationEnd = new DateOnly(2025, 7, 20),
                             DayPublicationStart = new DateOnly(2025, 7, 16),
@@ -490,7 +490,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 4,
                             Email = "marmax0504@gmail.com",
-                            Password = "$2a$11$tY.hViKZV8Mj9cnMI2F31.j7LL0cYNEEP7IwRqU.M4KyqESzt4oa2",
+                            Password = "$2a$11$cMXiAm5XMP4vKcwm7rI/w.UpwXhUO34lmhJnZR9WiN0vBy9VFg7fS",
                             PhoneNumber = "3496502453",
                             Role = 2,
                             UserName = "Maximo Martin",
@@ -501,7 +501,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 5,
                             Email = "joako.tanlon@gmail.com",
-                            Password = "$2a$11$hRc08hY38yvJuUYkEy/JOufUCWgV2grSV7AyrrHZDdIswnFU15jJi",
+                            Password = "$2a$11$MwxFVY1y2fHQNSP3bScaieArvCLAZMjB2/juo0ACoJH2roPL31APC",
                             PhoneNumber = "3412122907",
                             Role = 2,
                             UserName = "Joaquin Tanlongo",
@@ -512,7 +512,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 6,
                             Email = "marucomass@gmail.com",
-                            Password = "$2a$11$JqPDkLBEXzuITOWSFzhpjOIZFYVXmtFYFvSXX4emCeSGvnzryuwxy",
+                            Password = "$2a$11$i7/fdPNMt6kn5KDiNdAEHOTYRon1LmtQRONZ/mw3hjuDrluHyVc/q",
                             PhoneNumber = "3467637190",
                             Role = 2,
                             UserName = "Mario Massonnat",
@@ -523,18 +523,18 @@ namespace Infrastructure.Migrations
                         {
                             Id = 7,
                             Email = "frandepe7@gmail.com",
-                            Password = "$2a$11$G/suGWwv/N9ABAkS3X4zkO.HusRFGxo/JQqAICRKAI.nbgWYzpiX.",
+                            Password = "$2a$11$M3SmZJzz18CtXzhKeXT2dupEuAydKfQ7iWz9FX4VSFvEv8MYGtSli",
                             PhoneNumber = "3472582334",
                             Role = 2,
                             UserName = "Francisco Depetrini",
-                            City = "Marcos Juárez",
+                            City = "Marcos Juarez",
                             Province = "Córdoba"
                         },
                         new
                         {
                             Id = 8,
                             Email = "palenafrancisco@gmail.com",
-                            Password = "$2a$11$hGNDN5kMkZIvl61rpZJ4u.W7eocqM9dNIOIAPvGQt/39RZFrYcAV6",
+                            Password = "$2a$11$kPqxGJ.32UVotyYQBrYkzeZR4Dg6Vkinwg50ZRsRQDR8GkkS7zEam",
                             PhoneNumber = "3465664518",
                             Role = 2,
                             UserName = "Francisco Palena",
@@ -545,7 +545,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 9,
                             Email = "pedrogasparini99@gmail.com",
-                            Password = "$2a$11$nSn1xuehu2TYMKKdzMa3VeGVtGGPKmI4OTmOr.qBGjuU4HBmTBocG",
+                            Password = "$2a$11$74/QIEyFU4ano2ynOEi0Ue502VD.fjhyPtOWGHVXmCpLlZFq1d10i",
                             PhoneNumber = "3464445164",
                             Role = 2,
                             UserName = "Pedro Gasparini",
@@ -565,7 +565,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             Email = "moderator@gmail.com",
-                            Password = "$2a$11$gB6.JBRG3IjgLBe6jO2//evPHXVUCqjUxeIr8pFlKikvWMtBGM.Du",
+                            Password = "$2a$11$JxHYwil6km1Um/MSw8/WIe/XFZLgrqj5EXthUONu23tWTSmw.0CnO",
                             PhoneNumber = "341987654321",
                             Role = 1,
                             UserName = "moderator1"
@@ -583,7 +583,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 3,
                             Email = "support@gmail.com",
-                            Password = "$2a$11$YLJGxq8CinjKOBUI2ZX2R.ZJrN2jUMhKNbAB4LK8qCbJMzaXx5322",
+                            Password = "$2a$11$mqFLJsFkL8MlxYLkzr9bLOpqsHm10Pv6XSlK.vEUXbtUFgSB9AA3i",
                             PhoneNumber = "341112233",
                             Role = 3,
                             UserName = "support1"
@@ -601,7 +601,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             Email = "sysadmin@gmail.com",
-                            Password = "$2a$11$sDcMmIAjmxU/m.t24cde0eLN5jcXaFl0l0nQ2meb8Ovj4ffx2P99u",
+                            Password = "$2a$11$oYbcBz/fawCcP0w4eNC7..NIqFXvMlmICeZHd019alIr4RGiJKlfm",
                             PhoneNumber = "341001122",
                             Role = 0,
                             UserName = "platita"

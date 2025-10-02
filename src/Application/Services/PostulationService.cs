@@ -49,7 +49,7 @@ namespace Application.Services
 
         }
 
-        public async Task<PostulationDetailDTO> PostulateAsync(int userId, int jobId, float budget, DateTime jobDay)
+        public async Task<PostulationDetailDTO> PostulateAsync(int userId, int jobId, float budget, DateOnly jobDay)
         {
             var job = await _jobRepository.GetById(jobId);
             if (job == null)
@@ -159,11 +159,11 @@ namespace Application.Services
 
             if (userId == postulation.ClientId)
             {
-                return $"https://wa.me/{postulation.Job.Client.PhoneNumber}";
+                return $"{postulation.Job.Client.PhoneNumber}";
             }
             else if (userId == postulation.Job.ClientId)
             {
-                return $"https://wa.me/{postulation.Client.PhoneNumber}";
+                return $"{postulation.Client.PhoneNumber}";
             }
             else
             {
@@ -264,7 +264,7 @@ namespace Application.Services
             {
                 postulation.Status = PostulationStatusEnum.Cancelled;
                 await _emailService.SendNotificationEmailAsync(postulation.Client.Email, postulation.Client.UserName, CategoryNotificationsEnum.PostulantCancelled);
-                if ((DateTime.Now - postulation.JobDay).TotalHours <= 48)
+                if ((DateTime.Today - postulation.JobDay.ToDateTime(TimeOnly.MinValue)).TotalHours <= 48)
                 {
                     //resena mala para el postulante
                     var request = new CreateRatingRequest
@@ -288,6 +288,12 @@ namespace Application.Services
                 job.Status = JobStatusEnum.Deleted;
                 await _jobRepository.SaveChangesAsync();
             }
+        }
+
+        public async Task<IEnumerable<object>> GetMyPostulationsDone(int IdClient)
+        {
+            var postulationsDone = await _postulationRepository.GetAllMyPostulationsDone(IdClient);
+            return postulationsDone;
         }
     }
 }

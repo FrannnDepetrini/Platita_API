@@ -20,7 +20,7 @@ namespace Domain.Entities
         public Job Job { get; set; }
         public Client Client { get; set; }
 
-        public DateTime JobDay { get; set; }
+        public DateOnly JobDay { get; set; }
         public PostulationStatusEnum Status { get; set; }
 
     }

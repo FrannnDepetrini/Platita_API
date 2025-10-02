@@ -19,7 +19,7 @@ namespace Application.Services
 
             // Crear el cuerpo del correo con el enlace para restablecer la contraseña
 
-            string resetLink = $"http://localhost:5173/recover-password?token={token}";
+            string resetLink = $"http://localhost:5174/recover-password?token={token}";
             var builder = new BodyBuilder
             {
                 HtmlBody = $@"
@@ -89,6 +89,18 @@ namespace Application.Services
                     };
                     message.Body = builder2.ToMessageBody();
                     break;
+
+                case CategoryNotificationsEnum.JobFinished:
+                    message.Subject = "Trabajo Finalizado";
+                    var builder3 = new BodyBuilder
+                        {
+                            HtmlBody = $@"
+                        <p>Estimado/a {userName},</p>
+                        <p>Se ha dado por finalizado el trabajo.</p>
+                        <p>Atentamente,<br/>El equipo de Platita</p>"
+                        };
+                    message.Body = builder3.ToMessageBody();
+                    break;
             }
 
             // Enviar el correo
@@ -98,5 +110,7 @@ namespace Application.Services
             await client.SendAsync(message);
             await client.DisconnectAsync(true);
         }
+
+        
     }
 }

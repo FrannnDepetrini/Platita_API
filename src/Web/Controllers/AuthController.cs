@@ -49,6 +49,7 @@ namespace Web.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterRequest user)
         {
 
+            
             var result = await _authService.Register(user);
 
             if (!result)
