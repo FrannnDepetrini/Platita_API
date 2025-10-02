@@ -54,7 +54,7 @@ Cada changa y postulación puede pasar por los siguientes estados:
 - **Cliente (Usuario general):** puede crear changas o postularse a ellas  
 - **SysAdmin:** tiene acceso completo al sistema y puede gestionar cualquier entidad  
 - **Moderador:** se encarga de revisar publicaciones o usuarios reportados. Puede eliminar contenido inapropiado  
-- **Support:** recibe quejas y asiste a los usuarios por whatsapp 
+- **Support:** recibe quejas y asiste a los usuarios por correo electrónico  
 
 ## 6. Funcionalidades  
 
